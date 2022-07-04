@@ -1,0 +1,404 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="icon" type="image/x-icon" href="../favicon.ico">
+    <title>Designing Research Software</title>
+    <link rel="stylesheet" href="../mccole.css">
+    <link rel="stylesheet" href="../tango.css">
+    <script type="text/x-mathjax-config">
+      MathJax.Hub.Config({
+        TeX: { equationNumbers: { autoNumber: "AMS" } }
+      })
+    </script>
+    <script type="text/javascript" async src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+  </head>
+  <body>
+    <div class="row">
+      <div class="column">
+        <h2><a href="../">Designing Research Software</a></h2>
+        <p>
+          An Example-Based Introduction Using Python
+        </p>
+	<ol type="1">
+  
+  <li>
+    <a href="../starting/">
+      
+        Starting
+      
+    </a>
+  </li>
+  
+  <li>
+    <a href="../scraping/">
+      
+        Web Scraping
+      
+    </a>
+  </li>
+  
+  <li>
+    <a href="../unittest/">
+      <strong>
+        Unit Testing
+      </strong>
+    </a>
+  </li>
+  
+  <li>
+    <a href="../components/">
+      
+        Designing for Change
+      
+    </a>
+  </li>
+  
+  <li>
+    <a href="../performance/">
+      
+        Performance
+      
+    </a>
+  </li>
+  
+  <li>
+    <a href="../website/">
+      
+        Building a Website
+      
+    </a>
+  </li>
+  
+</ol>
+<ol type="A">
+  
+  <li>
+    <a href="../license/">
+      
+        License
+      
+    </a>
+  </li>
+  
+  <li>
+    <a href="../conduct/">
+      
+        Code of Conduct
+      
+    </a>
+  </li>
+  
+  <li>
+    <a href="../contributing/">
+      
+        Contributing
+      
+    </a>
+  </li>
+  
+  <li>
+    <a href="../links/">
+      
+        Links
+      
+    </a>
+  </li>
+  
+  <li>
+    <a href="../credits/">
+      
+        Credits
+      
+    </a>
+  </li>
+  
+</ol>
+
+      </div>
+      <div class="column bordered">
+        <h1>Unit Testing</h1>
+        <ul>
+<li>How to test the data download script?<ul>
+<li>Relies on command-line arguments</li>
+<li>Takes several hours to run</li>
+<li>Don't know what the output is supposed to be</li>
+<li>Output depends on pages that change outside our control</li>
+<li>Output is going to screen</li>
+</ul>
+</li>
+<li>And how much testing is actually needed?<ul>
+<li>Wouldn't test as thoroughly as shown here for a one-off</li>
+<li>But would if it is going to be used in production by other people</li>
+</ul>
+</li>
+<li>Setup<ul>
+<li>Create <code>download</code> directory and move script to <code>download/download.py</code></li>
+<li>Create <code>tests</code> directory and add <code>tests/test_download.py</code></li>
+<li>Create <code>__init__.py</code> files in both directories</li>
+<li>This is prep for creating a Python package, and many tools expect this structure</li>
+</ul>
+</li>
+<li>Simplest function in <code>download.py</code> is <code>skip_package</code><ul>
+<li>But even that relies on the options returned by <code>argparse</code></li>
+<li>Which are stored in a <code>Namespace</code> object</li>
+<li>We can construct one ourselves</li>
+</ul>
+</li>
+</ul>
+<p><div class="highlight"><span class="filename">tests/test_download.py</span><pre><span></span><code><span class="kn">from</span> <span class="nn">argparse</span> <span class="kn">import</span> <span class="n">Namespace</span>
+
+<span class="kn">from</span> <span class="nn">download.download</span> <span class="kn">import</span> <span class="n">skip_package</span>
+
+<span class="k">def</span> <span class="nf">test_skip_package_after_not_specified</span><span class="p">():</span>
+    <span class="n">options</span> <span class="o">=</span> <span class="n">Namespace</span><span class="p">(</span><span class="n">after</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">verbose</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
+    <span class="k">assert</span> <span class="ow">not</span> <span class="n">skip_package</span><span class="p">(</span><span class="n">options</span><span class="p">,</span> <span class="s2">&quot;something&quot;</span><span class="p">)</span>
+</code></pre></div>
+<div class="highlight"><pre><span></span><code>$ pytest
+collected <span class="m">1</span> item
+tests/test_download.py .
+</code></pre></div></p>
+<ul>
+<li>This works because we run Pytest from the project's root directory<ul>
+<li>So <code>download</code> is a subdirectory
+    and <code>download.download</code> identifies a file in that subdirectory</li>
+</ul>
+</li>
+<li>Could repeat the <code>Namespace</code> constructor in every test</li>
+<li>Or create a <a class="glossref" href="../gloss/#fixture" markdown="1">fixture</a> that pytest will construct automatically<ul>
+<li>Use the <code>pytest.fixture</code> <a class="glossref" href="../gloss/#decorator" markdown="1">decorator</a> to define a function</li>
+<li>Use the function name as a parameter to a unit test</li>
+<li>pytest notices that the parameter has the same name as a fixture and calls the function</li>
+</ul>
+</li>
+<li>Call the fixture <code>download_options</code> because <code>options</code> is a very generic name</li>
+</ul>
+<div class="highlight"><span class="filename">tests/test_download.py</span><pre><span></span><code><span class="nd">@pytest</span><span class="o">.</span><span class="n">fixture</span>
+<span class="k">def</span> <span class="nf">download_options</span><span class="p">():</span>
+    <span class="sd">&quot;&quot;&quot;Default download_options from argparse.&quot;&quot;&quot;</span>
+    <span class="k">return</span> <span class="n">Namespace</span><span class="p">(</span><span class="n">after</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">verbose</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
+</code></pre></div>
+<ul>
+<li>Use this in some tests</li>
+</ul>
+<div class="highlight"><span class="filename">tests/test_download.py</span><pre><span></span><code><span class="k">def</span> <span class="nf">test_skip_package_name_before_specified</span><span class="p">(</span><span class="n">download_options</span><span class="p">):</span>
+    <span class="n">download_options</span><span class="o">.</span><span class="n">after</span> <span class="o">=</span> <span class="s2">&quot;b&quot;</span>
+    <span class="k">assert</span> <span class="n">skip_package</span><span class="p">(</span><span class="n">download_options</span><span class="p">,</span> <span class="s2">&quot;a&quot;</span><span class="p">)</span>
+
+
+<span class="k">def</span> <span class="nf">test_skip_package_name_after_specified</span><span class="p">(</span><span class="n">download_options</span><span class="p">):</span>
+    <span class="n">download_options</span><span class="o">.</span><span class="n">after</span> <span class="o">=</span> <span class="s2">&quot;b&quot;</span>
+    <span class="k">assert</span> <span class="ow">not</span> <span class="n">skip_package</span><span class="p">(</span><span class="n">download_options</span><span class="p">,</span> <span class="s2">&quot;z&quot;</span><span class="p">)</span>
+
+
+<span class="k">def</span> <span class="nf">test_skip_package_name_equal_specified</span><span class="p">(</span><span class="n">download_options</span><span class="p">):</span>
+    <span class="n">download_options</span><span class="o">.</span><span class="n">after</span> <span class="o">=</span> <span class="s2">&quot;b&quot;</span>
+    <span class="k">assert</span> <span class="n">skip_package</span><span class="p">(</span><span class="n">download_options</span><span class="p">,</span> <span class="s2">&quot;b&quot;</span><span class="p">)</span>
+</code></pre></div>
+<ul>
+<li>Some people object to modifying fixtures in this way<ul>
+<li>A fixture is supposed to be fixed, which reduces cognitive load</li>
+<li>If the fixture needs to vary, use a helper function</li>
+</ul>
+</li>
+<li>Next step is to test some of the downloading functions<ul>
+<li>These rely on an HTTP response object from the requests package</li>
+<li>More specifically, these rely on that object having two members <code>status_code</code> and <code>text</code></li>
+</ul>
+</li>
+<li>It's a bit of a cheat to build a <code>Namespace</code> object<ul>
+<li>Could define a <code>dataclass</code> or a <code>namedtuple</code></li>
+<li>But <a href="https://en.wikipedia.org/wiki/Occam%27s_razor">Occam's Razor</a> applies: do not multiply entities (or in this case tools) unnecessarily</li>
+</ul>
+</li>
+<li>We'll call a function when we need it rather than creating a fixture</li>
+</ul>
+<div class="highlight"><span class="filename">tests/test_download.py</span><pre><span></span><code><span class="k">def</span> <span class="nf">response</span><span class="p">(</span><span class="n">status_code</span><span class="o">=</span><span class="mi">200</span><span class="p">,</span> <span class="n">text</span><span class="o">=</span><span class="s2">&quot;&quot;</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Create an HTTP response object to be filled in.&quot;&quot;&quot;</span>
+    <span class="k">return</span> <span class="n">Namespace</span><span class="p">(</span><span class="n">status_code</span><span class="o">=</span><span class="n">status_code</span><span class="p">,</span> <span class="n">text</span><span class="o">=</span><span class="n">text</span><span class="p">)</span>
+</code></pre></div>
+<ul>
+<li>Now use it</li>
+</ul>
+<div class="highlight"><span class="filename">tests/test_download.py</span><pre><span></span><code><span class="kn">from</span> <span class="nn">unittest.mock</span> <span class="kn">import</span> <span class="n">patch</span>
+
+<span class="k">def</span> <span class="nf">test_get_page_ok</span><span class="p">():</span>
+    <span class="n">resp</span> <span class="o">=</span> <span class="n">response</span><span class="p">(</span><span class="n">text</span><span class="o">=</span><span class="s2">&quot;expected&quot;</span><span class="p">)</span>
+    <span class="k">with</span> <span class="n">patch</span><span class="p">(</span><span class="s2">&quot;nitinat.download.requests.get&quot;</span><span class="p">,</span> <span class="n">return_value</span><span class="o">=</span><span class="n">resp</span><span class="p">):</span>
+        <span class="k">assert</span> <span class="n">get_page</span><span class="p">(</span><span class="s2">&quot;http://somewhere/&quot;</span><span class="p">)</span> <span class="o">==</span> <span class="s2">&quot;expected&quot;</span>
+</code></pre></div>
+<ul>
+<li><code>patch</code> takes the dotted path to the specific use of the function or method we want to replace and the value we want to return</li>
+<li>Replaces the named thing with a <a class="glossref" href="../gloss/#mock_object" markdown="1">mock object</a></li>
+<li>When <code>get_page</code> runs, the function <code>requests.test</code> in <code>nitinat.download</code> is intercepted and our response returned<ul>
+<li>The URL we give to <code>get_page</code> doesn't matter because the real <code>get_page</code> isn't called</li>
+</ul>
+</li>
+<li>If the main page is unavailable, the program is supposed to throw an exception<ul>
+<li>Not testing that the error handling does what it's supposed to is a major source of failure in production systems [<a href="../bib/#Yuan2015">Yuan2015</a>]</li>
+</ul>
+</li>
+<li>Use <code>pytest.raises</code> and specify the expected class of the exception<ul>
+<li>Could patch inside the exception check</li>
+<li>Pick one order and be consistent</li>
+</ul>
+</li>
+</ul>
+<div class="highlight"><span class="filename">tests/test_download.py</span><pre><span></span><code><span class="k">def</span> <span class="nf">test_get_page_fail_when_required_but_not_found</span><span class="p">():</span>
+    <span class="n">resp</span> <span class="o">=</span> <span class="n">response</span><span class="p">(</span><span class="n">status_code</span><span class="o">=</span><span class="mi">404</span><span class="p">)</span>
+    <span class="k">with</span> <span class="n">patch</span><span class="p">(</span><span class="s2">&quot;nitinat.download.requests.get&quot;</span><span class="p">,</span> <span class="n">return_value</span><span class="o">=</span><span class="n">resp</span><span class="p">):</span>
+        <span class="k">with</span> <span class="n">pytest</span><span class="o">.</span><span class="n">raises</span><span class="p">(</span><span class="ne">AssertionError</span><span class="p">):</span>
+            <span class="n">get_page</span><span class="p">(</span><span class="s2">&quot;http://somewhere/&quot;</span><span class="p">,</span> <span class="kc">True</span><span class="p">)</span>
+</code></pre></div>
+<ul>
+<li>Sub-pages should return <code>None</code> instead of failing</li>
+</ul>
+<div class="highlight"><span class="filename">tests/test_download.py</span><pre><span></span><code><span class="k">def</span> <span class="nf">test_get_page_succed_when_not_required_and_not_found</span><span class="p">():</span>
+    <span class="n">resp</span> <span class="o">=</span> <span class="n">response</span><span class="p">(</span><span class="n">status_code</span><span class="o">=</span><span class="mi">404</span><span class="p">)</span>
+    <span class="k">with</span> <span class="n">patch</span><span class="p">(</span><span class="s2">&quot;nitinat.download.requests.get&quot;</span><span class="p">,</span> <span class="n">return_value</span><span class="o">=</span><span class="n">resp</span><span class="p">):</span>
+        <span class="k">assert</span> <span class="n">get_page</span><span class="p">(</span><span class="s2">&quot;http://somewhere/&quot;</span><span class="p">)</span> <span class="o">==</span> <span class="kc">None</span>
+</code></pre></div>
+<ul>
+<li>Download program sends its output to the screen</li>
+<li>pytest provides a fixture called <code>capsys</code> that captures <code>stdout</code> and <code>stderr</code></li>
+<li>Test the entire program<ul>
+<li>Patch <code>parse_args</code> to inject the options we want instead of parsing command-line arguments</li>
+<li>Intercept <code>requests.get</code> to return an empty page</li>
+<li>Ask <code>capsys</code> for the output seen so far</li>
+<li>Check that only the column titles are present</li>
+</ul>
+</li>
+</ul>
+<div class="highlight"><span class="filename">tests/test_download.py</span><pre><span></span><code><span class="k">def</span> <span class="nf">test_no_packages_when_index_page_empty</span><span class="p">(</span><span class="n">capsys</span><span class="p">,</span> <span class="n">download_options</span><span class="p">):</span>
+    <span class="n">resp</span> <span class="o">=</span> <span class="n">response</span><span class="p">()</span>
+    <span class="k">with</span> <span class="n">patch</span><span class="p">(</span><span class="s2">&quot;nitinat.download.parse_args&quot;</span><span class="p">,</span> <span class="n">return_value</span><span class="o">=</span><span class="n">download_options</span><span class="p">):</span>
+        <span class="k">with</span> <span class="n">patch</span><span class="p">(</span><span class="s2">&quot;nitinat.download.requests.get&quot;</span><span class="p">,</span> <span class="n">return_value</span><span class="o">=</span><span class="n">resp</span><span class="p">):</span>
+            <span class="n">main</span><span class="p">()</span>
+            <span class="n">captured</span> <span class="o">=</span> <span class="n">capsys</span><span class="o">.</span><span class="n">readouterr</span><span class="p">()</span>
+            <span class="k">assert</span> <span class="n">captured</span><span class="o">.</span><span class="n">out</span> <span class="o">==</span> <span class="s2">&quot;Package,Releases</span><span class="se">\n</span><span class="s2">&quot;</span>
+</code></pre></div>
+<ul>
+<li>Simulate a main page that has one package page<ul>
+<li>Write the URLs that our regular expressions are supposed to catch</li>
+<li>Alternative would be to patch <code>get_package_urls</code></li>
+<li>Our decision to get the sub-page and extract the count in a single function <code>get_package_count</code> now looks short-sighted</li>
+</ul>
+</li>
+<li>If the mock object created by <code>patch</code> needs to return two or more values, use <code>side_effect=[...]</code></li>
+<li>Another reason to write a <code>response</code> function instead of using a fixture: we need several responses in order for some tests</li>
+</ul>
+<div class="highlight"><span class="filename">tests/test_download.py</span><pre><span></span><code><span class="k">def</span> <span class="nf">test_count_single_missing_package</span><span class="p">(</span><span class="n">capsys</span><span class="p">,</span> <span class="n">download_options</span><span class="p">):</span>
+    <span class="n">main_resp</span> <span class="o">=</span> <span class="n">response</span><span class="p">(</span><span class="n">text</span><span class="o">=</span><span class="s1">&#39;&lt;a href=&quot;alpha&quot;&gt;ALPHA&lt;/a&gt;&#39;</span><span class="p">)</span>
+    <span class="n">page_resp</span> <span class="o">=</span> <span class="n">response</span><span class="p">(</span><span class="n">status_code</span><span class="o">=</span><span class="mi">404</span><span class="p">,</span> <span class="n">text</span><span class="o">=</span><span class="s2">&quot;&quot;</span><span class="p">)</span>
+    <span class="k">with</span> <span class="n">patch</span><span class="p">(</span><span class="s2">&quot;nitinat.download.parse_args&quot;</span><span class="p">,</span> <span class="n">return_value</span><span class="o">=</span><span class="n">download_options</span><span class="p">):</span>
+        <span class="k">with</span> <span class="n">patch</span><span class="p">(</span><span class="s2">&quot;nitinat.download.requests.get&quot;</span><span class="p">,</span> <span class="n">side_effect</span><span class="o">=</span><span class="p">[</span><span class="n">main_resp</span><span class="p">,</span> <span class="n">page_resp</span><span class="p">]):</span>
+            <span class="n">main</span><span class="p">()</span>
+            <span class="n">captured</span> <span class="o">=</span> <span class="n">capsys</span><span class="o">.</span><span class="n">readouterr</span><span class="p">()</span>
+            <span class="k">assert</span> <span class="n">captured</span><span class="o">.</span><span class="n">out</span> <span class="o">==</span> <span class="s2">&quot;Package,Releases</span><span class="se">\n</span><span class="s2">alpha,NA</span><span class="se">\n</span><span class="s2">&quot;</span>
+</code></pre></div>
+<ul>
+<li>For longer pieces of text, use <code>textwrap.dedent</code> to un-indent a block of text inline<ul>
+<li>The backslash after the opening <code>"""</code> ensures that we don't accidentally introduce an opening newline character</li>
+</ul>
+</li>
+</ul>
+<div class="highlight"><span class="filename">tests/test_download.py</span><pre><span></span><code><span class="kn">from</span> <span class="nn">textwrap</span> <span class="kn">import</span> <span class="n">dedent</span>
+
+<span class="k">def</span> <span class="nf">test_count_single_package_multiple_releases</span><span class="p">(</span><span class="n">capsys</span><span class="p">,</span> <span class="n">download_options</span><span class="p">):</span>
+    <span class="n">main_resp</span> <span class="o">=</span> <span class="n">response</span><span class="p">(</span><span class="n">text</span><span class="o">=</span><span class="s1">&#39;&lt;a href=&quot;alpha&quot;&gt;ALPHA&lt;/a&gt;&#39;</span><span class="p">)</span>
+    <span class="n">page_resp</span> <span class="o">=</span> <span class="n">response</span><span class="p">(</span>
+        <span class="n">text</span><span class="o">=</span><span class="n">dedent</span><span class="p">(</span>
+            <span class="sd">&quot;&quot;&quot;\</span>
+<span class="sd">    &lt;a href=&quot;./alpha/1.2.3&quot;&gt;Version 1.2.3&lt;/a&gt;</span>
+<span class="sd">    &lt;a href=&quot;./alpha/4.5.6&quot;&gt;Version 4.5.6&lt;/a&gt;</span>
+<span class="sd">    &lt;a href=&quot;./alpha/7.8.9&quot;&gt;Version 7.8.9&lt;/a&gt;</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+        <span class="p">)</span>
+    <span class="p">)</span>
+    <span class="k">with</span> <span class="p">(</span>
+        <span class="n">patch</span><span class="p">(</span><span class="s2">&quot;nitinat.download.parse_args&quot;</span><span class="p">,</span> <span class="n">return_value</span><span class="o">=</span><span class="n">download_options</span><span class="p">),</span>
+        <span class="n">patch</span><span class="p">(</span><span class="s2">&quot;nitinat.download.requests.get&quot;</span><span class="p">,</span> <span class="n">side_effect</span><span class="o">=</span><span class="p">[</span><span class="n">main_resp</span><span class="p">,</span> <span class="n">page_resp</span><span class="p">]),</span>
+    <span class="p">):</span>
+        <span class="n">main</span><span class="p">()</span>
+        <span class="n">captured</span> <span class="o">=</span> <span class="n">capsys</span><span class="o">.</span><span class="n">readouterr</span><span class="p">()</span>
+        <span class="k">assert</span> <span class="n">captured</span><span class="o">.</span><span class="n">out</span> <span class="o">==</span> <span class="n">dedent</span><span class="p">(</span>
+            <span class="sd">&quot;&quot;&quot;\</span>
+<span class="sd">        Package,Releases</span>
+<span class="sd">        alpha,3</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="p">)</span>
+</code></pre></div>
+<ul>
+<li>Reading the fixtures and expected output from files looks simpler</li>
+</ul>
+<div class="highlight"><span class="filename">tests/test_download.py</span><pre><span></span><code><span class="k">def</span> <span class="nf">test_single_package_multiple_releases_file</span><span class="p">(</span><span class="n">capsys</span><span class="p">,</span> <span class="n">download_options</span><span class="p">):</span>
+    <span class="n">main_text</span> <span class="o">=</span> <span class="nb">open</span><span class="p">(</span><span class="s2">&quot;single_package_main_page.txt&quot;</span><span class="p">,</span> <span class="s2">&quot;r&quot;</span><span class="p">)</span><span class="o">.</span><span class="n">read</span><span class="p">()</span>
+    <span class="n">page_text</span> <span class="o">=</span> <span class="nb">open</span><span class="p">(</span><span class="s2">&quot;single_package_sub_page.txt&quot;</span><span class="p">,</span> <span class="s2">&quot;r&quot;</span><span class="p">)</span><span class="o">.</span><span class="n">read</span><span class="p">()</span>
+    <span class="n">expected</span> <span class="o">=</span> <span class="nb">open</span><span class="p">(</span><span class="s2">&quot;single_package_expected.txt&quot;</span><span class="p">,</span> <span class="s2">&quot;r&quot;</span><span class="p">)</span><span class="o">.</span><span class="n">read</span><span class="p">()</span>
+    <span class="n">main_resp</span> <span class="o">=</span> <span class="n">response</span><span class="p">(</span><span class="n">text</span><span class="o">=</span><span class="n">main_text</span><span class="p">)</span>
+    <span class="n">page_resp</span> <span class="o">=</span> <span class="n">response</span><span class="p">(</span><span class="n">text</span><span class="o">=</span><span class="n">page_text</span><span class="p">)</span>
+    <span class="k">with</span> <span class="p">(</span>
+        <span class="n">patch</span><span class="p">(</span><span class="s2">&quot;nitinat.download.parse_args&quot;</span><span class="p">,</span> <span class="n">return_value</span><span class="o">=</span><span class="n">download_options</span><span class="p">),</span>
+        <span class="n">patch</span><span class="p">(</span><span class="s2">&quot;nitinat.download.requests.get&quot;</span><span class="p">,</span> <span class="n">side_effect</span><span class="o">=</span><span class="p">[</span><span class="n">main_resp</span><span class="p">,</span> <span class="n">page_resp</span><span class="p">]),</span>
+    <span class="p">):</span>
+        <span class="n">main</span><span class="p">()</span>
+        <span class="n">captured</span> <span class="o">=</span> <span class="n">capsys</span><span class="o">.</span><span class="n">readouterr</span><span class="p">()</span>
+        <span class="k">assert</span> <span class="n">captured</span><span class="o">.</span><span class="n">out</span> <span class="o">==</span> <span class="n">expected</span>
+</code></pre></div>
+<ul>
+<li>But this doesn't work<ul>
+<li>When pytest runs, its <a class="glossref" href="../gloss/#cwd" markdown="1">current working directory</a> is the project's root directory</li>
+<li>So the process looks there for the files</li>
+</ul>
+</li>
+<li>Could write the paths <code>"tests/single_package_main_page.txt"</code><ul>
+<li>But large projects put test files in sub-directories of <code>tests</code></li>
+<li>And we don't want to have to rewrite all the tests when we do that</li>
+</ul>
+</li>
+<li>Mark the first attempt as "expected to fail"<ul>
+<li>Can also mark with <code>pytest.mark.skip</code> if skipping temporarily</li>
+</ul>
+</li>
+</ul>
+<div class="highlight"><span class="filename">tests/test_download.py</span><pre><span></span><code><span class="nd">@pytest</span><span class="o">.</span><span class="n">mark</span><span class="o">.</span><span class="n">xfail</span>
+<span class="k">def</span> <span class="nf">test_single_package_multiple_releases_file</span><span class="p">(</span><span class="n">capsys</span><span class="p">,</span> <span class="n">download_options</span><span class="p">):</span>
+    <span class="o">...</span><span class="k">as</span> <span class="n">before</span><span class="o">...</span>
+</code></pre></div>
+<ul>
+<li>Write a helper function to read a file from whatever directory the caller is in<ul>
+<li>The special variable <code>__file__</code> holds the full path of the current file</li>
+<li>Its parent is the directory that contains it</li>
+<li>So the complicated <code>Path</code> expression gets a file from the directory of the source file making the call</li>
+</ul>
+</li>
+</ul>
+<div class="highlight"><span class="filename">tests/test_download.py</span><pre><span></span><code><span class="k">def</span> <span class="nf">local_file</span><span class="p">(</span><span class="n">filename</span><span class="p">):</span>
+    <span class="n">path</span> <span class="o">=</span> <span class="n">Path</span><span class="p">(</span><span class="vm">__file__</span><span class="p">)</span><span class="o">.</span><span class="n">parent</span><span class="o">.</span><span class="n">joinpath</span><span class="p">(</span><span class="n">filename</span><span class="p">)</span>
+    <span class="k">return</span> <span class="nb">open</span><span class="p">(</span><span class="n">path</span><span class="p">,</span> <span class="s2">&quot;r&quot;</span><span class="p">)</span><span class="o">.</span><span class="n">read</span><span class="p">()</span>
+</code></pre></div>
+<ul>
+<li>Rewrite the test</li>
+</ul>
+<div class="highlight"><span class="filename">tests/test_download.py</span><pre><span></span><code><span class="k">def</span> <span class="nf">test_single_package_multiple_releases_fixed</span><span class="p">(</span><span class="n">capsys</span><span class="p">,</span> <span class="n">download_options</span><span class="p">):</span>
+    <span class="n">main_text</span> <span class="o">=</span> <span class="n">local_file</span><span class="p">(</span><span class="s2">&quot;single_package_main_page.txt&quot;</span><span class="p">)</span>
+    <span class="n">page_text</span> <span class="o">=</span> <span class="n">local_file</span><span class="p">(</span><span class="s2">&quot;single_package_sub_page.txt&quot;</span><span class="p">)</span>
+    <span class="n">expected</span> <span class="o">=</span> <span class="n">local_file</span><span class="p">(</span><span class="s2">&quot;single_package_expected.txt&quot;</span><span class="p">)</span>
+    <span class="o">...</span><span class="k">as</span> <span class="n">before</span><span class="o">...</span>
+</code></pre></div>
+<ul>
+<li>This works, but if there are dozens of tests with different fixtures, coming up with filenames will be a headache<ul>
+<li>So will understanding which files are used in which tests</li>
+<li>And maintaining them</li>
+</ul>
+</li>
+<li>Embedding the test data in the test file is the better choice in this case<ul>
+<li>But if your test fixture really needs to be a thousand lines long, the balance tips</li>
+</ul>
+</li>
+</ul>
+      </div>
+    </div>
+  </body>
+</html>

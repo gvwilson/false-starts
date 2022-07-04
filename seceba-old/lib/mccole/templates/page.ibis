@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    {% include "header.html" %}
+    <title>{{site.title}}: {{site.subtitle}}{% if node.title %} / {{node.title}}{% endif %}</title>
+  </head>
+  <body class="page">
+    <div align="center">
+      {% if node.title %}
+      <h2><a href="@root/">{{site.title}}: {{site.subtitle}}</a></h2>
+      <h1>{{node.major}}: {{node.title}}</h1>
+      {% else %}
+      <h1>{{site.title}}:<br/>{{site.subtitle}}</h1>
+      {% endif %}
+      <p>
+        <img class="page-logo" src="@root/{{site.logo}}" alt="logo" />
+      </p>
+    </div>
+
+{{node.html}}
+
+  {% include "footer.html" %}
+  </body>
+</html>

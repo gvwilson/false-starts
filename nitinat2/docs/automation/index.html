@@ -1,0 +1,432 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="icon" type="image/x-icon" href="../favicon.ico">
+    <title>Nitinat</title>
+    <link rel="stylesheet" href="../mccole.css">
+    <link rel="stylesheet" href="../tango.css">
+    <script type="text/x-mathjax-config">
+      MathJax.Hub.Config({
+        TeX: { equationNumbers: { autoNumber: "AMS" } }
+      })
+    </script>
+    <script type="text/javascript" async src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+  </head>
+  <body>
+    <div class="row">
+      <div class="column">
+        <h2><a href="../">Nitinat</a></h2>
+        <p>
+          A model data analysis project
+        </p>
+	<ol type="1">
+  
+  <li>
+    <a href="../starting/">
+      
+        Starting
+      
+    </a>
+  </li>
+  
+  <li>
+    <a href="../project/">
+      
+        Setting Up a Python Project
+      
+    </a>
+  </li>
+  
+  <li>
+    <a href="../dataset/">
+      
+        Getting a Dataset
+      
+    </a>
+  </li>
+  
+  <li>
+    <a href="../script/">
+      
+        Writing Robust Scripts
+      
+    </a>
+  </li>
+  
+  <li>
+    <a href="../unittest/">
+      
+        Unit Testing
+      
+    </a>
+  </li>
+  
+  <li>
+    <a href="../automation/">
+      <strong>
+        Automation
+      </strong>
+    </a>
+  </li>
+  
+  <li>
+    <a href="../caching/">
+      
+        Caching
+      
+    </a>
+  </li>
+  
+  <li>
+    <a href="../dependencies/">
+      
+        Dependencies
+      
+    </a>
+  </li>
+  
+  <li>
+    <a href="../pipeline/">
+      
+        Building a Pipeline
+      
+    </a>
+  </li>
+  
+  <li>
+    <a href="../configuration/">
+      
+        Configuration
+      
+    </a>
+  </li>
+  
+  <li>
+    <a href="../provenance/">
+      
+        Provenance
+      
+    </a>
+  </li>
+  
+  <li>
+    <a href="../organizing/">
+      
+        Organizing a Data Analysis
+      
+    </a>
+  </li>
+  
+  <li>
+    <a href="../documentation/">
+      
+        Documentation
+      
+    </a>
+  </li>
+  
+  <li>
+    <a href="../logging/">
+      
+        Logging
+      
+    </a>
+  </li>
+  
+  <li>
+    <a href="../coverage/">
+      
+        Code Coverage
+      
+    </a>
+  </li>
+  
+  <li>
+    <a href="../packaging/">
+      
+        Packaging
+      
+    </a>
+  </li>
+  
+  <li>
+    <a href="../website/">
+      
+        Build a Website
+      
+    </a>
+  </li>
+  
+  <li>
+    <a href="../indexing/">
+      
+        Indexing
+      
+    </a>
+  </li>
+  
+  <li>
+    <a href="../approximation/">
+      
+        Approximation
+      
+    </a>
+  </li>
+  
+  <li>
+    <a href="../database/">
+      
+        Using a Database
+      
+    </a>
+  </li>
+  
+  <li>
+    <a href="../service/">
+      
+        Creating a Web Service
+      
+    </a>
+  </li>
+  
+</ol>
+<ol type="A">
+  
+  <li>
+    <a href="../license/">
+      
+        License
+      
+    </a>
+  </li>
+  
+  <li>
+    <a href="../conduct/">
+      
+        Code of Conduct
+      
+    </a>
+  </li>
+  
+  <li>
+    <a href="../links/">
+      
+        Links
+      
+    </a>
+  </li>
+  
+  <li>
+    <a href="../credits/">
+      
+        Credits
+      
+    </a>
+  </li>
+  
+</ol>
+
+      </div>
+      <div class="column bordered">
+        <h1>Automation</h1>
+        <ul>
+<li>Want to make common commands re-runnable<ul>
+<li>More trustworthy than documentation</li>
+</ul>
+</li>
+<li>Many (many) <a class="glossref" href="../gloss/#build_tool" markdown="1">build automation tools</a> to do this<ul>
+<li>Called that because the first one was invented to recompile (build) C programs</li>
+</ul>
+</li>
+<li><a href="https://www.gnu.org/software/make/">Make</a> is the original and still most widely used, but its syntax is unpleasant</li>
+<li><a href="https://snakemake.readthedocs.io/">Snakemake</a> can do a lot [<a href="../bib/#Molder2021">Molder2021</a>], but it is also complicated</li>
+<li>Use <a href="https://www.pyinvoke.org/">Invoke</a> instead</li>
+<li><code>pip install invoke</code> and then add <code>invoke&gt;=1.7</code> to `requirements.txt</li>
+<li>Create a file in the project's root directory called <code>tasks.py</code>:</li>
+</ul>
+<div class="highlight"><span class="filename">tasks.py</span><pre><span></span><code><span class="sd">&quot;&quot;&quot;Run common tasks.&quot;&quot;&quot;</span>
+
+<span class="kn">from</span> <span class="nn">invoke</span> <span class="kn">import</span> <span class="n">task</span>
+
+
+<span class="nd">@task</span>
+<span class="k">def</span> <span class="nf">list</span><span class="p">(</span><span class="n">c</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;List available tasks.&quot;&quot;&quot;</span>
+    <span class="n">c</span><span class="o">.</span><span class="n">run</span><span class="p">(</span><span class="s2">&quot;inv --list&quot;</span><span class="p">)</span>
+
+
+<span class="nd">@task</span>
+<span class="k">def</span> <span class="nf">test</span><span class="p">(</span><span class="n">c</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Run tests.&quot;&quot;&quot;</span>
+    <span class="n">c</span><span class="o">.</span><span class="n">run</span><span class="p">(</span><span class="s2">&quot;pytest&quot;</span><span class="p">)</span>
+</code></pre></div>
+<ul>
+<li>The <code>@task</code> <a class="glossref" href="../gloss/#decorator" markdown="1">decorator</a> identifies functions that can be run as tasks<ul>
+<li>They can do any other processing (but we don't need them to yet)</li>
+</ul>
+</li>
+<li>The <code>c</code> parameter is a context that has details about the run<ul>
+<li>We don't need that yet either</li>
+</ul>
+</li>
+<li>Run <code>inv list</code>:</li>
+</ul>
+<div class="highlight"><pre><span></span><code>Available tasks:
+
+  list   List available tasks
+  test   Run tests
+</code></pre></div>
+<ul>
+<li><a href="https://pep8.org/">PEP 8</a> lays out some guidelines for readable Python, but checking those rules is tedious</li>
+<li><a href="https://black.readthedocs.io/">Black</a>, <a href="https://flake8.pycqa.org/">Flake8</a>, and <a href="https://pycqa.github.io/isort/">isort</a> check most of the rules for you<ul>
+<li>And can reformat code to obey them</li>
+</ul>
+</li>
+<li>These tools are called <a class="glossref" href="../gloss/#linter" markdown="1">linters</a><ul>
+<li>Because the first one (called <code>lint</code>) warned about fluff in C programs</li>
+</ul>
+</li>
+<li><code>pip install black flake8 isort</code> and then add entries to <code>requirements.txt</code></li>
+<li><code>black --check .</code> will check all the Python code in or below the current directory</li>
+<li><code>black .</code> will reformat anything that doesn't conform to style guidelines</li>
+<li>isort can both check and reformat (order and format of <code>import</code> statements)</li>
+<li>flake8 only checks for flaky code</li>
+<li>So add two tasks to <code>tasks.py</code>:<ul>
+<li>The term "lint" comes from an early tool for C that reported questionable code</li>
+</ul>
+</li>
+</ul>
+<div class="highlight"><span class="filename">tasks.py</span><pre><span></span><code><span class="nd">@task</span>
+<span class="k">def</span> <span class="nf">lint</span><span class="p">(</span><span class="n">c</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Run checks on code.&quot;&quot;&quot;</span>
+    <span class="n">c</span><span class="o">.</span><span class="n">run</span><span class="p">(</span><span class="s2">&quot;flake8&quot;</span><span class="p">,</span> <span class="n">warn</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+    <span class="n">c</span><span class="o">.</span><span class="n">run</span><span class="p">(</span><span class="s2">&quot;isort --check .&quot;</span><span class="p">)</span>
+    <span class="n">c</span><span class="o">.</span><span class="n">run</span><span class="p">(</span><span class="s2">&quot;black --check .&quot;</span><span class="p">)</span>
+
+
+<span class="nd">@task</span>
+<span class="k">def</span> <span class="nf">reformat</span><span class="p">(</span><span class="n">c</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Reformat code.&quot;&quot;&quot;</span>
+    <span class="n">c</span><span class="o">.</span><span class="n">run</span><span class="p">(</span><span class="s2">&quot;isort .&quot;</span><span class="p">)</span>
+    <span class="n">c</span><span class="o">.</span><span class="n">run</span><span class="p">(</span><span class="s2">&quot;black .&quot;</span><span class="p">)</span>
+</code></pre></div>
+<ul>
+<li><code>inv lint</code> produces:</li>
+</ul>
+<div class="highlight"><pre><span></span><code>./nitinat/download.py:68:80: E501 line too long (81 &gt; 79 characters)
+./nitinat/download.py:78:35: F541 f-string is missing placeholders
+./tests/test_download.py:60:46: E711 comparison to None should be &#39;if cond is None:&#39;
+./tests/test_heartbeat.py:3:1: F401 &#39;nitinat&#39; imported but unused
+</code></pre></div>
+<ul>
+<li>The second problem comes from this line:</li>
+</ul>
+<div class="highlight"><span class="filename">nitinat/download.py</span><pre><span></span><code><span class="k">assert</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">arg</span><span class="p">,</span> <span class="nb">dict</span><span class="p">),</span> <span class="sa">f</span><span class="s2">&quot;Expected int or dict&quot;</span>
+</code></pre></div>
+<ul>
+<li>A <a class="glossref" href="../gloss/#f_string" markdown="1">format string</a> that isn't formatting anything<ul>
+<li>Easy to fix</li>
+</ul>
+</li>
+<li>Change the comparison in the test</li>
+<li>And change the heartbeat test to:</li>
+</ul>
+<div class="highlight"><span class="filename">tests/test_heartbeat</span><pre><span></span><code><span class="k">def</span> <span class="nf">test_module_can_be_imported</span><span class="p">():</span>
+    <span class="k">assert</span> <span class="nb">hasattr</span><span class="p">(</span><span class="n">nitinat</span><span class="p">,</span> <span class="s2">&quot;__author__&quot;</span><span class="p">)</span>
+    <span class="k">assert</span> <span class="nb">hasattr</span><span class="p">(</span><span class="n">nitinat</span><span class="p">,</span> <span class="s2">&quot;__version__&quot;</span><span class="p">)</span>
+</code></pre></div>
+<ul>
+<li>The first problem in the list is a line that's one character too long:</li>
+</ul>
+<div class="highlight"><pre><span></span><code><span class="n">parser</span><span class="o">.</span><span class="n">add_argument</span><span class="p">(</span><span class="s2">&quot;--verbose&quot;</span><span class="p">,</span> <span class="n">action</span><span class="o">=</span><span class="s2">&quot;store_true&quot;</span><span class="p">,</span> <span class="n">help</span><span class="o">=</span><span class="s2">&quot;Report progress&quot;</span><span class="p">)</span>
+</code></pre></div>
+<ul>
+<li>Unfortunately, black and flake8 disagree on how long lines should be</li>
+<li>So create <code>setup.cfg</code> in the root directory of the project</li>
+</ul>
+<div class="highlight"><pre><span></span><code>[flake8]
+max-line-length = 88
+
+[isort]
+profile = black
+multi_line_output = 3
+
+[tool:pytest]
+addopts = -rfE -q
+</code></pre></div>
+<ul>
+<li>Tell flake8 to use 88-character lines (which is black's default)</li>
+<li>Tell isort to match black's preferred import order<ul>
+<li>And to use <a href="https://pycqa.github.io/isort/docs/configuration/multi_line_output_modes.html">vertical hanging indent for multi-line output</a></li>
+</ul>
+</li>
+<li>While we're here, tell pytest to produce a little less output</li>
+<li>Should always run checks when committing code<ul>
+<li>Or changing documentation, or...</li>
+</ul>
+</li>
+<li>But human beings are fallible, so automate: continuous integration (CI)</li>
+<li>Many dedicated CI services like <a href="https://circleci.com/">Circle CI</a></li>
+<li>For a project this size, easiest is <a href="https://docs.github.com/en/actions">GitHub Actions</a></li>
+<li>Create a directory <code>.github/workflows</code> beneath the root of the project</li>
+<li>Add a file <code>test-on-push.yml</code> in that directory:</li>
+</ul>
+<div class="highlight"><pre><span></span><code><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">Test on Push</span><span class="w"></span>
+<span class="nt">on</span><span class="p">:</span><span class="w"></span>
+<span class="w">  </span><span class="nt">push</span><span class="p">:</span><span class="w"></span>
+<span class="w">    </span><span class="nt">branches</span><span class="p">:</span><span class="w"></span>
+<span class="w">      </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">main</span><span class="w"></span>
+<span class="w">  </span><span class="nt">pull_request</span><span class="p">:</span><span class="w"></span>
+<span class="w">    </span><span class="nt">branches</span><span class="p">:</span><span class="w"></span>
+<span class="w">      </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">main</span><span class="w"></span>
+<span class="nt">jobs</span><span class="p">:</span><span class="w"></span>
+<span class="w">  </span><span class="nt">build</span><span class="p">:</span><span class="w"></span>
+<span class="w">    </span><span class="nt">runs-on</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">ubuntu-latest</span><span class="w"></span>
+<span class="w">    </span><span class="nt">steps</span><span class="p">:</span><span class="w"></span>
+<span class="w">      </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">uses</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">actions/checkout@v2</span><span class="w"></span>
+<span class="w">      </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">Set up Python</span><span class="w"></span>
+<span class="w">        </span><span class="nt">uses</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">actions/setup-python@v1</span><span class="w"></span>
+<span class="w">        </span><span class="nt">with</span><span class="p">:</span><span class="w"></span>
+<span class="w">          </span><span class="nt">python-version</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">3.9</span><span class="w"></span>
+<span class="w">      </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">Install dependencies</span><span class="w"></span>
+<span class="w">        </span><span class="nt">run</span><span class="p">:</span><span class="w"> </span><span class="p p-Indicator">|</span><span class="w"></span>
+<span class="w">          </span><span class="no">python -m pip install --upgrade pip</span><span class="w"></span>
+<span class="w">          </span><span class="no">pip install -r requirements.txt</span><span class="w"></span>
+<span class="w">      </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">Run code checks</span><span class="w"></span>
+<span class="w">        </span><span class="nt">run</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">inv lint</span><span class="w"></span>
+<span class="w">      </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">Run tests</span><span class="w"></span>
+<span class="w">        </span><span class="nt">run</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">inv test</span><span class="w"></span>
+<span class="w">        </span><span class="nt">if</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">${{ always() }}</span><span class="w"></span>
+</code></pre></div>
+<ul>
+<li><code>name</code> is the name of the action (used in error reporting, etc.)</li>
+<li><code>on</code> defines when the action runs<ul>
+<li>When there's a <code>push</code> to the <code>main</code> branch</li>
+<li>When anyone creates a pull request whose target is <code>main</code></li>
+<li>Lots of other options</li>
+</ul>
+</li>
+<li><code>jobs</code> defines what to do when the action runs<ul>
+<li>An action can run many jobs in parallel</li>
+</ul>
+</li>
+<li>We want to build our software on the latest version of Ubuntu Linux<ul>
+<li>Probably the most common platform</li>
+</ul>
+</li>
+<li>Spell out the steps:<ul>
+<li>Use a <a href="https://github.com/actions">pre-defined <code>checkout</code> action</a> to get a fresh copy of the repo</li>
+<li>Set up Python using another pre-defined action</li>
+<li>Install everything listed in <code>requirements.txt</code></li>
+<li>Run the code checks (do <em>not</em> reformat, just check)</li>
+<li>Run the tests: the <code>if</code> condition means "even if the previous linting step fails"</li>
+</ul>
+</li>
+<li><code>git add</code> changes, commit, push to GitHub, go to the <code>Actions</code> tab</li>
+</ul>
+      </div>
+    </div>
+  </body>
+</html>

@@ -1,0 +1,616 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="icon" type="image/x-icon" href="../favicon.ico">
+    <title>Designing Research Software</title>
+    <link rel="stylesheet" href="../mccole.css">
+    <link rel="stylesheet" href="../tango.css">
+    <script type="text/x-mathjax-config">
+      MathJax.Hub.Config({
+        TeX: { equationNumbers: { autoNumber: "AMS" } }
+      })
+    </script>
+    <script type="text/javascript" async src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+  </head>
+  <body>
+    <div class="row">
+      <div class="column">
+        <h2><a href="../">Designing Research Software</a></h2>
+        <p>
+          An Example-Based Introduction Using Python
+        </p>
+	<ol type="1">
+  
+  <li>
+    <a href="../starting/">
+      
+        Starting
+      
+    </a>
+  </li>
+  
+  <li>
+    <a href="../scraping/">
+      
+        Web Scraping
+      
+    </a>
+  </li>
+  
+  <li>
+    <a href="../unittest/">
+      
+        Unit Testing
+      
+    </a>
+  </li>
+  
+  <li>
+    <a href="../components/">
+      <strong>
+        Designing for Change
+      </strong>
+    </a>
+  </li>
+  
+  <li>
+    <a href="../performance/">
+      
+        Performance
+      
+    </a>
+  </li>
+  
+  <li>
+    <a href="../website/">
+      
+        Building a Website
+      
+    </a>
+  </li>
+  
+</ol>
+<ol type="A">
+  
+  <li>
+    <a href="../license/">
+      
+        License
+      
+    </a>
+  </li>
+  
+  <li>
+    <a href="../conduct/">
+      
+        Code of Conduct
+      
+    </a>
+  </li>
+  
+  <li>
+    <a href="../contributing/">
+      
+        Contributing
+      
+    </a>
+  </li>
+  
+  <li>
+    <a href="../links/">
+      
+        Links
+      
+    </a>
+  </li>
+  
+  <li>
+    <a href="../credits/">
+      
+        Credits
+      
+    </a>
+  </li>
+  
+</ol>
+
+      </div>
+      <div class="column bordered">
+        <h1>Designing for Change</h1>
+        <ul>
+<li><a class="glossref" href="../gloss/#invasion_percolation" markdown="1">Invasion percolation</a> is a model of how a fluid percolates into a porous medium
+    (or another fluid)<ul>
+<li>Fill a grid with random numbers</li>
+<li>Mark the center cell as "filled"</li>
+<li>Repeatedly:<ul>
+<li>Pick the lowest-valued cell adjacent to any filled cell</li>
+</ul>
+</li>
+<li>Mark it as filled</li>
+<li>Until filling reaches the edge of the grid</li>
+</ul>
+</li>
+<li>Produces a fractal whose dimension depends on:<ul>
+<li>The range of random values (i.e., how variable the porosity of the medium is)</li>
+<li>The connectivity of the grid (3-way, 4-way, 6-way, or 8-way)</li>
+</ul>
+</li>
+<li>We want to experiment with this, which means our code needs to:<ul>
+<li>Represent several sizes of grids</li>
+<li>Represent several different kinds of connectivity</li>
+<li>Allow for different filling algorithms</li>
+</ul>
+</li>
+<li>Start by outlining the main program<ul>
+<li>Parse command-line arguments</li>
+<li>Create and initialize grid</li>
+<li>Loop until filling hits edge</li>
+</ul>
+</li>
+</ul>
+<div class="highlight"><span class="filename">invperc.py</span><pre><span></span><code><span class="k">def</span> <span class="nf">main</span><span class="p">():</span>
+    <span class="sd">&quot;&quot;&quot;Parse arguments, run simulation, show result.&quot;&quot;&quot;</span>
+    <span class="c1"># Set up.</span>
+    <span class="n">options</span> <span class="o">=</span> <span class="n">parse_args</span><span class="p">()</span>
+    <span class="n">random</span><span class="o">.</span><span class="n">seed</span><span class="p">(</span><span class="n">options</span><span class="o">.</span><span class="n">seed</span><span class="p">)</span>
+    <span class="n">grid</span> <span class="o">=</span> <span class="n">World</span><span class="p">(</span><span class="n">options</span><span class="o">.</span><span class="n">x</span><span class="p">,</span> <span class="n">options</span><span class="o">.</span><span class="n">y</span><span class="p">)</span>
+    <span class="n">initialize</span><span class="p">(</span><span class="n">grid</span><span class="p">,</span> <span class="n">options</span><span class="p">)</span>
+
+    <span class="c1"># Run until edge reached.</span>
+    <span class="k">while</span> <span class="kc">True</span><span class="p">:</span>
+        <span class="n">coords</span> <span class="o">=</span> <span class="n">find_next</span><span class="p">()</span>
+        <span class="n">grid</span><span class="p">[</span><span class="n">coords</span><span class="p">]</span> <span class="o">=</span> <span class="n">FILLED</span>
+        <span class="k">if</span> <span class="n">grid</span><span class="o">.</span><span class="n">on_edge</span><span class="p">(</span><span class="n">coords</span><span class="p">):</span>
+            <span class="k">break</span>
+</code></pre></div>
+<ul>
+<li>Start by implementing a 2D grid class (because we know how to do that)<ul>
+<li>Store all values as 1D list rather than list of lists</li>
+<li>Want <code>grid[x, y]</code> rather than <code>grid.get(x, y)</code> or <code>grid.set(x, y, val)</code></li>
+<li>So define <code>__getitem__</code> and <code>__setitem__</code></li>
+<li>And the <code>on_edge</code> method the main program relied on</li>
+</ul>
+</li>
+</ul>
+<div class="highlight"><span class="filename">world.py</span><pre><span></span><code><span class="n">FILLED</span> <span class="o">=</span> <span class="o">-</span><span class="mi">1</span>  <span class="c1"># Mark filled cells.</span>
+
+<span class="k">class</span> <span class="nc">World</span><span class="p">:</span>
+    <span class="sd">&quot;&quot;&quot;Store a rectangular 2D grid.&quot;&quot;&quot;</span>
+
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Construct an XY grid.&quot;&quot;&quot;</span>
+        <span class="k">assert</span> <span class="p">(</span><span class="mi">0</span> <span class="o">&lt;</span> <span class="n">x</span><span class="p">)</span> <span class="ow">and</span> <span class="p">(</span><span class="mi">0</span> <span class="o">&lt;</span> <span class="n">y</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">dimX</span> <span class="o">=</span> <span class="n">x</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">dimY</span> <span class="o">=</span> <span class="n">y</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">cells</span> <span class="o">=</span> <span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">*</span> <span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">dimX</span> <span class="o">*</span> <span class="bp">self</span><span class="o">.</span><span class="n">dimY</span><span class="p">)</span>
+
+    <span class="k">def</span> <span class="fm">__getitem__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">key</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Get a value from (x, y).&quot;&quot;&quot;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_checkIndex</span><span class="p">(</span><span class="n">key</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">key</span><span class="p">[</span><span class="mi">1</span><span class="p">])</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">cells</span><span class="p">[</span><span class="n">key</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">*</span> <span class="bp">self</span><span class="o">.</span><span class="n">dimY</span> <span class="o">+</span> <span class="n">key</span><span class="p">[</span><span class="mi">1</span><span class="p">]]</span>
+
+    <span class="k">def</span> <span class="fm">__setitem__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">key</span><span class="p">,</span> <span class="n">val</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Set a value at (x, y).&quot;&quot;&quot;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_checkIndex</span><span class="p">(</span><span class="n">key</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">key</span><span class="p">[</span><span class="mi">1</span><span class="p">])</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">cells</span><span class="p">[</span><span class="n">key</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">*</span> <span class="bp">self</span><span class="o">.</span><span class="n">dimY</span> <span class="o">+</span> <span class="n">key</span><span class="p">[</span><span class="mi">1</span><span class="p">]]</span> <span class="o">=</span> <span class="n">val</span>
+
+    <span class="k">def</span> <span class="nf">on_edge</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">loc</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Is this point on the edge?&quot;&quot;&quot;</span>
+        <span class="n">ix</span><span class="p">,</span> <span class="n">iy</span> <span class="o">=</span> <span class="n">loc</span>
+        <span class="k">return</span> <span class="p">(</span><span class="n">ix</span> <span class="o">==</span> <span class="mi">0</span><span class="p">)</span> <span class="ow">or</span> <span class="p">(</span><span class="n">ix</span> <span class="o">==</span> <span class="bp">self</span><span class="o">.</span><span class="n">dimX</span> <span class="o">-</span> <span class="mi">1</span><span class="p">)</span> <span class="ow">or</span> <span class="p">(</span><span class="n">iy</span> <span class="o">==</span> <span class="mi">0</span><span class="p">)</span> <span class="ow">or</span> <span class="p">(</span><span class="n">iy</span> <span class="o">==</span> <span class="bp">self</span><span class="o">.</span><span class="n">dimY</span> <span class="o">-</span> <span class="mi">1</span><span class="p">)</span>
+
+    <span class="k">def</span> <span class="nf">_checkIndex</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">ix</span><span class="p">,</span> <span class="n">iy</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Check that an index is in range.&quot;&quot;&quot;</span>
+        <span class="k">if</span> <span class="p">(</span><span class="n">ix</span> <span class="o">&lt;</span> <span class="mi">0</span><span class="p">)</span> <span class="ow">or</span> <span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">dimX</span> <span class="o">&lt;</span> <span class="n">ix</span><span class="p">):</span>
+            <span class="k">raise</span> <span class="ne">IndexError</span><span class="p">(</span><span class="s2">&quot;X index out of range&quot;</span><span class="p">)</span>
+        <span class="k">if</span> <span class="p">(</span><span class="n">iy</span> <span class="o">&lt;</span> <span class="mi">0</span><span class="p">)</span> <span class="ow">or</span> <span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">dimY</span> <span class="o">&lt;</span> <span class="n">iy</span><span class="p">):</span>
+            <span class="k">raise</span> <span class="ne">IndexError</span><span class="p">(</span><span class="s2">&quot;Y index out of range&quot;</span><span class="p">)</span>
+</code></pre></div>
+<ul>
+<li>Connectivity is variable, so put it in a class of its own<ul>
+<li>Define an <a class="glossref" href="../gloss/#abstract_base_class" markdown="1">abstract base class</a> with shared code and placeholders</li>
+<li>Then derive concrete implementations</li>
+</ul>
+</li>
+<li>Abstract base class is:</li>
+</ul>
+<div class="highlight"><span class="filename">connections.py</span><pre><span></span><code><span class="kn">from</span> <span class="nn">abc</span> <span class="kn">import</span> <span class="n">ABC</span><span class="p">,</span> <span class="n">abstractmethod</span>
+
+<span class="kn">from</span> <span class="nn">world</span> <span class="kn">import</span> <span class="n">FILLED</span>
+
+
+<span class="k">class</span> <span class="nc">Connect</span><span class="p">:</span>
+    <span class="sd">&quot;&quot;&quot;Define connection operations.&quot;&quot;&quot;</span>
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">world</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">world</span> <span class="o">=</span> <span class="n">world</span>
+
+    <span class="k">def</span> <span class="nf">adjacent</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">loc</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Is this point adjacent to a filled cell?&quot;&quot;&quot;</span>
+        <span class="k">for</span> <span class="n">pt</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">neighbors</span><span class="p">(</span><span class="n">loc</span><span class="p">):</span>
+            <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">world</span><span class="p">[</span><span class="n">pt</span><span class="p">]</span> <span class="o">==</span> <span class="n">FILLED</span><span class="p">:</span>
+                <span class="k">return</span> <span class="kc">True</span>
+        <span class="k">return</span> <span class="kc">False</span>
+
+    <span class="nd">@abstractmethod</span>
+    <span class="k">def</span> <span class="nf">neighbors</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">loc</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Generate neighbor coordinates.&quot;&quot;&quot;</span>
+</code></pre></div>
+<ul>
+<li>Four-way connectivity uses a <a class="glossref" href="../gloss/#generator" markdown="1">generator</a> to <a class="glossref" href="../gloss/#yield" markdown="1">yield</a> neighbors<ul>
+<li>So other code can use this method as the subject of a loop</li>
+</ul>
+</li>
+</ul>
+<div class="highlight"><span class="filename">connections.py</span><pre><span></span><code><span class="k">class</span> <span class="nc">Connect_4</span><span class="p">(</span><span class="n">Connect</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Four-way connectivity.&quot;&quot;&quot;</span>
+
+    <span class="k">def</span> <span class="nf">neighbors</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">loc</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Generate neighbor coordinates.&quot;&quot;&quot;</span>
+        <span class="n">ix</span><span class="p">,</span> <span class="n">iy</span> <span class="o">=</span> <span class="n">loc</span>
+        <span class="n">dx</span><span class="p">,</span> <span class="n">dy</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">world</span><span class="o">.</span><span class="n">dims</span><span class="p">()</span>
+        <span class="k">assert</span> <span class="mi">0</span> <span class="o">&lt;=</span> <span class="n">ix</span> <span class="o">&lt;</span> <span class="n">dx</span>
+        <span class="k">assert</span> <span class="mi">0</span> <span class="o">&lt;=</span> <span class="n">iy</span> <span class="o">&lt;</span> <span class="n">dy</span>
+
+        <span class="k">if</span> <span class="mi">0</span> <span class="o">&lt;</span> <span class="n">ix</span><span class="p">:</span>
+            <span class="k">yield</span> <span class="n">ix</span> <span class="o">-</span> <span class="mi">1</span><span class="p">,</span> <span class="n">iy</span>
+
+        <span class="k">if</span> <span class="n">ix</span> <span class="o">&lt;</span> <span class="n">dx</span> <span class="o">-</span> <span class="mi">1</span><span class="p">:</span>
+            <span class="k">yield</span> <span class="n">ix</span> <span class="o">+</span> <span class="mi">1</span><span class="p">,</span> <span class="n">iy</span>
+
+        <span class="k">if</span> <span class="mi">0</span> <span class="o">&lt;</span> <span class="n">iy</span><span class="p">:</span>
+            <span class="k">yield</span> <span class="n">ix</span><span class="p">,</span> <span class="n">iy</span> <span class="o">-</span> <span class="mi">1</span>
+
+        <span class="k">if</span> <span class="n">iy</span> <span class="o">&lt;</span> <span class="n">dy</span> <span class="o">-</span> <span class="mi">1</span><span class="p">:</span>
+            <span class="k">yield</span> <span class="n">ix</span><span class="p">,</span> <span class="n">iy</span> <span class="o">+</span> <span class="mi">1</span>
+</code></pre></div>
+<ul>
+<li>Eight-way connectivity has the same interface but a different implementation</li>
+</ul>
+<div class="highlight"><span class="filename">connections.py</span><pre><span></span><code><span class="k">class</span> <span class="nc">Connect_8</span><span class="p">(</span><span class="n">Connect</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Eight-way connectivity.&quot;&quot;&quot;</span>
+    <span class="k">def</span> <span class="nf">neighbors</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">loc</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Eight-way connectivity.&quot;&quot;&quot;</span>
+        <span class="n">ix</span><span class="p">,</span> <span class="n">iy</span> <span class="o">=</span> <span class="n">loc</span>
+        <span class="n">dx</span><span class="p">,</span> <span class="n">dy</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">world</span><span class="o">.</span><span class="n">dims</span><span class="p">()</span>
+        <span class="k">assert</span> <span class="mi">0</span> <span class="o">&lt;=</span> <span class="n">ix</span> <span class="o">&lt;</span> <span class="n">dx</span>
+        <span class="k">assert</span> <span class="mi">0</span> <span class="o">&lt;=</span> <span class="n">iy</span> <span class="o">&lt;</span> <span class="n">dy</span>
+
+        <span class="k">for</span> <span class="n">x</span> <span class="ow">in</span> <span class="p">(</span><span class="n">ix</span> <span class="o">-</span> <span class="mi">1</span><span class="p">,</span> <span class="n">ix</span><span class="p">,</span> <span class="n">ix</span> <span class="o">+</span> <span class="mi">1</span><span class="p">):</span>
+            <span class="k">if</span> <span class="mi">0</span> <span class="o">&lt;=</span> <span class="n">x</span> <span class="o">&lt;</span> <span class="n">dx</span><span class="p">:</span>
+                <span class="k">for</span> <span class="n">y</span> <span class="ow">in</span> <span class="p">(</span><span class="n">iy</span> <span class="o">-</span> <span class="mi">1</span><span class="p">,</span> <span class="n">iy</span><span class="p">,</span> <span class="n">iy</span> <span class="o">+</span> <span class="mi">1</span><span class="p">):</span>
+                    <span class="k">if</span> <span class="mi">0</span> <span class="o">&lt;=</span> <span class="n">y</span> <span class="o">&lt;</span> <span class="n">dy</span><span class="p">:</span>
+                        <span class="k">if</span> <span class="p">(</span><span class="n">x</span> <span class="o">!=</span> <span class="n">ix</span><span class="p">)</span> <span class="ow">or</span> <span class="p">(</span><span class="n">y</span> <span class="o">!=</span> <span class="n">iy</span><span class="p">):</span>
+                            <span class="k">yield</span> <span class="n">x</span><span class="p">,</span> <span class="n">y</span>
+</code></pre></div>
+<ul>
+<li>Use a similar trick to create plug-and-play algorithms for finding and filling cells</li>
+<li>Abstract base class for algorithm takes a grid and a connectivity object</li>
+</ul>
+<div class="highlight"><span class="filename">algorithms.py</span><pre><span></span><code><span class="k">class</span> <span class="nc">Algorithm</span><span class="p">(</span><span class="n">ABC</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Base class for all algorithms.&quot;&quot;&quot;</span>
+
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">world</span><span class="p">,</span> <span class="n">connect</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Construct shared values.&quot;&quot;&quot;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">world</span> <span class="o">=</span> <span class="n">world</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">connect</span> <span class="o">=</span> <span class="n">connect</span>
+
+    <span class="nd">@abstractmethod</span>
+    <span class="k">def</span> <span class="fm">__call__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Find the next cell to fill.&quot;&quot;&quot;</span>
+</code></pre></div>
+<ul>
+<li>Simplest algorithm sweeps the entire grid each time
+    looking for the lowest-valued cell adjacent to a filled cell</li>
+</ul>
+<div class="highlight"><span class="filename">algorithms.py</span><pre><span></span><code><span class="k">class</span> <span class="nc">Sweep</span><span class="p">(</span><span class="n">Algorithm</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Sweep the whole grid every time.&quot;&quot;&quot;</span>
+
+    <span class="k">def</span> <span class="fm">__call__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Find the next cell to fill.&quot;&quot;&quot;</span>
+        <span class="n">dx</span><span class="p">,</span> <span class="n">dy</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">world</span><span class="o">.</span><span class="n">dims</span><span class="p">()</span>
+        <span class="n">rx</span><span class="p">,</span> <span class="n">ry</span><span class="p">,</span> <span class="n">rv</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span> <span class="kc">None</span><span class="p">,</span> <span class="kc">None</span>
+        <span class="k">for</span> <span class="n">ix</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">dx</span><span class="p">):</span>
+            <span class="k">for</span> <span class="n">iy</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">dy</span><span class="p">):</span>
+                <span class="n">val</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">world</span><span class="p">[</span><span class="n">ix</span><span class="p">,</span> <span class="n">iy</span><span class="p">]</span>
+                <span class="k">if</span> <span class="p">(</span><span class="n">val</span> <span class="o">!=</span> <span class="n">FILLED</span><span class="p">)</span> <span class="ow">and</span> <span class="bp">self</span><span class="o">.</span><span class="n">connect</span><span class="o">.</span><span class="n">adjacent</span><span class="p">((</span><span class="n">ix</span><span class="p">,</span> <span class="n">iy</span><span class="p">)):</span>
+                    <span class="k">if</span> <span class="p">(</span><span class="n">rv</span> <span class="o">==</span> <span class="kc">None</span><span class="p">)</span> <span class="ow">or</span> <span class="p">(</span><span class="n">val</span> <span class="o">&lt;</span> <span class="n">rv</span><span class="p">):</span>
+                        <span class="n">rx</span><span class="p">,</span> <span class="n">ry</span><span class="p">,</span> <span class="n">rv</span> <span class="o">=</span> <span class="n">ix</span><span class="p">,</span> <span class="n">iy</span><span class="p">,</span> <span class="n">val</span>
+        <span class="k">if</span> <span class="n">rv</span> <span class="o">==</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">&quot;Cannot find cell to fill&quot;</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">rx</span><span class="p">,</span> <span class="n">ry</span>
+</code></pre></div>
+<ul>
+<li>But wait: we might also want to change how we initialize the grid<ul>
+<li>What if there's a spatial bias in the distribution of random values?</li>
+<li>Or barriers (i.e., non-porous regions)?</li>
+</ul>
+</li>
+<li>So put grid initialization in a class as well</li>
+</ul>
+<div class="highlight"><span class="filename">initialize.py</span><pre><span></span><code><span class="sd">&quot;&quot;&quot;Initialize invasion percolation simulation.&quot;&quot;&quot;</span>
+
+<span class="kn">import</span> <span class="nn">random</span>
+
+<span class="kn">from</span> <span class="nn">world</span> <span class="kn">import</span> <span class="n">FILLED</span>
+
+
+<span class="k">def</span> <span class="nf">uniform</span><span class="p">(</span><span class="n">world</span><span class="p">,</span> <span class="n">options</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Initialize grid with uniform random numbers.&quot;&quot;&quot;</span>
+    <span class="n">dimX</span><span class="p">,</span> <span class="n">dimY</span> <span class="o">=</span> <span class="n">world</span><span class="o">.</span><span class="n">dims</span><span class="p">()</span>
+    <span class="k">for</span> <span class="n">ix</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">dimX</span><span class="p">):</span>
+        <span class="k">for</span> <span class="n">iy</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">dimY</span><span class="p">):</span>
+            <span class="n">world</span><span class="p">[</span><span class="n">ix</span><span class="p">,</span> <span class="n">iy</span><span class="p">]</span> <span class="o">=</span> <span class="n">random</span><span class="o">.</span><span class="n">randrange</span><span class="p">(</span><span class="n">options</span><span class="o">.</span><span class="n">height</span><span class="p">)</span>
+    <span class="n">world</span><span class="p">[</span><span class="n">world</span><span class="o">.</span><span class="n">center</span><span class="p">()]</span> <span class="o">=</span> <span class="n">FILLED</span>
+</code></pre></div>
+<ul>
+<li>Main program is now:</li>
+</ul>
+<div class="highlight"><span class="filename">invperc.py</span><pre><span></span><code><span class="kn">import</span> <span class="nn">algorithms</span><span class="o">,</span> <span class="nn">connections</span><span class="o">,</span> <span class="nn">initialize</span><span class="o">,</span> <span class="nn">render</span>
+<span class="kn">from</span> <span class="nn">world</span> <span class="kn">import</span> <span class="n">World</span><span class="p">,</span> <span class="n">FILLED</span>
+
+<span class="n">ALGORITHMS</span> <span class="o">=</span> <span class="p">{</span>
+    <span class="s2">&quot;sweep&quot;</span><span class="p">:</span> <span class="n">algorithms</span><span class="o">.</span><span class="n">Sweep</span><span class="p">,</span>
+    <span class="s2">&quot;window&quot;</span><span class="p">:</span> <span class="n">algorithms</span><span class="o">.</span><span class="n">Window</span><span class="p">,</span>
+<span class="p">}</span>
+
+<span class="n">INITIALIZE</span> <span class="o">=</span> <span class="p">{</span>
+    <span class="s2">&quot;uniform&quot;</span><span class="p">:</span> <span class="n">initialize</span><span class="o">.</span><span class="n">uniform</span>
+<span class="p">}</span>
+
+<span class="n">CONNECTIONS</span> <span class="o">=</span> <span class="p">{</span>
+    <span class="s2">&quot;4&quot;</span><span class="p">:</span> <span class="n">connections</span><span class="o">.</span><span class="n">Connect_4</span><span class="p">,</span>
+    <span class="s2">&quot;8&quot;</span><span class="p">:</span> <span class="n">connections</span><span class="o">.</span><span class="n">Connect_8</span>
+<span class="p">}</span>
+
+
+<span class="k">def</span> <span class="nf">main</span><span class="p">():</span>
+    <span class="sd">&quot;&quot;&quot;Parse arguments, run simulation, show result.&quot;&quot;&quot;</span>
+    <span class="c1"># Set up.</span>
+    <span class="n">options</span> <span class="o">=</span> <span class="n">parse_args</span><span class="p">()</span>
+    <span class="n">random</span><span class="o">.</span><span class="n">seed</span><span class="p">(</span><span class="n">options</span><span class="o">.</span><span class="n">seed</span><span class="p">)</span>
+    <span class="n">grid</span> <span class="o">=</span> <span class="n">World</span><span class="p">(</span><span class="n">options</span><span class="o">.</span><span class="n">x</span><span class="p">,</span> <span class="n">options</span><span class="o">.</span><span class="n">y</span><span class="p">)</span>
+    <span class="n">INITIALIZE</span><span class="p">[</span><span class="n">options</span><span class="o">.</span><span class="n">init</span><span class="p">](</span><span class="n">grid</span><span class="p">,</span> <span class="n">options</span><span class="p">)</span>
+
+    <span class="c1"># Run until edge reached.</span>
+    <span class="n">connect</span> <span class="o">=</span> <span class="n">CONNECTIONS</span><span class="p">[</span><span class="n">options</span><span class="o">.</span><span class="n">connect</span><span class="p">](</span><span class="n">grid</span><span class="p">)</span>
+    <span class="n">alg</span> <span class="o">=</span> <span class="n">ALGORITHMS</span><span class="p">[</span><span class="n">options</span><span class="o">.</span><span class="n">algorithm</span><span class="p">](</span><span class="n">grid</span><span class="p">,</span> <span class="n">connect</span><span class="p">)</span>
+    <span class="k">while</span> <span class="kc">True</span><span class="p">:</span>
+        <span class="n">coords</span> <span class="o">=</span> <span class="n">alg</span><span class="p">()</span>
+        <span class="n">grid</span><span class="p">[</span><span class="n">coords</span><span class="p">]</span> <span class="o">=</span> <span class="n">FILLED</span>
+        <span class="k">if</span> <span class="n">grid</span><span class="o">.</span><span class="n">on_edge</span><span class="p">(</span><span class="n">coords</span><span class="p">):</span>
+            <span class="k">break</span>
+</code></pre></div>
+<ul>
+<li>Specify initialization method, connectivity, and fill algorithm on command line</li>
+<li>Each is a component with a fixed interface that only relies on the fixed interfaces of other components</li>
+<li>Which makes plugging in a new component easy</li>
+<li>For example, keep track of how wide and tall the filled region is and only search nearby<ul>
+<li>Why bother searching cells that can't possibly be fillable?</li>
+</ul>
+</li>
+<li>Nothing else in the program has to change</li>
+<li>And we don't have to implement this separately for each kind of connectivity</li>
+</ul>
+<div class="highlight"><span class="filename">algorithms.py</span><pre><span></span><code><span class="k">class</span> <span class="nc">Window</span><span class="p">(</span><span class="n">Algorithm</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Only sweep the plausible region.&quot;&quot;&quot;</span>
+
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">world</span><span class="p">,</span> <span class="n">connect</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Construct shared values.&quot;&quot;&quot;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">world</span> <span class="o">=</span> <span class="n">world</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">connect</span> <span class="o">=</span> <span class="n">connect</span>
+
+        <span class="n">cx</span><span class="p">,</span> <span class="n">cy</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">world</span><span class="o">.</span><span class="n">center</span><span class="p">()</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">loX</span> <span class="o">=</span> <span class="n">cx</span> <span class="o">-</span> <span class="mi">1</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">loY</span> <span class="o">=</span> <span class="n">cy</span> <span class="o">-</span> <span class="mi">1</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">hiX</span> <span class="o">=</span> <span class="n">cx</span> <span class="o">+</span> <span class="mi">1</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">hiY</span> <span class="o">=</span> <span class="n">cy</span> <span class="o">+</span> <span class="mi">1</span>
+
+    <span class="k">def</span> <span class="fm">__call__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Find the next cell to fill.&quot;&quot;&quot;</span>
+        <span class="n">rx</span><span class="p">,</span> <span class="n">ry</span><span class="p">,</span> <span class="n">rv</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span> <span class="kc">None</span><span class="p">,</span> <span class="kc">None</span>
+        <span class="k">for</span> <span class="n">ix</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">loX</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">hiX</span><span class="p">):</span>
+            <span class="k">for</span> <span class="n">iy</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">loY</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">hiY</span><span class="p">):</span>
+                <span class="n">val</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">world</span><span class="p">[</span><span class="n">ix</span><span class="p">,</span> <span class="n">iy</span><span class="p">]</span>
+                <span class="k">if</span> <span class="p">(</span><span class="n">val</span> <span class="o">!=</span> <span class="n">FILLED</span><span class="p">)</span> <span class="ow">and</span> <span class="bp">self</span><span class="o">.</span><span class="n">connect</span><span class="o">.</span><span class="n">adjacent</span><span class="p">((</span><span class="n">ix</span><span class="p">,</span> <span class="n">iy</span><span class="p">)):</span>
+                    <span class="k">if</span> <span class="p">(</span><span class="n">rv</span> <span class="o">==</span> <span class="kc">None</span><span class="p">)</span> <span class="ow">or</span> <span class="p">(</span><span class="n">val</span> <span class="o">&lt;</span> <span class="n">rv</span><span class="p">):</span>
+                        <span class="n">rx</span><span class="p">,</span> <span class="n">ry</span><span class="p">,</span> <span class="n">rv</span> <span class="o">=</span> <span class="n">ix</span><span class="p">,</span> <span class="n">iy</span><span class="p">,</span> <span class="n">val</span>
+
+        <span class="k">if</span> <span class="n">rv</span> <span class="o">==</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">&quot;Cannot find cell to fill&quot;</span><span class="p">)</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">loX</span> <span class="o">=</span> <span class="nb">min</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">loX</span><span class="p">,</span> <span class="n">rx</span> <span class="o">-</span> <span class="mi">1</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">loY</span> <span class="o">=</span> <span class="nb">min</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">loY</span><span class="p">,</span> <span class="n">ry</span> <span class="o">-</span> <span class="mi">1</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">hiX</span> <span class="o">=</span> <span class="nb">max</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">hiX</span><span class="p">,</span> <span class="n">rx</span> <span class="o">+</span> <span class="mi">1</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">hiY</span> <span class="o">=</span> <span class="nb">max</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">hiY</span><span class="p">,</span> <span class="n">ry</span> <span class="o">+</span> <span class="mi">1</span><span class="p">)</span>
+
+        <span class="k">return</span> <span class="n">rx</span><span class="p">,</span> <span class="n">ry</span>
+</code></pre></div>
+<ul>
+<li>But what do these fractals look like?</li>
+<li>Draw a picture (rather than a graph)</li>
+</ul>
+<div class="highlight"><span class="filename">render.py</span><pre><span></span><code><span class="sd">&quot;&quot;&quot;Render world grids.&quot;&quot;&quot;</span>
+
+<span class="kn">from</span> <span class="nn">PIL</span> <span class="kn">import</span> <span class="n">Image</span><span class="p">,</span> <span class="n">ImageDraw</span>
+
+<span class="kn">from</span> <span class="nn">world</span> <span class="kn">import</span> <span class="n">FILLED</span>
+
+
+<span class="n">BACKGROUND</span> <span class="o">=</span> <span class="p">(</span><span class="mi">128</span><span class="p">,</span> <span class="mi">128</span><span class="p">,</span> <span class="mi">128</span><span class="p">)</span>
+<span class="n">FILL</span> <span class="o">=</span> <span class="p">(</span><span class="mi">128</span><span class="p">,</span> <span class="mi">128</span><span class="p">,</span> <span class="mi">255</span><span class="p">)</span>
+<span class="n">SCALE</span> <span class="o">=</span> <span class="mi">10</span>
+
+
+<span class="k">def</span> <span class="nf">make_image</span><span class="p">(</span><span class="n">filename</span><span class="p">,</span> <span class="n">grid</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Create and save an image of the fractal.&quot;&quot;&quot;</span>
+    <span class="n">dx</span><span class="p">,</span> <span class="n">dy</span> <span class="o">=</span> <span class="n">grid</span><span class="o">.</span><span class="n">dims</span><span class="p">()</span>
+    <span class="n">width</span> <span class="o">=</span> <span class="n">SCALE</span> <span class="o">*</span> <span class="n">dx</span>
+    <span class="n">height</span> <span class="o">=</span> <span class="n">SCALE</span> <span class="o">*</span> <span class="n">dy</span>
+    <span class="n">img</span> <span class="o">=</span> <span class="n">Image</span><span class="o">.</span><span class="n">new</span><span class="p">(</span><span class="n">mode</span><span class="o">=</span><span class="s2">&quot;RGB&quot;</span><span class="p">,</span> <span class="n">size</span><span class="o">=</span><span class="p">(</span><span class="n">width</span><span class="p">,</span> <span class="n">height</span><span class="p">))</span>
+    <span class="n">draw</span> <span class="o">=</span> <span class="n">ImageDraw</span><span class="o">.</span><span class="n">Draw</span><span class="p">(</span><span class="n">img</span><span class="p">)</span>
+    <span class="n">draw</span><span class="o">.</span><span class="n">rectangle</span><span class="p">((</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="n">SCALE</span> <span class="o">*</span> <span class="n">dx</span> <span class="o">-</span> <span class="mi">1</span><span class="p">,</span> <span class="n">SCALE</span> <span class="o">*</span> <span class="n">dy</span> <span class="o">-</span> <span class="mi">1</span><span class="p">),</span> <span class="n">fill</span><span class="o">=</span><span class="n">BACKGROUND</span><span class="p">,</span> <span class="n">outline</span><span class="o">=</span><span class="n">FILL</span><span class="p">)</span>
+    <span class="k">for</span> <span class="n">ix</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">dx</span><span class="p">):</span>
+        <span class="k">for</span> <span class="n">iy</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">dx</span><span class="p">):</span>
+            <span class="k">if</span> <span class="n">grid</span><span class="p">[(</span><span class="n">ix</span><span class="p">,</span> <span class="n">iy</span><span class="p">)]</span> <span class="o">!=</span> <span class="n">FILLED</span><span class="p">:</span>
+                <span class="k">continue</span>
+            <span class="n">draw</span><span class="o">.</span><span class="n">rectangle</span><span class="p">(</span>
+                <span class="p">(</span><span class="n">SCALE</span> <span class="o">*</span> <span class="n">ix</span><span class="p">,</span> <span class="n">SCALE</span> <span class="o">*</span> <span class="n">iy</span><span class="p">,</span> <span class="n">SCALE</span> <span class="o">*</span> <span class="p">(</span><span class="n">ix</span> <span class="o">+</span> <span class="mi">1</span><span class="p">)</span> <span class="o">-</span> <span class="mi">1</span><span class="p">,</span> <span class="n">SCALE</span> <span class="o">*</span> <span class="p">(</span><span class="n">iy</span> <span class="o">+</span> <span class="mi">1</span><span class="p">)</span> <span class="o">-</span> <span class="mi">1</span><span class="p">),</span>
+                <span class="n">fill</span><span class="o">=</span><span class="n">FILL</span><span class="p">,</span>
+                <span class="n">outline</span><span class="o">=</span><span class="n">FILL</span>
+            <span class="p">)</span>
+    <span class="n">img</span><span class="o">.</span><span class="n">save</span><span class="p">(</span><span class="n">filename</span><span class="p">)</span>
+</code></pre></div>
+<ul>
+<li>Run</li>
+<li>Put key parameters in output filename</li>
+</ul>
+<div class="highlight"><pre><span></span><code>$ python invperc.py --seed <span class="m">12345</span> --algorithm sweep --x <span class="m">51</span> --y <span class="m">51</span> --height <span class="m">10</span> --image sweep-51x51-10-12345.png
+</code></pre></div>
+<figure id="fractal-sweep-01">
+  <img src="./sweep-51x51-10-12345.png" alt="Fractal produced by full sweep invasion percolation algorithm."/>
+  <figcaption markdown="1">Figure 4.2: First Fractal</figcaption>
+</figure>
+
+<ul>
+<li>That's kind of pretty</li>
+<li>Let's try a different seed</li>
+</ul>
+<div class="highlight"><pre><span></span><code>$ python invperc.py --seed <span class="m">67890</span> --algorithm sweep --x <span class="m">51</span> --y <span class="m">51</span> --height <span class="m">10</span> --image sweep-51x51-10-67890.png
+</code></pre></div>
+<figure id="fractal-sweep-01">
+  <img src="./sweep-51x51-10-67890.png" alt="Another fractal produced by full sweep invasion percolation algorithm."/>
+  <figcaption markdown="1">Figure 4.2: Second Fractal</figcaption>
+</figure>
+
+<ul>
+<li>Should get exactly the same result using the windowed algorithm</li>
+</ul>
+<div class="highlight"><pre><span></span><code>$ python invperc.py --seed <span class="m">12345</span> --algorithm window --x <span class="m">51</span> --y <span class="m">51</span> --height <span class="m">10</span> --image window-51x51-10-12345.png
+</code></pre></div>
+<figure id="fractal-window-01">
+  <img src="./window-51x51-10-12345.png" alt="Reproduction of first fractal using windowed algorithm."/>
+  <figcaption markdown="1">Figure 4.3: Windowed Version of First Fractal</figcaption>
+</figure>
+
+<ul>
+<li>This isn't the same</li>
+<li>Check that the grids are the same<ul>
+<li>Yes: generating the same random numbers in the same sequence from the same seed</li>
+</ul>
+</li>
+</ul>
+<div class="highlight"><span class="filename">world.py</span><pre><span></span><code><span class="k">class</span> <span class="nc">World</span><span class="p">:</span>
+    <span class="sd">&quot;&quot;&quot;Store a rectangular 2D grid.&quot;&quot;&quot;</span>
+    <span class="c1"># ...as before...</span>
+
+    <span class="k">def</span> <span class="fm">__str__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Convert to string for printing.&quot;&quot;&quot;</span>
+        <span class="n">width</span> <span class="o">=</span> <span class="nb">max</span><span class="p">(</span><span class="mi">2</span><span class="p">,</span> <span class="nb">len</span><span class="p">(</span><span class="nb">str</span><span class="p">(</span><span class="nb">max</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">cells</span><span class="p">))))</span>
+        <span class="nb">format</span> <span class="o">=</span> <span class="sa">f</span><span class="s2">&quot;|%</span><span class="si">{</span><span class="n">width</span><span class="si">}</span><span class="s2">s&quot;</span>
+        <span class="n">ruler</span> <span class="o">=</span> <span class="s2">&quot;+&quot;</span> <span class="o">+</span> <span class="p">(</span><span class="s2">&quot;-&quot;</span> <span class="o">*</span> <span class="n">width</span><span class="p">)</span>
+        <span class="n">ruler</span> <span class="o">=</span> <span class="p">(</span><span class="n">ruler</span> <span class="o">*</span> <span class="bp">self</span><span class="o">.</span><span class="n">dimX</span><span class="p">)</span> <span class="o">+</span> <span class="s2">&quot;+</span><span class="se">\n</span><span class="s2">&quot;</span>
+        <span class="n">result</span> <span class="o">=</span> <span class="s2">&quot;&quot;</span>
+        <span class="n">iy</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">dimY</span> <span class="o">-</span> <span class="mi">1</span>
+        <span class="k">while</span> <span class="n">iy</span> <span class="o">&gt;=</span> <span class="mi">0</span><span class="p">:</span>
+            <span class="n">result</span> <span class="o">+=</span> <span class="n">ruler</span>
+            <span class="k">for</span> <span class="n">ix</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">dimX</span><span class="p">):</span>
+                <span class="n">val</span> <span class="o">=</span> <span class="bp">self</span><span class="p">[</span><span class="n">ix</span><span class="p">,</span> <span class="n">iy</span><span class="p">]</span> <span class="k">if</span> <span class="bp">self</span><span class="p">[</span><span class="n">ix</span><span class="p">,</span> <span class="n">iy</span><span class="p">]</span> <span class="o">!=</span> <span class="n">FILLED</span> <span class="k">else</span> <span class="s1">&#39;X&#39;</span>
+                <span class="n">result</span> <span class="o">+=</span> <span class="nb">format</span> <span class="o">%</span> <span class="n">val</span>
+            <span class="n">result</span> <span class="o">+=</span> <span class="s2">&quot;|</span><span class="se">\n</span><span class="s2">&quot;</span>
+            <span class="n">iy</span> <span class="o">-=</span> <span class="mi">1</span>
+        <span class="n">result</span> <span class="o">+=</span> <span class="n">ruler</span>
+        <span class="k">return</span> <span class="n">result</span>
+</code></pre></div>
+<ul>
+<li>Run both algorithms on a 5x5 grid: very first cell filled is wrong for the windowing algorithm</li>
+<li>Quickly spot that the windowed update <code>__call__</code> function was using:</li>
+</ul>
+<div class="highlight"><span class="filename">algorithms.py</span><pre><span></span><code>        <span class="k">for</span> <span class="n">ix</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">loX</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">hiX</span> <span class="o">+</span> <span class="mi">1</span><span class="p">):</span>
+            <span class="k">for</span> <span class="n">iy</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">loY</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">hiY</span> <span class="o">+</span> <span class="mi">1</span><span class="p">):</span>
+</code></pre></div>
+<ul>
+<li>This skips the high edges</li>
+<li>Should have been using:</li>
+</ul>
+<div class="highlight"><span class="filename">algorithms.py</span><pre><span></span><code>        <span class="k">for</span> <span class="n">ix</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">loX</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">hiX</span> <span class="o">+</span> <span class="mi">1</span><span class="p">):</span>
+            <span class="k">for</span> <span class="n">iy</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">loY</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">hiY</span> <span class="o">+</span> <span class="mi">1</span><span class="p">):</span>
+</code></pre></div>
+<ul>
+<li>Re-run and yes, it produces the correct image</li>
+<li>Which highlights one of the benefits of component-based software development: <a class="glossref" href="../gloss/#cross_validation" markdown="1">cross-validation</a></li>
+<li>But now we're worried about whether there are other bugs</li>
+<li>Run 100 times and count how often each cell in a 51x51 grid is filled</li>
+</ul>
+<figure id="merged-with-bug">
+  <img src="./merged-51x51-10-12345-300.png" alt="Heat map showing how often cells are filled with bug present."/>
+  <figcaption markdown="1">Figure 4.4: Merged Grids with Bug</figcaption>
+</figure>
+
+<ul>
+<li>Appears to be bias</li>
+<li>We are picking the lowest-valued cell on the boundary…</li>
+<li>…and if there's a tie, the <em>first</em> one we see</li>
+<li>So create another algorithm<ul>
+<li>Derive from the fixed version of the window algorithm because we need the same initialization</li>
+<li>Save candidate cells, then choose one at random</li>
+</ul>
+</li>
+</ul>
+<div class="highlight"><span class="filename">algorithms.py</span><pre><span></span><code><span class="k">class</span> <span class="nc">WindowTies</span><span class="p">(</span><span class="n">WindowFixed</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Only sweep the plausible region.&quot;&quot;&quot;</span>
+    <span class="k">def</span> <span class="fm">__call__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Find the next cell to fill, choosing randomly between ties.&quot;&quot;&quot;</span>
+        <span class="n">rv</span> <span class="o">=</span> <span class="kc">None</span>
+        <span class="n">candidates</span> <span class="o">=</span> <span class="p">[]</span>
+        <span class="k">for</span> <span class="n">ix</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">loX</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">hiX</span> <span class="o">+</span> <span class="mi">1</span><span class="p">):</span>
+            <span class="k">for</span> <span class="n">iy</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">loY</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">hiY</span> <span class="o">+</span> <span class="mi">1</span><span class="p">):</span>
+                <span class="n">rv</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_inspect</span><span class="p">(</span><span class="n">candidates</span><span class="p">,</span> <span class="n">rv</span><span class="p">,</span> <span class="n">ix</span><span class="p">,</span> <span class="n">iy</span><span class="p">)</span>
+
+        <span class="k">if</span> <span class="ow">not</span> <span class="n">candidates</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">&quot;Cannot find cell to fill&quot;</span><span class="p">)</span>
+
+        <span class="n">rx</span><span class="p">,</span> <span class="n">ry</span> <span class="o">=</span> <span class="n">random</span><span class="o">.</span><span class="n">choice</span><span class="p">(</span><span class="n">candidates</span><span class="p">)</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">loX</span> <span class="o">=</span> <span class="nb">min</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">loX</span><span class="p">,</span> <span class="n">rx</span> <span class="o">-</span> <span class="mi">1</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">loY</span> <span class="o">=</span> <span class="nb">min</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">loY</span><span class="p">,</span> <span class="n">ry</span> <span class="o">-</span> <span class="mi">1</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">hiX</span> <span class="o">=</span> <span class="nb">max</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">hiX</span><span class="p">,</span> <span class="n">rx</span> <span class="o">+</span> <span class="mi">1</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">hiY</span> <span class="o">=</span> <span class="nb">max</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">hiY</span><span class="p">,</span> <span class="n">ry</span> <span class="o">+</span> <span class="mi">1</span><span class="p">)</span>
+
+        <span class="k">return</span> <span class="n">rx</span><span class="p">,</span> <span class="n">ry</span>
+</code></pre></div>
+<ul>
+<li>Handle cases for a single cell<ul>
+<li>Be careful to update <code>candidates</code> in place rather than assinging a completely new value</li>
+<li>I.e., <code>candidates = [(ix, iy)]</code> doesn't work</li>
+</ul>
+</li>
+</ul>
+<div class="highlight"><span class="filename">algorithms.py</span><pre><span></span><code>    <span class="k">def</span> <span class="nf">_inspect</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">candidates</span><span class="p">,</span> <span class="n">rv</span><span class="p">,</span> <span class="n">ix</span><span class="p">,</span> <span class="n">iy</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Handle inspection of a single cell.&quot;&quot;&quot;</span>
+        <span class="n">val</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">world</span><span class="p">[</span><span class="n">ix</span><span class="p">,</span> <span class="n">iy</span><span class="p">]</span>
+        <span class="k">if</span> <span class="n">val</span> <span class="o">==</span> <span class="n">FILLED</span><span class="p">:</span>
+            <span class="k">pass</span>
+
+        <span class="k">elif</span> <span class="ow">not</span> <span class="bp">self</span><span class="o">.</span><span class="n">connect</span><span class="o">.</span><span class="n">adjacent</span><span class="p">((</span><span class="n">ix</span><span class="p">,</span> <span class="n">iy</span><span class="p">)):</span>
+            <span class="k">pass</span>
+
+        <span class="k">elif</span> <span class="p">(</span><span class="n">rv</span> <span class="o">==</span> <span class="kc">None</span><span class="p">)</span> <span class="ow">or</span> <span class="p">(</span><span class="n">val</span> <span class="o">&lt;</span> <span class="n">rv</span><span class="p">):</span>
+            <span class="n">candidates</span><span class="o">.</span><span class="n">clear</span><span class="p">()</span>
+            <span class="n">candidates</span><span class="o">.</span><span class="n">append</span><span class="p">((</span><span class="n">ix</span><span class="p">,</span> <span class="n">iy</span><span class="p">))</span>
+            <span class="n">rv</span> <span class="o">=</span> <span class="n">val</span>
+
+        <span class="k">elif</span> <span class="n">val</span> <span class="o">==</span> <span class="n">rv</span><span class="p">:</span>
+            <span class="n">candidates</span><span class="o">.</span><span class="n">append</span><span class="p">((</span><span class="n">ix</span><span class="p">,</span> <span class="n">iy</span><span class="p">))</span>
+
+        <span class="k">return</span> <span class="n">rv</span>
+</code></pre></div>
+<figure id="merged-without-bug">
+  <img src="./ties-51x51-10-12345-300.png" alt="Heat map showing how often cells are filled with ties handled."/>
+  <figcaption markdown="1">Figure 4.5: Merged Grids with Ties Handled Correctly</figcaption>
+</figure>
+      </div>
+    </div>
+  </body>
+</html>

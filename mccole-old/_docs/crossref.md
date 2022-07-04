@@ -1,0 +1,3 @@
+# Cross References
+
+::: mccole.crossref

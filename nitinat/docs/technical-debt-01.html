@@ -1,0 +1,302 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Nitinat</title>
+    <link rel="stylesheet" href="theme/nitinat.css">
+    <link rel="stylesheet" href="theme/tango.css">
+  </head>
+  <body>
+    <div class="row">
+      <div class="column smaller">
+        <h2><a href="index.html">Nitinat</a></h2>
+        <p>
+          A model data analysis project in Python
+        </p>
+	<ol type="1">
+  
+  <li>
+    <a href="starting.html">
+      
+        Starting
+      
+    </a>
+  </li>
+  
+  <li>
+    <a href="project.html">
+      
+        Setting Up a Python Project
+      
+    </a>
+  </li>
+  
+  <li>
+    <a href="dataset.html">
+      
+        Handling Data
+      
+    </a>
+  </li>
+  
+  <li>
+    <a href="reproducible.html">
+      
+        Making Tasks Reproducible
+      
+    </a>
+  </li>
+  
+  <li>
+    <a href="results.html">
+      
+        Producing Results
+      
+    </a>
+  </li>
+  
+  <li>
+    <a href="quality.html">
+      
+        Checking Code Quality
+      
+    </a>
+  </li>
+  
+  <li>
+    <a href="setback-01.html">
+      
+        The First Setback
+      
+    </a>
+  </li>
+  
+  <li>
+    <a href="configuration.html">
+      
+        Consistent Configuration
+      
+    </a>
+  </li>
+  
+  <li>
+    <a href="testing.html">
+      
+        Improving Testing
+      
+    </a>
+  </li>
+  
+  <li>
+    <a href="logging.html">
+      
+        Logging
+      
+    </a>
+  </li>
+  
+  <li>
+    <a href="technical-debt-01.html">
+      <strong>
+        Technical Debt
+      </strong>
+    </a>
+  </li>
+  
+  <li>
+    <a href="parameters.html">
+      
+        Handling Model Parameters
+      
+    </a>
+  </li>
+  
+  <li>
+    <a href="pipeline-01.html">
+      
+        Creating a Pipeline
+      
+    </a>
+  </li>
+  
+  <li>
+    <a href="technical-debt-02.html">
+      
+        Technical Debt Revisited
+      
+    </a>
+  </li>
+  
+  <li>
+    <a href="pipeline-02.html">
+      
+        Pipeline Revisited
+      
+    </a>
+  </li>
+  
+  <li>
+    <a href="website-01.html">
+      
+        Creating a Website
+      
+    </a>
+  </li>
+  
+  <li>
+    <a href="pipeline-03.html">
+      
+        A Pipeline with Provenance
+      
+    </a>
+  </li>
+  
+  <li>
+    <a href="website-02.html">
+      
+        Improving the Website
+      
+    </a>
+  </li>
+  
+  <li>
+    <a href="documentation.html">
+      
+        Documenting Code
+      
+    </a>
+  </li>
+  
+  <li>
+    <a href="packaging.html">
+      
+        Creating a Package
+      
+    </a>
+  </li>
+  
+  <li>
+    <a href="ci.html">
+      
+        Continuous Integration
+      
+    </a>
+  </li>
+  
+  <li>
+    <a href="indexing.html">
+      
+        Indexing Datasets
+      
+    </a>
+  </li>
+  
+  <li>
+    <a href="dependencies.html">
+      
+        Handling Task Dependencies
+      
+    </a>
+  </li>
+  
+  <li>
+    <a href="layered.html">
+      
+        Layered Configuration
+      
+    </a>
+  </li>
+  
+  <li>
+    <a href="database.html">
+      
+        Accessing a Database
+      
+    </a>
+  </li>
+  
+</ol>
+<ol type="A">
+  
+  <li>
+    <a href="data.html">
+      
+        Parameter Sets
+      
+    </a>
+  </li>
+  
+  <li>
+    <a href="license.html">
+      
+        License
+      
+    </a>
+  </li>
+  
+  <li>
+    <a href="links.html">
+      
+        Links
+      
+    </a>
+  </li>
+  
+  <li>
+    <a href="credits.html">
+      
+        Credits
+      
+    </a>
+  </li>
+  
+</ol>
+
+	<ul>
+	  <li><a href="nitinat/index.html">Documentation</a></li>
+	  <li><a href="https://github.com/gvwilson/nitinat/">Source</a></li>
+	</ul>
+      </div>
+      <div class="column bordered">
+        <h1>Technical Debt</h1>
+        <ul>
+<li>Time to fix that trendline bug</li>
+<li>Step 1: re-create the conda environment with Python 3.9 instead of 3.10 to avoid problems with <code>statsmodels</code><ul>
+<li>At the time of writing <code>pip install statsmodels</code> works with 3.9 but not with 3.10</li>
+<li>Add to <code>requirements.txt</code></li>
+</ul>
+</li>
+<li>Step 2: ask a colleague for help<ul>
+<li>Least squares can't calculate the square of a datetime</li>
+<li>So add some conversion to the plotting function's just-loaded copy of the dataframe</li>
+</ul>
+</li>
+</ul>
+<div class="highlight"><pre><span></span><code><span class="k">def</span> <span class="nf">sample_vs_analysis_date</span><span class="p">(</span><span class="n">datafile</span><span class="p">,</span> <span class="n">plotfile</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Create scatter plot of sample and analysis dates.&quot;&quot;&quot;</span>
+    <span class="n">df</span> <span class="o">=</span> <span class="n">read_clean_data</span><span class="p">(</span><span class="n">datafile</span><span class="p">)</span>
+    <span class="k">for</span> <span class="n">colname</span> <span class="ow">in</span> <span class="p">(</span><span class="s2">&quot;sample_date&quot;</span><span class="p">,</span> <span class="s2">&quot;analysis_date&quot;</span><span class="p">):</span>
+        <span class="n">df</span><span class="p">[</span><span class="n">colname</span><span class="p">]</span> <span class="o">=</span> <span class="n">df</span><span class="p">[</span><span class="n">colname</span><span class="p">]</span><span class="o">.</span><span class="n">map</span><span class="p">(</span><span class="n">datetime</span><span class="o">.</span><span class="n">toordinal</span><span class="p">)</span>
+    <span class="n">fig</span> <span class="o">=</span> <span class="n">px</span><span class="o">.</span><span class="n">scatter</span><span class="p">(</span><span class="n">df</span><span class="p">,</span> <span class="n">x</span><span class="o">=</span><span class="s2">&quot;sample_date&quot;</span><span class="p">,</span> <span class="n">y</span><span class="o">=</span><span class="s2">&quot;analysis_date&quot;</span><span class="p">,</span> <span class="n">trendline</span><span class="o">=</span><span class="s2">&quot;ols&quot;</span><span class="p">)</span>
+    <span class="n">tick_x</span> <span class="o">=</span> <span class="n">df</span><span class="p">[</span><span class="s1">&#39;sample_date&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">map</span><span class="p">(</span><span class="k">lambda</span> <span class="n">x</span><span class="p">:</span> <span class="n">datetime</span><span class="o">.</span><span class="n">fromordinal</span><span class="p">(</span><span class="n">x</span><span class="p">)</span><span class="o">.</span><span class="n">strftime</span><span class="p">(</span><span class="s1">&#39;%b </span><span class="si">%d</span><span class="s1">&#39;</span><span class="p">))</span>
+    <span class="n">fig</span><span class="o">.</span><span class="n">update_xaxes</span><span class="p">(</span><span class="n">tickvals</span><span class="o">=</span><span class="n">df</span><span class="p">[</span><span class="s1">&#39;sample_date&#39;</span><span class="p">],</span> <span class="n">ticktext</span><span class="o">=</span><span class="n">tick_x</span><span class="p">)</span>
+    <span class="n">tick_y</span> <span class="o">=</span> <span class="n">df</span><span class="p">[</span><span class="s1">&#39;analysis_date&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">map</span><span class="p">(</span><span class="k">lambda</span> <span class="n">x</span><span class="p">:</span> <span class="n">datetime</span><span class="o">.</span><span class="n">fromordinal</span><span class="p">(</span><span class="n">x</span><span class="p">)</span><span class="o">.</span><span class="n">strftime</span><span class="p">(</span><span class="s1">&#39;%b </span><span class="si">%d</span><span class="s1">&#39;</span><span class="p">))</span>
+    <span class="n">fig</span><span class="o">.</span><span class="n">update_yaxes</span><span class="p">(</span><span class="n">tickvals</span><span class="o">=</span><span class="n">df</span><span class="p">[</span><span class="s1">&#39;analysis_date&#39;</span><span class="p">],</span> <span class="n">ticktext</span><span class="o">=</span><span class="n">tick_y</span><span class="p">)</span>
+    <span class="n">fig</span><span class="o">.</span><span class="n">write_image</span><span class="p">(</span><span class="n">plotfile</span><span class="p">)</span>
+</code></pre></div>
+<ul>
+<li>Won't affect anything else, since the dataframe is created by loading the file here<ul>
+<li><em>Shouldn't</em> affect anything else, because other code may actually want <code>datetime</code></li>
+</ul>
+</li>
+<li>Plot now works, so commit the fix with <code>Closes #3</code> in the body of the commit message<ul>
+<li>But the spacing on the axes is uneven</li>
+<li>File a bug against <a href="https://plotly.com/python/plotly-express/">Plotly</a> <a href="https://github.com/plotly/plotly.py/issues/3641">#3641</a></li>
+</ul>
+</li>
+</ul>
+      </div>
+    </div>
+  </body>
+</html>

@@ -1,0 +1,418 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Nitinat</title>
+    <link rel="stylesheet" href="theme/nitinat.css">
+    <link rel="stylesheet" href="theme/tango.css">
+  </head>
+  <body>
+    <div class="row">
+      <div class="column smaller">
+        <h2><a href="index.html">Nitinat</a></h2>
+        <p>
+          A model data analysis project in Python
+        </p>
+	<ol type="1">
+  
+  <li>
+    <a href="starting.html">
+      
+        Starting
+      
+    </a>
+  </li>
+  
+  <li>
+    <a href="project.html">
+      
+        Setting Up a Python Project
+      
+    </a>
+  </li>
+  
+  <li>
+    <a href="dataset.html">
+      
+        Handling Data
+      
+    </a>
+  </li>
+  
+  <li>
+    <a href="reproducible.html">
+      
+        Making Tasks Reproducible
+      
+    </a>
+  </li>
+  
+  <li>
+    <a href="results.html">
+      
+        Producing Results
+      
+    </a>
+  </li>
+  
+  <li>
+    <a href="quality.html">
+      
+        Checking Code Quality
+      
+    </a>
+  </li>
+  
+  <li>
+    <a href="setback-01.html">
+      
+        The First Setback
+      
+    </a>
+  </li>
+  
+  <li>
+    <a href="configuration.html">
+      
+        Consistent Configuration
+      
+    </a>
+  </li>
+  
+  <li>
+    <a href="testing.html">
+      
+        Improving Testing
+      
+    </a>
+  </li>
+  
+  <li>
+    <a href="logging.html">
+      
+        Logging
+      
+    </a>
+  </li>
+  
+  <li>
+    <a href="technical-debt-01.html">
+      
+        Technical Debt
+      
+    </a>
+  </li>
+  
+  <li>
+    <a href="parameters.html">
+      
+        Handling Model Parameters
+      
+    </a>
+  </li>
+  
+  <li>
+    <a href="pipeline-01.html">
+      
+        Creating a Pipeline
+      
+    </a>
+  </li>
+  
+  <li>
+    <a href="technical-debt-02.html">
+      
+        Technical Debt Revisited
+      
+    </a>
+  </li>
+  
+  <li>
+    <a href="pipeline-02.html">
+      
+        Pipeline Revisited
+      
+    </a>
+  </li>
+  
+  <li>
+    <a href="website-01.html">
+      
+        Creating a Website
+      
+    </a>
+  </li>
+  
+  <li>
+    <a href="pipeline-03.html">
+      
+        A Pipeline with Provenance
+      
+    </a>
+  </li>
+  
+  <li>
+    <a href="website-02.html">
+      
+        Improving the Website
+      
+    </a>
+  </li>
+  
+  <li>
+    <a href="documentation.html">
+      
+        Documenting Code
+      
+    </a>
+  </li>
+  
+  <li>
+    <a href="packaging.html">
+      
+        Creating a Package
+      
+    </a>
+  </li>
+  
+  <li>
+    <a href="ci.html">
+      
+        Continuous Integration
+      
+    </a>
+  </li>
+  
+  <li>
+    <a href="indexing.html">
+      <strong>
+        Indexing Datasets
+      </strong>
+    </a>
+  </li>
+  
+  <li>
+    <a href="dependencies.html">
+      
+        Handling Task Dependencies
+      
+    </a>
+  </li>
+  
+  <li>
+    <a href="layered.html">
+      
+        Layered Configuration
+      
+    </a>
+  </li>
+  
+  <li>
+    <a href="database.html">
+      
+        Accessing a Database
+      
+    </a>
+  </li>
+  
+</ol>
+<ol type="A">
+  
+  <li>
+    <a href="data.html">
+      
+        Parameter Sets
+      
+    </a>
+  </li>
+  
+  <li>
+    <a href="license.html">
+      
+        License
+      
+    </a>
+  </li>
+  
+  <li>
+    <a href="links.html">
+      
+        Links
+      
+    </a>
+  </li>
+  
+  <li>
+    <a href="credits.html">
+      
+        Credits
+      
+    </a>
+  </li>
+  
+</ol>
+
+	<ul>
+	  <li><a href="nitinat/index.html">Documentation</a></li>
+	  <li><a href="https://github.com/gvwilson/nitinat/">Source</a></li>
+	</ul>
+      </div>
+      <div class="column bordered">
+        <h1>Indexing Datasets</h1>
+        <ul>
+<li>The project will contain more datasets as it grows<ul>
+<li>Findability will be a challenge</li>
+<li>So start to index them now</li>
+</ul>
+</li>
+<li><em>This is not research</em> and researchers shouldn't have to spend time doing it<ul>
+<li>This is plain old text wrangling and programmers should create tools that researchers can just use</li>
+<li>Put it here for completeness</li>
+</ul>
+</li>
+<li>Options:<ol>
+<li>Generate an index page from scratch: but we have HTML generators</li>
+<li>Extend <a href="https://pdoc3.github.io/pdoc/">pdoc3</a>: but the index isn't part of the code docs</li>
+<li>Extend <a href="http://www.dmulholl.com/docs/ivy/main/">Ivy</a>: least painful</li>
+</ol>
+</li>
+<li>Took about an hour to figure out how to add things and another hour to debug and polish<ul>
+<li>Only worth it if the code and the knowledge are going to be re-used</li>
+</ul>
+</li>
+<li>Add this to Ivy's <code>config.py</code><ul>
+<li>Where the dataset descriptions will go</li>
+<li>What filename pattern (a.k.a. "glob") matches datasets (we'll actually use parameter sets since we already have them)</li>
+<li>What page template to fill in</li>
+</ul>
+</li>
+</ul>
+<div class="highlight"><pre><span></span><code><span class="c1"># Dataset pattern, template, and output directory</span>
+<span class="n">data</span> <span class="o">=</span> <span class="p">{</span>
+    <span class="s2">&quot;out_dir&quot;</span><span class="p">:</span> <span class="s2">&quot;data&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;src_glob&quot;</span><span class="p">:</span> <span class="s2">&quot;parameters/*.json&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;template&quot;</span><span class="p">:</span> <span class="s2">&quot;datapage.html&quot;</span><span class="p">,</span>
+<span class="p">}</span>
+</code></pre></div>
+<ul>
+<li>The page template is:</li>
+</ul>
+<div class="highlight"><pre><span></span><code><span class="cp">&lt;!DOCTYPE html&gt;</span>
+<span class="p">&lt;</span><span class="nt">html</span> <span class="na">lang</span><span class="o">=</span><span class="s">&quot;en&quot;</span><span class="p">&gt;</span>
+  <span class="p">&lt;</span><span class="nt">head</span><span class="p">&gt;</span>
+    <span class="p">&lt;</span><span class="nt">meta</span> <span class="na">http-equiv</span><span class="o">=</span><span class="s">&quot;Content-Type&quot;</span> <span class="na">content</span><span class="o">=</span><span class="s">&quot;text/html; charset=UTF-8&quot;</span><span class="p">&gt;</span>
+    <span class="p">&lt;</span><span class="nt">meta</span> <span class="na">name</span><span class="o">=</span><span class="s">&quot;viewport&quot;</span> <span class="na">content</span><span class="o">=</span><span class="s">&quot;width=device-width, initial-scale=1&quot;</span><span class="p">&gt;</span>
+    <span class="p">&lt;</span><span class="nt">title</span><span class="p">&gt;</span>{{ site.title }}: {{ title }}<span class="p">&lt;/</span><span class="nt">title</span><span class="p">&gt;</span>
+    <span class="p">&lt;</span><span class="nt">link</span> <span class="na">rel</span><span class="o">=</span><span class="s">&quot;stylesheet&quot;</span> <span class="na">href</span><span class="o">=</span><span class="s">&quot;@root/theme/nitinat.css&quot;</span><span class="p">&gt;</span>
+    <span class="p">&lt;</span><span class="nt">link</span> <span class="na">rel</span><span class="o">=</span><span class="s">&quot;stylesheet&quot;</span> <span class="na">href</span><span class="o">=</span><span class="s">&quot;@root/theme/tango.css&quot;</span><span class="p">&gt;</span>
+  <span class="p">&lt;/</span><span class="nt">head</span><span class="p">&gt;</span>
+  <span class="p">&lt;</span><span class="nt">body</span><span class="p">&gt;</span>
+    <span class="p">&lt;</span><span class="nt">h1</span><span class="p">&gt;</span>{{ site.title}}: {{ title }}<span class="p">&lt;/</span><span class="nt">h1</span><span class="p">&gt;</span>
+    <span class="p">&lt;</span><span class="nt">table</span><span class="p">&gt;</span>
+      <span class="p">&lt;</span><span class="nt">tr</span><span class="p">&gt;&lt;</span><span class="nt">th</span><span class="p">&gt;</span>Key<span class="p">&lt;/</span><span class="nt">th</span><span class="p">&gt;&lt;</span><span class="nt">th</span><span class="p">&gt;</span>Value<span class="p">&lt;/</span><span class="nt">th</span><span class="p">&gt;&lt;/</span><span class="nt">tr</span><span class="p">&gt;</span>
+      {% for key, value in data.items() %}
+      <span class="p">&lt;</span><span class="nt">tr</span><span class="p">&gt;&lt;</span><span class="nt">td</span><span class="p">&gt;</span>{{ key }}<span class="p">&lt;/</span><span class="nt">td</span><span class="p">&gt;&lt;</span><span class="nt">td</span><span class="p">&gt;</span>{{ value }}<span class="p">&lt;/</span><span class="nt">td</span><span class="p">&gt;&lt;/</span><span class="nt">tr</span><span class="p">&gt;</span>
+      {% endfor %}
+    <span class="p">&lt;/</span><span class="nt">table</span><span class="p">&gt;</span>
+  <span class="p">&lt;/</span><span class="nt">body</span><span class="p">&gt;</span>
+<span class="p">&lt;/</span><span class="nt">html</span><span class="p">&gt;</span>
+</code></pre></div>
+<ul>
+<li>Create a file <code>lib/nitinat/extensions/datasets.py</code> to hold the extensions</li>
+<li>Collect information early in Ivy's processing cycle and add it to the configuration</li>
+</ul>
+<div class="highlight"><pre><span></span><code><span class="nd">@ivy</span><span class="o">.</span><span class="n">events</span><span class="o">.</span><span class="n">register</span><span class="p">(</span><span class="n">ivy</span><span class="o">.</span><span class="n">events</span><span class="o">.</span><span class="n">Event</span><span class="o">.</span><span class="n">INIT</span><span class="p">)</span>
+<span class="k">def</span> <span class="nf">collect</span><span class="p">():</span>
+    <span class="sd">&quot;&quot;&quot;Collect information about datasets.&quot;&quot;&quot;</span>
+    <span class="k">if</span> <span class="s2">&quot;data&quot;</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">ivy</span><span class="o">.</span><span class="n">site</span><span class="o">.</span><span class="n">config</span><span class="p">:</span>
+        <span class="k">return</span>
+    <span class="n">pattern</span> <span class="o">=</span> <span class="nb">str</span><span class="p">(</span><span class="n">Path</span><span class="p">(</span><span class="n">ivy</span><span class="o">.</span><span class="n">site</span><span class="o">.</span><span class="n">home</span><span class="p">(),</span> <span class="n">ivy</span><span class="o">.</span><span class="n">site</span><span class="o">.</span><span class="n">config</span><span class="p">[</span><span class="s2">&quot;data&quot;</span><span class="p">][</span><span class="s2">&quot;src_glob&quot;</span><span class="p">]))</span>
+    <span class="n">data</span> <span class="o">=</span> <span class="p">[]</span>
+    <span class="k">for</span> <span class="n">filename</span> <span class="ow">in</span> <span class="n">glob</span><span class="o">.</span><span class="n">glob</span><span class="p">(</span><span class="n">pattern</span><span class="p">):</span>
+        <span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="n">filename</span><span class="p">,</span> <span class="s2">&quot;r&quot;</span><span class="p">)</span> <span class="k">as</span> <span class="n">reader</span><span class="p">:</span>
+            <span class="n">title</span> <span class="o">=</span> <span class="n">Path</span><span class="p">(</span><span class="n">filename</span><span class="p">)</span><span class="o">.</span><span class="n">name</span>
+            <span class="n">data</span><span class="o">.</span><span class="n">append</span><span class="p">({</span>
+                <span class="s2">&quot;title&quot;</span><span class="p">:</span> <span class="n">title</span><span class="p">,</span>
+                <span class="s2">&quot;src&quot;</span><span class="p">:</span> <span class="n">filename</span><span class="p">,</span>
+                <span class="s2">&quot;dst&quot;</span><span class="p">:</span> <span class="n">_output_filename</span><span class="p">(</span><span class="n">title</span><span class="p">),</span>
+                <span class="s2">&quot;data&quot;</span><span class="p">:</span> <span class="n">json</span><span class="o">.</span><span class="n">load</span><span class="p">(</span><span class="n">reader</span><span class="p">)</span>
+            <span class="p">})</span>
+    <span class="n">ivy</span><span class="o">.</span><span class="n">site</span><span class="o">.</span><span class="n">config</span><span class="p">[</span><span class="s2">&quot;data&quot;</span><span class="p">][</span><span class="s2">&quot;datasets&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">data</span>
+</code></pre></div>
+<ul>
+<li>Write files late in the processing cycle</li>
+</ul>
+<div class="highlight"><pre><span></span><code><span class="nd">@ivy</span><span class="o">.</span><span class="n">events</span><span class="o">.</span><span class="n">register</span><span class="p">(</span><span class="n">ivy</span><span class="o">.</span><span class="n">events</span><span class="o">.</span><span class="n">Event</span><span class="o">.</span><span class="n">EXIT</span><span class="p">)</span>
+<span class="k">def</span> <span class="nf">write</span><span class="p">():</span>
+    <span class="sd">&quot;&quot;&quot;Write information about datasets.&quot;&quot;&quot;</span>
+    <span class="k">if</span> <span class="s2">&quot;data&quot;</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">ivy</span><span class="o">.</span><span class="n">site</span><span class="o">.</span><span class="n">config</span><span class="p">:</span>
+        <span class="k">return</span>
+
+    <span class="n">out_dir</span> <span class="o">=</span> <span class="n">_output_directory</span><span class="p">()</span>
+    <span class="n">out_dir</span><span class="o">.</span><span class="n">mkdir</span><span class="p">(</span><span class="n">mode</span><span class="o">=</span><span class="mo">0o755</span><span class="p">,</span> <span class="n">parents</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">exist_ok</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+
+    <span class="n">template_path</span> <span class="o">=</span> <span class="nb">str</span><span class="p">(</span>
+        <span class="n">Path</span><span class="p">(</span><span class="n">ivy</span><span class="o">.</span><span class="n">site</span><span class="o">.</span><span class="n">theme</span><span class="p">(),</span>
+             <span class="s2">&quot;templates&quot;</span><span class="p">,</span> <span class="n">ivy</span><span class="o">.</span><span class="n">site</span><span class="o">.</span><span class="n">config</span><span class="p">[</span><span class="s2">&quot;data&quot;</span><span class="p">][</span><span class="s2">&quot;template&quot;</span><span class="p">])</span>
+    <span class="p">)</span>
+    <span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="n">template_path</span><span class="p">,</span> <span class="s2">&quot;r&quot;</span><span class="p">)</span> <span class="k">as</span> <span class="n">reader</span><span class="p">:</span>
+        <span class="n">template</span> <span class="o">=</span> <span class="n">ibis</span><span class="o">.</span><span class="n">Template</span><span class="p">(</span><span class="n">reader</span><span class="o">.</span><span class="n">read</span><span class="p">())</span>
+
+    <span class="n">site</span> <span class="o">=</span> <span class="p">{</span><span class="s2">&quot;title&quot;</span><span class="p">:</span> <span class="n">ivy</span><span class="o">.</span><span class="n">site</span><span class="o">.</span><span class="n">config</span><span class="p">[</span><span class="s2">&quot;title&quot;</span><span class="p">]}</span>
+    <span class="k">for</span> <span class="n">dataset</span> <span class="ow">in</span> <span class="n">ivy</span><span class="o">.</span><span class="n">site</span><span class="o">.</span><span class="n">config</span><span class="p">[</span><span class="s2">&quot;data&quot;</span><span class="p">][</span><span class="s2">&quot;datasets&quot;</span><span class="p">]:</span>
+        <span class="n">dst</span> <span class="o">=</span> <span class="n">Path</span><span class="p">(</span><span class="n">out_dir</span><span class="p">,</span> <span class="n">_output_filename</span><span class="p">(</span><span class="n">dataset</span><span class="p">[</span><span class="s2">&quot;title&quot;</span><span class="p">]))</span>
+        <span class="n">result</span> <span class="o">=</span> <span class="n">template</span><span class="o">.</span><span class="n">render</span><span class="p">({</span><span class="s2">&quot;site&quot;</span><span class="p">:</span> <span class="n">site</span><span class="p">}</span> <span class="o">|</span> <span class="n">dataset</span><span class="p">)</span>
+        <span class="n">result</span> <span class="o">=</span> <span class="n">ivy</span><span class="o">.</span><span class="n">utils</span><span class="o">.</span><span class="n">rewrite_urls</span><span class="p">(</span><span class="n">result</span><span class="p">,</span> <span class="n">dst</span><span class="p">)</span>
+        <span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="n">dst</span><span class="p">,</span> <span class="s2">&quot;w&quot;</span><span class="p">)</span> <span class="k">as</span> <span class="n">writer</span><span class="p">:</span>
+            <span class="n">writer</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="n">result</span><span class="p">)</span>
+</code></pre></div>
+<ul>
+<li>Generate an index of datasets</li>
+</ul>
+<div class="highlight"><pre><span></span><code><span class="nd">@shortcodes</span><span class="o">.</span><span class="n">register</span><span class="p">(</span><span class="s2">&quot;datasets&quot;</span><span class="p">)</span>
+<span class="k">def</span> <span class="nf">index</span><span class="p">(</span><span class="n">pargs</span><span class="p">,</span> <span class="n">kwargs</span><span class="p">,</span> <span class="n">node</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Generate index of datasets.&quot;&quot;&quot;</span>
+    <span class="n">entries</span> <span class="o">=</span> <span class="p">[]</span>
+    <span class="k">for</span> <span class="n">dataset</span> <span class="ow">in</span> <span class="n">ivy</span><span class="o">.</span><span class="n">site</span><span class="o">.</span><span class="n">config</span><span class="p">[</span><span class="s2">&quot;data&quot;</span><span class="p">][</span><span class="s2">&quot;datasets&quot;</span><span class="p">]:</span>
+        <span class="n">relative</span> <span class="o">=</span> <span class="n">Path</span><span class="p">(</span><span class="n">ivy</span><span class="o">.</span><span class="n">site</span><span class="o">.</span><span class="n">config</span><span class="p">[</span><span class="s2">&quot;data&quot;</span><span class="p">][</span><span class="s2">&quot;out_dir&quot;</span><span class="p">],</span> <span class="n">dataset</span><span class="p">[</span><span class="s2">&quot;dst&quot;</span><span class="p">])</span>
+        <span class="n">entries</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;&lt;li&gt;&lt;a href=&quot;./</span><span class="si">{</span><span class="n">relative</span><span class="si">}</span><span class="s1">&quot;&gt;</span><span class="si">{</span><span class="n">dataset</span><span class="p">[</span><span class="s2">&quot;title&quot;</span><span class="p">]</span><span class="si">}</span><span class="s1">&lt;/a&gt;&lt;/li&gt;&#39;</span><span class="p">)</span>
+    <span class="k">return</span> <span class="s2">&quot;&lt;ul&gt;</span><span class="se">\n</span><span class="s2">&quot;</span> <span class="o">+</span> <span class="s2">&quot;</span><span class="se">\n</span><span class="s2">&quot;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">entries</span><span class="p">)</span> <span class="o">+</span> <span class="s2">&quot;</span><span class="se">\n</span><span class="s2">&lt;/ul&gt;&quot;</span>
+</code></pre></div>
+<ul>
+<li>Add this page to the source pages to contain the index</li>
+</ul>
+<div class="highlight"><pre><span></span><code>---
+title: Parameter Sets
+---
+
+&lt;ul&gt;
+&lt;li&gt;&lt;a href=&quot;./data/fraction-0.1.json.html&quot;&gt;fraction-0.1.json&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&quot;./data/nth-50.json.html&quot;&gt;nth-50.json&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;
+</code></pre></div>
+<ul>
+<li>Index page:</li>
+</ul>
+<div class="html">
+<h1>Parameter Sets</h1>
+<ul>
+<li><a href="./data/fraction-0.1.json.html">fraction-0.1.json</a></li>
+<li><a href="./data/nth-50.json.html">nth-50.json</a></li>
+</ul>
+</div>
+
+<ul>
+<li>Dataset page (again, we're using the parameter sets for examples)</li>
+</ul>
+<div class="html">
+<h1>Nitinat: fraction-0.1.json</h1>
+<table>
+  <tr><th>Key</th><th>Value</th></tr>
+  <tr><td>fraction</td><td>0.1</td></tr>
+</table>
+</div>
+      </div>
+    </div>
+  </body>
+</html>

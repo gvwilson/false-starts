@@ -1,0 +1,7 @@
+bibtexparser
+gitpython
+pydriller
+pwlf
+requests
+snakemake
+xlrd

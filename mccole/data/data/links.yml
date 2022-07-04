@@ -1,0 +1,18 @@
+- key: aosa
+  url: https://aosabook.org/
+  title: The Architecture of Open Source Applications
+- key: carpentries
+  url: https://carpentries.org/
+  title: The Carpentries
+- key: js4ds
+  url: https://js4ds.org/
+  title: JavaScript for Data Science
+- key: py-rse
+  url: https://merely-useful.tech/py-rse/
+  title: Research Software Engineering with Python
+- key: t3
+  url: http://teachtogether.tech/
+  title: Teaching Tech Together
+- key: wilson-greg
+  url: https://third-bit.com/
+  title: Greg Wilson

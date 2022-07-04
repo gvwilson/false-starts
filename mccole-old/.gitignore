@@ -1,0 +1,8 @@
+*.pyc
+*~
+.DS_Store
+.coverage
+site
+build
+dist
+mccole.egg-info

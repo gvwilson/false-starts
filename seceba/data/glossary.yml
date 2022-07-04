@@ -1,0 +1,29 @@
+- key: box_and_whisker_plot
+  en:
+    term: "box-and-whisker plot"
+    def: >
+      FIXME
+
+- key: cognitive_load
+  en:
+    term: "cognitive load"
+    def: >
+      The mental effort needed to solve a problem.
+
+- key: jitter
+  en:
+    term: "jitter"
+    def: >
+      FIXME
+
+- key: median
+  en:
+    term: "median"
+    def: >
+      FIXME
+
+- key: percentile
+  en:
+    term: "percentile"
+    def: >
+      FIXME

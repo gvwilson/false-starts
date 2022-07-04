@@ -1,0 +1,192 @@
+- slug: black
+  title: Black
+  url: https://black.readthedocs.io/
+- slug: blas
+  title: BLAS
+  url: https://en.wikipedia.org/wiki/Basic_Linear_Algebra_Subprograms
+- slug: carpentries-sql
+  title: Carpentries SQL Lesson
+  url: http://swcarpentry.github.io/sql-novice-survey/
+- slug: circle-ci
+  title: Circle CI
+  url: https://circleci.com/
+- slug: conda
+  title: Conda
+  url: https://docs.conda.io/
+- slug: conventional-commits
+  title: Conventional Commits
+  url: https://www.conventionalcommits.org/
+- slug: cookiecutter
+  title: Cookiecutter
+  url: https://cookiecutter.readthedocs.io/
+- slug: coverage
+  title: Coverage
+  url: https://coverage.readthedocs.io/
+- slug: deep-genomics
+  title: Deep Genomics Inc.
+  url: https://www.deepgenomics.com/
+- slug: docker
+  title: Docker
+  url: https://www.docker.com/
+- slug: duckduckgo
+  title: DuckDuckGo
+  url: https://duckduckgo.com/
+- slug: firestore
+  title: Firestore
+  url: https://cloud.google.com/firestore/
+- slug: flake8
+  title: Flake8
+  url: https://flake8.pycqa.org/
+- slug: flit
+  title: Flit
+  url: https://flit.pypa.io/
+- slug: gh-actions
+  title: GitHub Actions
+  url: https://docs.github.com/en/actions
+- slug: gh-actions-predefined
+  title: Pre-defined GitHub Actions
+  url: https://github.com/actions
+- slug: gh-cmdline
+  title: GitHub Command Line
+  url: https://cli.github.com/
+- slug: gh-coc
+  title: Adding a Code of Conduct on GitHub
+  url: https://docs.github.com/en/communities/setting-up-your-project-for-healthy-contributions/adding-a-code-of-conduct-to-your-project
+- slug: google-docstrings
+  title: Google-style Docstrings
+  url: https://www.sphinx-doc.org/en/master/usage/extensions/example_google.html
+- slug: ibis
+  title: Ibis
+  url: https://ibis-project.org/
+- slug: invoke
+  title: Invoke
+  url: https://www.pyinvoke.org/
+- slug: invoke-bug
+  title: Invoke Bug Report
+  url: https://github.com/pyinvoke/invoke/issues/852
+- slug: invoke-so-question
+  title: Invoke Stack Overflow Question
+  url: https://stackoverflow.com/questions/71716837/how-to-pass-optional-flags-to-pre-tasks-using-python-invoke
+- slug: isort
+  title: Isort
+  url: https://pycqa.github.io/isort/
+- slug: ivy
+  title: Ivy
+  url: http://www.dmulholl.com/docs/ivy/main/
+- slug: layered-config
+  title: Layered Configuration
+  url: https://merely-useful.tech/py-rse/config.html
+- slug: make
+  title: Make
+  url: https://www.gnu.org/software/make/
+- slug: mit-license
+  title: MIT License
+  url: https://choosealicense.com/licenses/mit/
+- slug: mkdocs
+  title: MkDocs
+  url: https://www.mkdocs.org/
+- slug: mongo
+  title: MongoDB
+  url: https://www.mongodb.com/
+- slug: nobles-rules
+  title: Noble's Rules
+  url: https://journals.plos.org/ploscompbiol/article?id=10.1371/journal.pcbi.1000424
+- slug: orm
+  title: Object-relational mapping
+  url: https://en.wikipedia.org/wiki/Object%E2%80%93relational_mapping
+- slug: pandas
+  title: Pandas
+  url: https://pandas.pydata.org/
+- slug: pdoc3
+  title: Pdoc3
+  url: https://pdoc3.github.io/pdoc/
+- slug: pep8
+  title: PEP-8
+  url: https://pep8.org/
+- slug: plotly-3641
+  title: Plotly Bug Report
+  url: https://github.com/plotly/plotly.py/issues/3641
+- slug: plotly
+  title: Plotly
+  url: https://plotly.com/python/plotly-express/
+- slug: poetry
+  title: Poetry
+  url: https://python-poetry.org/
+- slug: postgresql
+  title: PostgreSQL
+  url: https://www.postgresql.org/
+- slug: programmers-brain
+  title: The Programmer's Brain
+  url: https://www.manning.com/books/the-programmers-brain
+- slug: py-invoke-depends
+  title: PyInvokeDepends
+  url: https://github.com/mohnen/pyinvokedepends
+- slug: py-invoke-depends-bug
+  title: PyInvokeDepends Bug
+  url: https://github.com/mohnen/pyinvokedepends/issues/1
+- slug: py-rse
+  title: Research Software Engineering with Python
+  url: https://merely-useful.tech/py-rse/
+- slug: pydantic
+  title: Pydantic
+  url: https://pydantic-docs.helpmanual.io/
+- slug: pyfakefs
+  title: PyFakeFS
+  url: http://jmcgeheeiv.github.io/pyfakefs/
+- slug: pygments-css
+  title: Pygments
+  url: https://richleland.github.io/pygments-css/
+- slug: pypi
+  title: PyPI
+  url: https://pypi.org/
+- slug: pyproject-flake8
+  title: PyProject-Flake8
+  url: https://pypi.org/project/pyproject-flake8/
+- slug: pytest
+  title: Pytest
+  url: https://docs.pytest.org/
+- slug: python-mock
+  title: Mock Objects in Python
+  url: https://docs.python.org/3/library/unittest.mock.html
+- slug: requests
+  title: Requests
+  url: https://docs.python-requests.org/
+- slug: semver
+  title: Semantic Versioning
+  url: https://semver.org/
+- slug: sphinx
+  title: Sphinx
+  url: https://www.sphinx-doc.org/
+- slug: singleton
+  title: Singleton Pattern
+  url: https://en.wikipedia.org/wiki/Singleton_pattern
+- slug: sql
+  title: SQL
+  url: https://en.wikipedia.org/wiki/SQL
+- slug: sqlalchemy
+  title: SQLAlchemy
+  url: https://www.sqlalchemy.org/
+- slug: sqlite
+  title: SQLite
+  url: https://sqlite.org/
+- slug: ssg
+  title: Static Site Generators
+  url: https://jamstack.org/generators/
+- slug: stack-overflow
+  title: Stack Overflow
+  url: https://stackoverflow.com/
+- slug: statsmodels
+  title: Statsmodels
+  url: https://www.statsmodels.org/
+- slug: tdd-nwit
+  title: Evidence about Test-Driven Development
+  url: https://neverworkintheory.org/category/#test-driven-development
+- slug: tdd
+  title: Test-Driven Development
+  url: https://en.wikipedia.org/wiki/Test-driven_development
+- slug: twine
+  title: Twine
+  url: https://twine.readthedocs.io/
+- slug: wilson-greg
+  title: Greg Wilson
+  url: https://third-bit.com/

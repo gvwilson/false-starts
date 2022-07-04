@@ -1,0 +1,444 @@
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  
+  
+  <link rel="shortcut icon" href="../img/favicon.ico">
+  <title>Utilities - McCole</title>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Lato:400,700|Roboto+Slab:400,700|Inconsolata:400,700" />
+
+  <link rel="stylesheet" href="../css/theme.css" />
+  <link rel="stylesheet" href="../css/theme_extra.css" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/10.5.0/styles/github.min.css" />
+  <link href="../assets/_mkdocstrings.css" rel="stylesheet" />
+  
+  <script>
+    // Current page data
+    var mkdocs_page_name = "Utilities";
+    var mkdocs_page_input_path = "util.md";
+    var mkdocs_page_url = null;
+  </script>
+  
+  <script src="../js/jquery-2.1.1.min.js" defer></script>
+  <script src="../js/modernizr-2.8.3.min.js" defer></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/10.5.0/highlight.min.js"></script>
+  <script>hljs.initHighlightingOnLoad();</script> 
+</head>
+
+<body class="wy-body-for-nav" role="document">
+
+  <div class="wy-grid-for-nav">
+
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side stickynav">
+    <div class="wy-side-scroll">
+      <div class="wy-side-nav-search">
+        <a href=".." class="icon icon-home"> McCole</a>
+        <div role="search">
+  <form id ="rtd-search-form" class="wy-form" action="../search.html" method="get">
+      <input type="text" name="q" placeholder="Search docs" title="Type search term here" />
+  </form>
+</div>
+      </div>
+
+      <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+                <p class="caption"><span class="caption-text">Main</span></p>
+                <ul>
+                    <li class="toctree-l1"><a class="reference internal" href="..">Home Page</a>
+                    </li>
+                    <li class="toctree-l1"><a class="reference internal" href="../license/">License</a>
+                    </li>
+                    <li class="toctree-l1"><a class="reference internal" href="../conduct/">Code of Conduct</a>
+                    </li>
+                </ul>
+                <p class="caption"><span class="caption-text">Example</span></p>
+                <ul>
+                    <li class="toctree-l1"><a class="reference internal" href="../sample/">Sample Book</a>
+                    </li>
+                </ul>
+                <p class="caption"><span class="caption-text">Code</span></p>
+                <ul class="current">
+                    <li class="toctree-l1"><a class="reference internal" href="../accounting/">Accounting</a>
+                    </li>
+                    <li class="toctree-l1"><a class="reference internal" href="../bib/">Bibliography</a>
+                    </li>
+                    <li class="toctree-l1"><a class="reference internal" href="../check/">Checks</a>
+                    </li>
+                    <li class="toctree-l1"><a class="reference internal" href="../collect/">File Collection</a>
+                    </li>
+                    <li class="toctree-l1"><a class="reference internal" href="../config/">Configuration</a>
+                    </li>
+                    <li class="toctree-l1"><a class="reference internal" href="../crossref/">Cross References</a>
+                    </li>
+                    <li class="toctree-l1"><a class="reference internal" href="../gloss/">Glossary</a>
+                    </li>
+                    <li class="toctree-l1"><a class="reference internal" href="../include/">File Inclusion</a>
+                    </li>
+                    <li class="toctree-l1"><a class="reference internal" href="../mccole/">Main Driver</a>
+                    </li>
+                    <li class="toctree-l1"><a class="reference internal" href="../patterns/">Patterns</a>
+                    </li>
+                    <li class="toctree-l1"><a class="reference internal" href="../render/">Render HTML</a>
+                    </li>
+                    <li class="toctree-l1"><a class="reference internal" href="../server/">Preview Server</a>
+                    </li>
+                    <li class="toctree-l1"><a class="reference internal" href="../show/">Show Standard Files</a>
+                    </li>
+                    <li class="toctree-l1"><a class="reference internal" href="../template/">Template Expansion</a>
+                    </li>
+                    <li class="toctree-l1"><a class="reference internal" href="../tokenize/">Tokenize Markdown</a>
+                    </li>
+                    <li class="toctree-l1 current"><a class="reference internal current" href="./">Utilities</a>
+    <ul class="current">
+    <li class="toctree-l2"><a class="reference internal" href="#mccole.util">mccole.util</a>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#mccole.util.McColeExc">McColeExc</a>
+        <ul>
+    <li class="toctree-l3"><a class="reference internal" href="#mccole.util.McColeExc.__init__">__init__()</a>
+    </li>
+        </ul>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#mccole.util.err">err()</a>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#mccole.util.loc">loc()</a>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#mccole.util.make_inclusion_filename">make_inclusion_filename()</a>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#mccole.util.make_md">make_md()</a>
+    </li>
+    </ul>
+                    </li>
+                    <li class="toctree-l1"><a class="reference internal" href="../write/">Writing Files</a>
+                    </li>
+                </ul>
+      </div>
+    </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" role="navigation" aria-label="top navigation">
+        <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+        <a href="..">McCole</a>
+      </nav>
+
+      
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="breadcrumbs navigation">
+  <ul class="wy-breadcrumbs">
+    <li><a href="..">Docs</a> &raquo;</li>
+    
+      
+        
+          <li>Code &raquo;</li>
+        
+      
+    
+    <li>Utilities</li>
+    <li class="wy-breadcrumbs-aside">
+      
+        <a href="https://github.com/gvwilson/mccole/edit/master/docs/util.md"
+          class="icon icon-github"> Edit on GitHub</a>
+      
+    </li>
+  </ul>
+  
+  <hr/>
+</div>
+
+          <div role="main">
+            <div class="section">
+              
+                <h1 id="utility-functions">Utility Functions</h1>
+
+
+  <div class="doc doc-object doc-module">
+
+<a id="mccole.util"></a>
+    <div class="doc doc-contents first">
+
+      <p>Utilities.</p>
+
+
+
+  <div class="doc doc-children">
+
+
+
+
+
+
+
+
+
+
+  <div class="doc doc-object doc-class">
+
+
+
+<h2 id="mccole.util.McColeExc" class="doc doc-heading">
+        <code>
+McColeExc            (<span title="Exception">Exception</span>)
+        </code>
+
+
+
+</h2>
+
+    <div class="doc doc-contents ">
+
+      <p>Problems we expect.</p>
+
+        <details class="quote">
+          <summary>Source code in <code>mccole/util.py</code></summary>
+          <div class="highlight"><pre><span></span><code><span class="k">class</span> <span class="nc">McColeExc</span><span class="p">(</span><span class="ne">Exception</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Problems we expect.&quot;&quot;&quot;</span>
+
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">msg</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Save the message.&quot;&quot;&quot;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">msg</span> <span class="o">=</span> <span class="n">msg</span>
+</code></pre></div>
+        </details>
+
+
+
+  <div class="doc doc-children">
+
+
+
+
+
+
+
+
+
+  <div class="doc doc-object doc-method">
+
+
+
+<h3 id="mccole.util.McColeExc.__init__" class="doc doc-heading">
+<code class="highlight language-python"><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">msg</span><span class="p">)</span></code>
+
+  <span class="doc doc-properties">
+      <small class="doc doc-property doc-property-special"><code>special</code></small>
+  </span>
+
+</h3>
+
+    <div class="doc doc-contents ">
+
+      <p>Save the message.</p>
+
+        <details class="quote">
+          <summary>Source code in <code>mccole/util.py</code></summary>
+          <div class="highlight"><pre><span></span><code><span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">msg</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Save the message.&quot;&quot;&quot;</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">msg</span> <span class="o">=</span> <span class="n">msg</span>
+</code></pre></div>
+        </details>
+    </div>
+
+  </div>
+
+
+
+
+
+  </div>
+
+    </div>
+
+  </div>
+
+
+
+
+  <div class="doc doc-object doc-function">
+
+
+
+<h2 id="mccole.util.err" class="doc doc-heading">
+<code class="highlight language-python"><span class="n">err</span><span class="p">(</span><span class="n">msg</span><span class="p">,</span> <span class="n">info</span><span class="p">,</span> <span class="n">token</span><span class="o">=</span><span class="kc">None</span><span class="p">)</span></code>
+
+
+</h2>
+
+    <div class="doc doc-contents ">
+
+      <p>Report an error with location information.</p>
+
+        <details class="quote">
+          <summary>Source code in <code>mccole/util.py</code></summary>
+          <div class="highlight"><pre><span></span><code><span class="k">def</span> <span class="nf">err</span><span class="p">(</span><span class="n">msg</span><span class="p">,</span> <span class="n">info</span><span class="p">,</span> <span class="n">token</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Report an error with location information.&quot;&quot;&quot;</span>
+    <span class="n">LOGGER</span><span class="o">.</span><span class="n">error</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">msg</span><span class="si">}</span><span class="s2"> </span><span class="si">{</span><span class="n">loc</span><span class="p">(</span><span class="n">info</span><span class="p">,</span> <span class="n">token</span><span class="p">)</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+</code></pre></div>
+        </details>
+    </div>
+
+  </div>
+
+
+
+  <div class="doc doc-object doc-function">
+
+
+
+<h2 id="mccole.util.loc" class="doc doc-heading">
+<code class="highlight language-python"><span class="n">loc</span><span class="p">(</span><span class="n">info</span><span class="p">,</span> <span class="n">token</span><span class="p">)</span></code>
+
+
+</h2>
+
+    <div class="doc doc-contents ">
+
+      <p>Report error location in token stream.</p>
+
+        <details class="quote">
+          <summary>Source code in <code>mccole/util.py</code></summary>
+          <div class="highlight"><pre><span></span><code><span class="k">def</span> <span class="nf">loc</span><span class="p">(</span><span class="n">info</span><span class="p">,</span> <span class="n">token</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Report error location in token stream.&quot;&quot;&quot;</span>
+    <span class="k">if</span> <span class="n">token</span><span class="o">.</span><span class="n">map</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+        <span class="k">return</span> <span class="sa">f</span><span class="s2">&quot;(</span><span class="si">{</span><span class="n">info</span><span class="o">.</span><span class="n">src</span><span class="si">}</span><span class="s2">)&quot;</span>
+    <span class="k">return</span> <span class="sa">f</span><span class="s2">&quot;(</span><span class="si">{</span><span class="n">info</span><span class="o">.</span><span class="n">src</span><span class="si">}</span><span class="s2">/</span><span class="si">{</span><span class="n">token</span><span class="o">.</span><span class="n">map</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="si">}</span><span class="s2">)&quot;</span>
+</code></pre></div>
+        </details>
+    </div>
+
+  </div>
+
+
+
+  <div class="doc doc-object doc-function">
+
+
+
+<h2 id="mccole.util.make_inclusion_filename" class="doc doc-heading">
+<code class="highlight language-python"><span class="n">make_inclusion_filename</span><span class="p">(</span><span class="n">info</span><span class="p">,</span> <span class="n">name</span><span class="p">)</span></code>
+
+
+</h2>
+
+    <div class="doc doc-contents ">
+
+      <p>Construct full path name.</p>
+
+        <details class="quote">
+          <summary>Source code in <code>mccole/util.py</code></summary>
+          <div class="highlight"><pre><span></span><code><span class="k">def</span> <span class="nf">make_inclusion_filename</span><span class="p">(</span><span class="n">info</span><span class="p">,</span> <span class="n">name</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Construct full path name.&quot;&quot;&quot;</span>
+    <span class="k">return</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">dirname</span><span class="p">(</span><span class="n">info</span><span class="o">.</span><span class="n">src</span><span class="p">),</span> <span class="n">name</span><span class="p">)</span>
+</code></pre></div>
+        </details>
+    </div>
+
+  </div>
+
+
+
+  <div class="doc doc-object doc-function">
+
+
+
+<h2 id="mccole.util.make_md" class="doc doc-heading">
+<code class="highlight language-python"><span class="n">make_md</span><span class="p">()</span></code>
+
+
+</h2>
+
+    <div class="doc doc-contents ">
+
+      <p>Make Markdown parser.</p>
+
+        <details class="quote">
+          <summary>Source code in <code>mccole/util.py</code></summary>
+          <div class="highlight"><pre><span></span><code><span class="k">def</span> <span class="nf">make_md</span><span class="p">():</span>
+    <span class="sd">&quot;&quot;&quot;Make Markdown parser.&quot;&quot;&quot;</span>
+    <span class="k">return</span> <span class="p">(</span>
+        <span class="n">MarkdownIt</span><span class="p">(</span><span class="s2">&quot;commonmark&quot;</span><span class="p">)</span>
+        <span class="o">.</span><span class="n">enable</span><span class="p">(</span><span class="s2">&quot;table&quot;</span><span class="p">)</span>
+        <span class="o">.</span><span class="n">use</span><span class="p">(</span><span class="n">deflist_plugin</span><span class="p">)</span>
+        <span class="o">.</span><span class="n">use</span><span class="p">(</span><span class="n">front_matter_plugin</span><span class="p">)</span>
+    <span class="p">)</span>
+</code></pre></div>
+        </details>
+    </div>
+
+  </div>
+
+
+
+
+
+
+  </div>
+
+    </div>
+
+  </div>
+              
+            </div>
+          </div>
+          <footer>
+  
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+      
+        <a href="../write/" class="btn btn-neutral float-right" title="Writing Files">Next <span class="icon icon-circle-arrow-right"></span></a>
+      
+      
+        <a href="../tokenize/" class="btn btn-neutral" title="Tokenize Markdown"><span class="icon icon-circle-arrow-left"></span> Previous</a>
+      
+    </div>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <!-- Copyright etc -->
+    
+  </div>
+
+  Built with <a href="https://www.mkdocs.org/">MkDocs</a> using a <a href="https://github.com/snide/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>.
+</footer>
+      
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+
+  <div class="rst-versions" role="note" aria-label="versions">
+  <span class="rst-current-version" data-toggle="rst-current-version">
+    
+        <span>
+          <a href="https://github.com/gvwilson/mccole/" class="fa fa-github" style="color: #fcfcfc"> GitHub</a>
+        </span>
+    
+    
+      <span><a href="../tokenize/" style="color: #fcfcfc">&laquo; Previous</a></span>
+    
+    
+      <span><a href="../write/" style="color: #fcfcfc">Next &raquo;</a></span>
+    
+  </span>
+</div>
+    <script>var base_url = '..';</script>
+    <script src="../js/theme_extra.js" defer></script>
+    <script src="../js/theme.js" defer></script>
+      <script src="../search/main.js" defer></script>
+    <script defer>
+        window.onload = function () {
+            SphinxRtdTheme.Navigation.enable(true);
+        };
+    </script>
+
+</body>
+</html>

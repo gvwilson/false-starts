@@ -1,0 +1,13 @@
+*.pyc
+*~
+.DS_Store
+.bundle
+.jekyll-cache
+.jekyll-metadata
+.sass-cache
+__pycache__
+_cache
+_site
+book.*
+Gemfile.lock
+.ruby-version

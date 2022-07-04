@@ -1,0 +1,3 @@
+# Rendering HTML
+
+::: mccole.render

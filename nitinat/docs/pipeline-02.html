@@ -1,0 +1,420 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Nitinat</title>
+    <link rel="stylesheet" href="theme/nitinat.css">
+    <link rel="stylesheet" href="theme/tango.css">
+  </head>
+  <body>
+    <div class="row">
+      <div class="column smaller">
+        <h2><a href="index.html">Nitinat</a></h2>
+        <p>
+          A model data analysis project in Python
+        </p>
+	<ol type="1">
+  
+  <li>
+    <a href="starting.html">
+      
+        Starting
+      
+    </a>
+  </li>
+  
+  <li>
+    <a href="project.html">
+      
+        Setting Up a Python Project
+      
+    </a>
+  </li>
+  
+  <li>
+    <a href="dataset.html">
+      
+        Handling Data
+      
+    </a>
+  </li>
+  
+  <li>
+    <a href="reproducible.html">
+      
+        Making Tasks Reproducible
+      
+    </a>
+  </li>
+  
+  <li>
+    <a href="results.html">
+      
+        Producing Results
+      
+    </a>
+  </li>
+  
+  <li>
+    <a href="quality.html">
+      
+        Checking Code Quality
+      
+    </a>
+  </li>
+  
+  <li>
+    <a href="setback-01.html">
+      
+        The First Setback
+      
+    </a>
+  </li>
+  
+  <li>
+    <a href="configuration.html">
+      
+        Consistent Configuration
+      
+    </a>
+  </li>
+  
+  <li>
+    <a href="testing.html">
+      
+        Improving Testing
+      
+    </a>
+  </li>
+  
+  <li>
+    <a href="logging.html">
+      
+        Logging
+      
+    </a>
+  </li>
+  
+  <li>
+    <a href="technical-debt-01.html">
+      
+        Technical Debt
+      
+    </a>
+  </li>
+  
+  <li>
+    <a href="parameters.html">
+      
+        Handling Model Parameters
+      
+    </a>
+  </li>
+  
+  <li>
+    <a href="pipeline-01.html">
+      
+        Creating a Pipeline
+      
+    </a>
+  </li>
+  
+  <li>
+    <a href="technical-debt-02.html">
+      
+        Technical Debt Revisited
+      
+    </a>
+  </li>
+  
+  <li>
+    <a href="pipeline-02.html">
+      <strong>
+        Pipeline Revisited
+      </strong>
+    </a>
+  </li>
+  
+  <li>
+    <a href="website-01.html">
+      
+        Creating a Website
+      
+    </a>
+  </li>
+  
+  <li>
+    <a href="pipeline-03.html">
+      
+        A Pipeline with Provenance
+      
+    </a>
+  </li>
+  
+  <li>
+    <a href="website-02.html">
+      
+        Improving the Website
+      
+    </a>
+  </li>
+  
+  <li>
+    <a href="documentation.html">
+      
+        Documenting Code
+      
+    </a>
+  </li>
+  
+  <li>
+    <a href="packaging.html">
+      
+        Creating a Package
+      
+    </a>
+  </li>
+  
+  <li>
+    <a href="ci.html">
+      
+        Continuous Integration
+      
+    </a>
+  </li>
+  
+  <li>
+    <a href="indexing.html">
+      
+        Indexing Datasets
+      
+    </a>
+  </li>
+  
+  <li>
+    <a href="dependencies.html">
+      
+        Handling Task Dependencies
+      
+    </a>
+  </li>
+  
+  <li>
+    <a href="layered.html">
+      
+        Layered Configuration
+      
+    </a>
+  </li>
+  
+  <li>
+    <a href="database.html">
+      
+        Accessing a Database
+      
+    </a>
+  </li>
+  
+</ol>
+<ol type="A">
+  
+  <li>
+    <a href="data.html">
+      
+        Parameter Sets
+      
+    </a>
+  </li>
+  
+  <li>
+    <a href="license.html">
+      
+        License
+      
+    </a>
+  </li>
+  
+  <li>
+    <a href="links.html">
+      
+        Links
+      
+    </a>
+  </li>
+  
+  <li>
+    <a href="credits.html">
+      
+        Credits
+      
+    </a>
+  </li>
+  
+</ol>
+
+	<ul>
+	  <li><a href="nitinat/index.html">Documentation</a></li>
+	  <li><a href="https://github.com/gvwilson/nitinat/">Source</a></li>
+	</ul>
+      </div>
+      <div class="column bordered">
+        <h1>Pipeline Revisited</h1>
+        <ul>
+<li>We want global configuration (passed to all stages) as well as local (per-stage)<ul>
+<li>I.e., a configuration file like this:</li>
+</ul>
+</li>
+</ul>
+<div class="highlight"><pre><span></span><code><span class="p p-Indicator">-</span> <span class="nt">overall</span><span class="p">:</span>
+    <span class="nt">debug</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">true</span>
+<span class="p p-Indicator">-</span> <span class="nt">function</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">reader</span>
+<span class="p p-Indicator">-</span> <span class="nt">function</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">head</span>
+  <span class="nt">num</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">1000</span>
+</code></pre></div>
+<ul>
+<li>Would also prefer not to have to pass in all the needed functions separately</li>
+<li>And requiring <code>reader</code> to take <code>None</code> as the first parameter seems clumsy<ul>
+<li>Listen to our code</li>
+</ul>
+</li>
+<li><a href="https://en.wikipedia.org/wiki/Test-driven_development">Test-driven development</a> (TDD) doesn't actually improve productivity (<a href="https://neverworkintheory.org/category/#test-driven-development">evidence</a>)<ul>
+<li>But working backwards from a test you have can be a good way to <em>explain</em> a design</li>
+</ul>
+</li>
+<li>Eventually wrote this:</li>
+</ul>
+<div class="highlight"><pre><span></span><code><span class="k">def</span> <span class="nf">test_pipeline2_two_stage_with_yaml_text</span><span class="p">(</span><span class="n">available</span><span class="p">):</span>
+    <span class="n">config</span> <span class="o">=</span> <span class="n">dedent</span><span class="p">(</span><span class="s2">&quot;&quot;&quot;</span><span class="se">\</span>
+<span class="s2">    - overall:</span>
+<span class="s2">        debug: true</span>
+<span class="s2">    - function: reader</span>
+<span class="s2">    - function: head</span>
+<span class="s2">      num: 1000</span>
+<span class="s2">    &quot;&quot;&quot;</span><span class="p">)</span>
+    <span class="n">config</span> <span class="o">=</span> <span class="n">yaml</span><span class="o">.</span><span class="n">safe_load</span><span class="p">(</span><span class="n">config</span><span class="p">)</span>
+    <span class="k">with</span> <span class="n">patch</span><span class="p">(</span><span class="n">READ_CONFIG</span><span class="p">,</span> <span class="n">return_value</span><span class="o">=</span><span class="n">config</span><span class="p">):</span>
+        <span class="n">result</span> <span class="o">=</span> <span class="n">pipeline</span><span class="p">(</span><span class="s2">&quot;test.yml&quot;</span><span class="p">,</span> <span class="n">available</span><span class="p">)</span>
+        <span class="k">assert</span> <span class="nb">len</span><span class="p">(</span><span class="n">result</span><span class="p">)</span> <span class="o">==</span> <span class="mi">1</span>
+</code></pre></div>
+<ul>
+<li>The <code>available</code> fixture is a dictionary of functions the pipeline can use<ul>
+<li><code>textwrap.dedent</code> moves text back to the left margin<ul>
+<li>So this is what our YAML configuration file would look like</li>
+</ul>
+</li>
+<li>The new <code>pipeline</code> function always starts with a reader<ul>
+<li>That's probably too far the other way</li>
+</ul>
+</li>
+<li>The global <code>debug</code> flag overrides the <code>num</code> setting in <code>head</code>:</li>
+</ul>
+</li>
+</ul>
+<div class="highlight"><pre><span></span><code><span class="k">def</span> <span class="nf">head</span><span class="p">(</span><span class="n">df</span><span class="p">,</span> <span class="n">num</span><span class="p">,</span> <span class="n">debug</span><span class="o">=</span><span class="kc">False</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;To demonstrate pipeline operation.&quot;&quot;&quot;</span>
+    <span class="k">return</span> <span class="n">df</span><span class="o">.</span><span class="n">head</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span> <span class="k">if</span> <span class="n">debug</span> <span class="k">else</span> <span class="n">df</span><span class="o">.</span><span class="n">head</span><span class="p">(</span><span class="n">num</span><span class="p">)</span>
+</code></pre></div>
+<ul>
+<li><code>debug</code> has a default value so we don't have to provide it every time</li>
+<li>The revised <code>pipeline</code> function is:</li>
+</ul>
+<div class="highlight"><pre><span></span><code><span class="k">def</span> <span class="nf">pipeline</span><span class="p">(</span><span class="n">config_file</span><span class="p">,</span> <span class="n">available</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Construct and run a processing pipeline.&quot;&quot;&quot;</span>
+    <span class="c1"># Set up.</span>
+    <span class="n">raw_config</span> <span class="o">=</span> <span class="n">_read_config</span><span class="p">(</span><span class="n">config_file</span><span class="p">)</span>
+    <span class="n">overall</span><span class="p">,</span> <span class="n">stages</span> <span class="o">=</span> <span class="n">split_config</span><span class="p">(</span><span class="n">raw_config</span><span class="p">)</span>
+
+    <span class="c1"># Run each stage in turn.</span>
+    <span class="n">data</span> <span class="o">=</span> <span class="kc">None</span>
+    <span class="k">for</span> <span class="n">stage</span> <span class="ow">in</span> <span class="n">stages</span><span class="p">:</span>
+        <span class="n">func</span> <span class="o">=</span> <span class="n">get_function</span><span class="p">(</span><span class="n">available</span><span class="p">,</span> <span class="n">stage</span><span class="p">[</span><span class="s2">&quot;function&quot;</span><span class="p">])</span>
+        <span class="n">params</span> <span class="o">=</span> <span class="n">overall</span> <span class="o">|</span> <span class="p">{</span><span class="n">k</span><span class="p">:</span> <span class="n">stage</span><span class="p">[</span><span class="n">k</span><span class="p">]</span> <span class="k">for</span> <span class="n">k</span> <span class="ow">in</span> <span class="n">stage</span> <span class="k">if</span> <span class="n">k</span> <span class="o">!=</span> <span class="s2">&quot;function&quot;</span><span class="p">}</span>
+        <span class="n">data</span> <span class="o">=</span> <span class="n">func</span><span class="p">(</span><span class="o">**</span><span class="n">params</span><span class="p">)</span> <span class="k">if</span> <span class="p">(</span><span class="n">data</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">)</span> <span class="k">else</span> <span class="n">func</span><span class="p">(</span><span class="n">data</span><span class="p">,</span> <span class="o">**</span><span class="n">params</span><span class="p">)</span>
+
+    <span class="c1"># Return final result.</span>
+    <span class="k">return</span> <span class="n">data</span>
+</code></pre></div>
+<ul>
+<li>Read the configuration file<ul>
+<li>Again, keep this in a separate function for easy mocking</li>
+</ul>
+</li>
+<li>Split the configuration into overall and per-stage</li>
+<li>Initially have no data</li>
+<li>For each stage:<ul>
+<li>Get the function</li>
+<li>Construct parameters: per-stage overrides overall</li>
+<li>Call the function with data if we have any or with nothing if we don't</li>
+</ul>
+</li>
+<li>Splitting the configuration is straightforward:</li>
+</ul>
+<div class="highlight"><pre><span></span><code><span class="k">def</span> <span class="nf">split_config</span><span class="p">(</span><span class="n">raw</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Split configuration into overall and per-stage.&quot;&quot;&quot;</span>
+    <span class="k">for</span> <span class="p">(</span><span class="n">i</span><span class="p">,</span> <span class="n">entry</span><span class="p">)</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">raw</span><span class="p">):</span>
+        <span class="k">if</span> <span class="s2">&quot;overall&quot;</span> <span class="ow">in</span> <span class="n">entry</span><span class="p">:</span>
+            <span class="k">del</span> <span class="n">raw</span><span class="p">[</span><span class="n">i</span><span class="p">]</span>
+            <span class="k">return</span> <span class="n">entry</span><span class="p">[</span><span class="s2">&quot;overall&quot;</span><span class="p">],</span> <span class="n">raw</span>
+    <span class="k">return</span> <span class="p">{},</span> <span class="n">raw</span>
+</code></pre></div>
+<ul>
+<li>OK, I lied: it took a couple of tries to come up with this<ul>
+<li>The overall configuration is a dictionary with one key ("overall")</li>
+</ul>
+</li>
+<li>Getting the function is straightforward:</li>
+</ul>
+<div class="highlight"><pre><span></span><code><span class="k">def</span> <span class="nf">get_function</span><span class="p">(</span><span class="n">available</span><span class="p">,</span> <span class="n">name</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Look up a function by name.&quot;&quot;&quot;</span>
+    <span class="k">assert</span> <span class="n">name</span> <span class="ow">in</span> <span class="n">available</span>
+    <span class="k">return</span> <span class="n">available</span><span class="p">[</span><span class="n">name</span><span class="p">]</span>
+</code></pre></div>
+<ul>
+<li>Could move this inline<ul>
+<li>But it's likely to become more complicated...</li>
+<li>...and we're going to want to add better error handling than a simple <code>assert</code></li>
+<li>Experience (i.e., past difficulties) tell us when to plan and design ahead</li>
+</ul>
+</li>
+<li>Lots here to test, but one key feature is that we can debug individual stages:</li>
+</ul>
+<div class="highlight"><pre><span></span><code><span class="n">READER_SHORTENED_LEN</span> <span class="o">=</span> <span class="mi">3</span>
+
+<span class="k">def</span> <span class="nf">reader</span><span class="p">(</span><span class="n">debug</span><span class="o">=</span><span class="kc">False</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;To demonstrate pipeline operation.&quot;&quot;&quot;</span>
+    <span class="n">df</span> <span class="o">=</span> <span class="n">simple_df</span><span class="p">()</span>
+    <span class="k">return</span> <span class="n">df</span><span class="o">.</span><span class="n">head</span><span class="p">(</span><span class="n">READER_SHORTENED_LEN</span><span class="p">)</span> <span class="k">if</span> <span class="n">debug</span> <span class="k">else</span> <span class="n">df</span>
+
+<span class="k">def</span> <span class="nf">test_pipeline2_single_stage_with_debugging</span><span class="p">(</span><span class="n">available</span><span class="p">):</span>
+    <span class="n">config</span> <span class="o">=</span> <span class="p">[{</span><span class="s2">&quot;function&quot;</span><span class="p">:</span> <span class="s2">&quot;reader&quot;</span><span class="p">,</span> <span class="s2">&quot;debug&quot;</span><span class="p">:</span> <span class="kc">True</span><span class="p">}]</span>
+    <span class="k">with</span> <span class="n">patch</span><span class="p">(</span><span class="n">READ_CONFIG</span><span class="p">,</span> <span class="n">return_value</span><span class="o">=</span><span class="n">config</span><span class="p">):</span>
+        <span class="n">result</span> <span class="o">=</span> <span class="n">pipeline</span><span class="p">(</span><span class="s2">&quot;test.yml&quot;</span><span class="p">,</span> <span class="n">available</span><span class="p">)</span>
+        <span class="k">assert</span> <span class="nb">len</span><span class="p">(</span><span class="n">result</span><span class="p">)</span> <span class="o">==</span> <span class="n">READER_SHORTENED_LEN</span>
+</code></pre></div>
+<ul>
+<li>Test code should be written as cleanly as production code<ul>
+<li>Which is why this code now has <code>READER_SHORTENED_LEN</code></li>
+<li>Because an earlier version of the just used the number 3...</li>
+<li>...which stopped working when we changed it in one place but not another</li>
+</ul>
+</li>
+<li>One final step: <code>inv coverage</code><ul>
+<li>Tells us that <code>_read_config</code> isn't being tested</li>
+<li>Could add a test that reads from an actual file...</li>
+<li>...or add a directive in a specially-formatted comment telling coverage not to worry about it</li>
+</ul>
+</li>
+</ul>
+<div class="highlight"><pre><span></span><code><span class="k">def</span> <span class="nf">_read_config</span><span class="p">(</span><span class="n">filename</span><span class="p">):</span>  <span class="c1"># pragma: no cover</span>
+    <span class="sd">&quot;&quot;&quot;Read YAML configuration file.&quot;&quot;&quot;</span>
+    <span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="n">filename</span><span class="p">,</span> <span class="s2">&quot;r&quot;</span><span class="p">)</span> <span class="k">as</span> <span class="n">reader</span><span class="p">:</span>
+        <span class="k">return</span> <span class="n">yaml</span><span class="o">.</span><span class="n">safe_load</span><span class="p">(</span><span class="n">reader</span><span class="p">)</span>
+</code></pre></div>
+<ul>
+<li>Please use these sparingly</li>
+</ul>
+      </div>
+    </div>
+  </body>
+</html>

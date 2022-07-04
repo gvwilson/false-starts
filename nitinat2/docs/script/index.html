@@ -1,0 +1,462 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="icon" type="image/x-icon" href="../favicon.ico">
+    <title>Nitinat</title>
+    <link rel="stylesheet" href="../mccole.css">
+    <link rel="stylesheet" href="../tango.css">
+    <script type="text/x-mathjax-config">
+      MathJax.Hub.Config({
+        TeX: { equationNumbers: { autoNumber: "AMS" } }
+      })
+    </script>
+    <script type="text/javascript" async src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+  </head>
+  <body>
+    <div class="row">
+      <div class="column">
+        <h2><a href="../">Nitinat</a></h2>
+        <p>
+          A model data analysis project
+        </p>
+	<ol type="1">
+  
+  <li>
+    <a href="../starting/">
+      
+        Starting
+      
+    </a>
+  </li>
+  
+  <li>
+    <a href="../project/">
+      
+        Setting Up a Python Project
+      
+    </a>
+  </li>
+  
+  <li>
+    <a href="../dataset/">
+      
+        Getting a Dataset
+      
+    </a>
+  </li>
+  
+  <li>
+    <a href="../script/">
+      <strong>
+        Writing Robust Scripts
+      </strong>
+    </a>
+  </li>
+  
+  <li>
+    <a href="../unittest/">
+      
+        Unit Testing
+      
+    </a>
+  </li>
+  
+  <li>
+    <a href="../automation/">
+      
+        Automation
+      
+    </a>
+  </li>
+  
+  <li>
+    <a href="../caching/">
+      
+        Caching
+      
+    </a>
+  </li>
+  
+  <li>
+    <a href="../dependencies/">
+      
+        Dependencies
+      
+    </a>
+  </li>
+  
+  <li>
+    <a href="../pipeline/">
+      
+        Building a Pipeline
+      
+    </a>
+  </li>
+  
+  <li>
+    <a href="../configuration/">
+      
+        Configuration
+      
+    </a>
+  </li>
+  
+  <li>
+    <a href="../provenance/">
+      
+        Provenance
+      
+    </a>
+  </li>
+  
+  <li>
+    <a href="../organizing/">
+      
+        Organizing a Data Analysis
+      
+    </a>
+  </li>
+  
+  <li>
+    <a href="../documentation/">
+      
+        Documentation
+      
+    </a>
+  </li>
+  
+  <li>
+    <a href="../logging/">
+      
+        Logging
+      
+    </a>
+  </li>
+  
+  <li>
+    <a href="../coverage/">
+      
+        Code Coverage
+      
+    </a>
+  </li>
+  
+  <li>
+    <a href="../packaging/">
+      
+        Packaging
+      
+    </a>
+  </li>
+  
+  <li>
+    <a href="../website/">
+      
+        Build a Website
+      
+    </a>
+  </li>
+  
+  <li>
+    <a href="../indexing/">
+      
+        Indexing
+      
+    </a>
+  </li>
+  
+  <li>
+    <a href="../approximation/">
+      
+        Approximation
+      
+    </a>
+  </li>
+  
+  <li>
+    <a href="../database/">
+      
+        Using a Database
+      
+    </a>
+  </li>
+  
+  <li>
+    <a href="../service/">
+      
+        Creating a Web Service
+      
+    </a>
+  </li>
+  
+</ol>
+<ol type="A">
+  
+  <li>
+    <a href="../license/">
+      
+        License
+      
+    </a>
+  </li>
+  
+  <li>
+    <a href="../conduct/">
+      
+        Code of Conduct
+      
+    </a>
+  </li>
+  
+  <li>
+    <a href="../links/">
+      
+        Links
+      
+    </a>
+  </li>
+  
+  <li>
+    <a href="../credits/">
+      
+        Credits
+      
+    </a>
+  </li>
+  
+</ol>
+
+      </div>
+      <div class="column bordered">
+        <h1>Writing Robust Scripts</h1>
+        <ul>
+<li>First run crashed after a few minutes because of a missing sub-page</li>
+<li>So add a check on the HTTP status codes from queries<ul>
+<li>Record <a class="glossref" href="../gloss/#na" markdown="1"><code>NA</code></a> for those pages</li>
+<li>And hope that analysis software interprets this as "not available"
+    rather than Namibia or the element sodium</li>
+</ul>
+</li>
+<li>Whole thing took about 8.5 hours<ul>
+<li>So we should add a <a class="glossref" href="../gloss/#restart" markdown="1">restart</a> capability</li>
+</ul>
+</li>
+<li>And those options should be documented</li>
+<li>Time for <a class="glossref" href="../gloss/#taschuks_rules" markdown="1">Taschuk's Rules</a> [<a href="../bib/#Taschuk2017">Taschuk2017</a>]:<ol>
+<li>Use version control.</li>
+<li>Document your code and usage</li>
+<li>Make common operations easy to control.</li>
+<li>Version your releases.</li>
+<li>Reuse software (within reason)</li>
+<li>Rely on build tools and package managers for installation.</li>
+<li>Do not require root or other special privileges to install or run.</li>
+<li>Eliminate hard-coded paths.</li>
+<li>Include a small test set that can be run to ensure the software is actually working.</li>
+<li>Produce identical results when given identical inputs.</li>
+</ol>
+</li>
+<li>And Koch's Amendment: make long-running programs restartable</li>
+<li>Divide the download script into pieces<ul>
+<li>Human beings can only keep \( 7 \pm 2 \) things in working memory at once</li>
+<li>Makes testing easier (<a class="crossref" href="../unittest/">Chapter 5</a>)</li>
+</ul>
+</li>
+<li>Write the <a class="glossref" href="../gloss/#main_driver" markdown="1">main driver</a> first<ul>
+<li>Designing top-down</li>
+<li>Toward a more-or-less understood goal</li>
+</ul>
+</li>
+<li>Read the code aloud to see if it's at a consistent level [<a href="../bib/#Wilson2022">Wilson2022</a>]</li>
+</ul>
+<div class="highlight"><span class="filename">get-release-counts-robust.py</span><pre><span></span><code><span class="kn">import</span> <span class="nn">argparse</span>
+<span class="kn">import</span> <span class="nn">re</span>
+<span class="kn">import</span> <span class="nn">sys</span>
+<span class="kn">import</span> <span class="nn">time</span>
+
+<span class="kn">import</span> <span class="nn">requests</span>
+
+<span class="c1"># ...regular expression patterns...</span>
+
+<span class="k">def</span> <span class="nf">main</span><span class="p">():</span>
+    <span class="sd">&quot;&quot;&quot;Main driver.&quot;&quot;&quot;</span>
+    <span class="n">options</span> <span class="o">=</span> <span class="n">parse_args</span><span class="p">()</span>
+    <span class="n">main_page</span> <span class="o">=</span> <span class="n">get_page</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">DOMAIN</span><span class="si">}</span><span class="s2">/simple/&quot;</span><span class="p">,</span> <span class="kc">True</span><span class="p">)</span>
+    <span class="n">package_urls</span> <span class="o">=</span> <span class="n">get_package_urls</span><span class="p">(</span><span class="n">main_page</span><span class="p">)</span>
+    <span class="n">progress</span> <span class="o">=</span> <span class="n">report_progress</span><span class="p">(</span><span class="n">options</span><span class="p">,</span> <span class="nb">len</span><span class="p">(</span><span class="n">package_urls</span><span class="p">))</span>
+
+    <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Package,Releases&quot;</span><span class="p">)</span>
+    <span class="k">for</span> <span class="n">package</span> <span class="ow">in</span> <span class="n">package_urls</span><span class="p">:</span>
+        <span class="n">name</span> <span class="o">=</span> <span class="n">get_package_name</span><span class="p">(</span><span class="n">package</span><span class="p">)</span>
+        <span class="k">if</span> <span class="n">skip_package</span><span class="p">(</span><span class="n">options</span><span class="p">,</span> <span class="n">name</span><span class="p">):</span>
+            <span class="k">continue</span>
+        <span class="n">count</span> <span class="o">=</span> <span class="n">get_package_count</span><span class="p">(</span><span class="n">package</span><span class="p">)</span>
+        <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">name</span><span class="si">}</span><span class="s2">,</span><span class="si">{</span><span class="n">count</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+        <span class="n">progress</span> <span class="o">=</span> <span class="n">report_progress</span><span class="p">(</span><span class="n">options</span><span class="p">,</span> <span class="n">progress</span><span class="p">,</span> <span class="n">name</span><span class="p">)</span>
+
+
+<span class="c1"># ...function definitions...</span>
+
+
+<span class="k">if</span> <span class="vm">__name__</span> <span class="o">==</span> <span class="s2">&quot;__main__&quot;</span><span class="p">:</span>
+    <span class="n">main</span><span class="p">()</span>
+</code></pre></div>
+<ul>
+<li>Put the functions in alphabetical order<ul>
+<li>There may be a "logical" order...</li>
+<li>...but as soon as there are utilities called by more than one other function,
+    you're trying to linearize a directed graph</li>
+<li>Findability reduces <a class="glossref" href="../gloss/#cognitive_load" markdown="1">cognitive load</a> [<a href="../bib/#Hermans2021">Hermans2021</a>]</li>
+</ul>
+</li>
+<li>But write the functions in that logical order<ul>
+<li>Because you are tracing execution in your head as you code</li>
+</ul>
+</li>
+<li>Handle command-line arguments using <a href="https://docs.python.org/3/library/argparse.html"><code>argparse</code></a></li>
+<li><code>--verbose</code> to turn on reporting<ul>
+<li>We'll look at something better than "print to <code>stderr</code>" <a class="crossref" href="../logging/">Chapter 14</a></li>
+</ul>
+</li>
+<li><code>--after <em>name</em></code> rather than "start with name"
+    because all you can be sure of is the last thing you saw<ul>
+<li>Better implementation would read the last line of the data already downloaded
+    and restart from there</li>
+</ul>
+</li>
+</ul>
+<div class="highlight"><span class="filename">get-release-counts-robust.py</span><pre><span></span><code><span class="k">def</span> <span class="nf">parse_args</span><span class="p">():</span>
+    <span class="sd">&quot;&quot;&quot;Parse command-line arguments.&quot;&quot;&quot;</span>
+    <span class="n">parser</span> <span class="o">=</span> <span class="n">argparse</span><span class="o">.</span><span class="n">ArgumentParser</span><span class="p">()</span>
+    <span class="n">parser</span><span class="o">.</span><span class="n">add_argument</span><span class="p">(</span><span class="s2">&quot;--after&quot;</span><span class="p">,</span> <span class="n">help</span><span class="o">=</span><span class="s2">&quot;Start recording after this package&quot;</span><span class="p">)</span>
+    <span class="n">parser</span><span class="o">.</span><span class="n">add_argument</span><span class="p">(</span><span class="s2">&quot;--verbose&quot;</span><span class="p">,</span> <span class="n">action</span><span class="o">=</span><span class="s2">&quot;store_true&quot;</span><span class="p">,</span> <span class="n">help</span><span class="o">=</span><span class="s2">&quot;Report progress&quot;</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">parser</span><span class="o">.</span><span class="n">parse_args</span><span class="p">()</span>
+</code></pre></div>
+<ul>
+<li>Get a page<ul>
+<li>"Just" a wrapper around <code>requests.get</code></li>
+<li>But testing is easier if we only have one thing to replace</li>
+<li>And wrapping it ensures consistent error handling</li>
+</ul>
+</li>
+<li>Allow for the fact that the main page is required but package pages are not</li>
+</ul>
+<div class="highlight"><span class="filename">get-release-counts-robust.py</span><pre><span></span><code><span class="k">def</span> <span class="nf">get_page</span><span class="p">(</span><span class="n">url</span><span class="p">,</span> <span class="n">required</span><span class="o">=</span><span class="kc">False</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Get a page; fail if required but not available.&quot;&quot;&quot;</span>
+    <span class="n">resp</span> <span class="o">=</span> <span class="n">requests</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">url</span><span class="p">)</span>
+    <span class="k">if</span> <span class="n">resp</span><span class="o">.</span><span class="n">status_code</span> <span class="o">==</span> <span class="mi">200</span><span class="p">:</span>
+        <span class="k">return</span> <span class="n">resp</span><span class="o">.</span><span class="n">text</span>
+    <span class="k">assert</span> <span class="ow">not</span> <span class="n">required</span><span class="p">,</span> <span class="sa">f</span><span class="s2">&quot;Unable to get </span><span class="si">{</span><span class="n">url</span><span class="si">}</span><span class="s2">: </span><span class="si">{</span><span class="n">resp</span><span class="o">.</span><span class="n">status_code</span><span class="si">}</span><span class="s2">&quot;</span>
+    <span class="k">return</span> <span class="kc">None</span>
+</code></pre></div>
+<ul>
+<li>Get the package count from the main page<ul>
+<li>This could have been left inline, but it sounded off-level when read aloud</li>
+</ul>
+</li>
+<li>Get the package count or <code>NA</code> from a package page<ul>
+<li><code>main</code> doesn't need to know we're handling this specially</li>
+</ul>
+</li>
+</ul>
+<div class="highlight"><span class="filename">get-release-counts-robust.py</span><pre><span></span><code><span class="k">def</span> <span class="nf">get_package_urls</span><span class="p">(</span><span class="n">page</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Extract package URLs from main page.&quot;&quot;&quot;</span>
+    <span class="k">return</span> <span class="n">RE_PACKAGE</span><span class="o">.</span><span class="n">findall</span><span class="p">(</span><span class="n">page</span><span class="p">)</span>
+
+<span class="k">def</span> <span class="nf">get_package_count</span><span class="p">(</span><span class="n">package</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Get the package page and extract count or NA.&quot;&quot;&quot;</span>
+    <span class="n">url</span> <span class="o">=</span> <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">DOMAIN</span><span class="si">}{</span><span class="n">package</span><span class="si">}</span><span class="s2">&quot;</span>
+    <span class="n">page</span> <span class="o">=</span> <span class="n">get_page</span><span class="p">(</span><span class="n">url</span><span class="p">)</span>
+    <span class="k">if</span> <span class="ow">not</span> <span class="n">page</span><span class="p">:</span>
+        <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Cannot get </span><span class="si">{</span><span class="n">url</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">,</span> <span class="n">file</span><span class="o">=</span><span class="n">sys</span><span class="o">.</span><span class="n">stderr</span><span class="p">)</span>
+        <span class="k">return</span> <span class="s2">&quot;NA&quot;</span>
+    <span class="k">return</span> <span class="nb">len</span><span class="p">(</span><span class="n">RE_RELEASE</span><span class="o">.</span><span class="n">findall</span><span class="p">(</span><span class="n">page</span><span class="p">))</span>
+</code></pre></div>
+<ul>
+<li>Went back and forth on whether this should be <code>skip_package</code> or <code>process_package</code><ul>
+<li>I.e., is the code more naturally "do this" or "don't do that"?</li>
+</ul>
+</li>
+<li>Another option would have been <code>handle_package</code> in <code>main</code> and to shorten the loop</li>
+</ul>
+<div class="highlight"><span class="filename">get-release-counts-robust.py</span><pre><span></span><code><span class="k">def</span> <span class="nf">skip_package</span><span class="p">(</span><span class="n">options</span><span class="p">,</span> <span class="n">name</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Should we skip this package?&quot;&quot;&quot;</span>
+    <span class="k">return</span> <span class="p">(</span><span class="n">options</span><span class="o">.</span><span class="n">after</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">)</span> <span class="ow">and</span> <span class="p">(</span><span class="n">name</span> <span class="o">&lt;=</span> <span class="n">options</span><span class="o">.</span><span class="n">after</span><span class="p">)</span>
+</code></pre></div>
+<ul>
+<li>Reporting progress is actually the most complex part of this code<ul>
+<li>Keeping track requires several bits of information,
+    so put them in a dictionary instead of passing around three variables</li>
+<li>Call <code>report_progress</code> with <code>None</code> to initialize that dictionary</li>
+<li>Call it with a dictionary to update and report</li>
+<li>"Initialize or use" is a common <a class="glossref" href="../gloss/#design_pattern" markdown="1">design pattern</a></li>
+</ul>
+</li>
+</ul>
+<div class="highlight"><span class="filename">get-release-counts-robust.py</span><pre><span></span><code><span class="k">def</span> <span class="nf">report_progress</span><span class="p">(</span><span class="n">options</span><span class="p">,</span> <span class="n">arg</span><span class="p">,</span> <span class="n">name</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Report progress and update.&quot;&quot;&quot;</span>
+    <span class="c1"># Initializing with total package count.</span>
+    <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">arg</span><span class="p">,</span> <span class="nb">int</span><span class="p">):</span>
+        <span class="k">return</span> <span class="p">{</span><span class="s2">&quot;expected&quot;</span><span class="p">:</span> <span class="n">arg</span><span class="p">,</span> <span class="s2">&quot;seen&quot;</span><span class="p">:</span> <span class="mi">0</span><span class="p">,</span> <span class="s2">&quot;start&quot;</span><span class="p">:</span> <span class="n">time</span><span class="o">.</span><span class="n">time</span><span class="p">()}</span>
+
+    <span class="k">assert</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">arg</span><span class="p">,</span> <span class="nb">dict</span><span class="p">),</span> <span class="sa">f</span><span class="s2">&quot;Expected int or dict&quot;</span>
+    <span class="n">arg</span><span class="p">[</span><span class="s2">&quot;seen&quot;</span><span class="p">]</span> <span class="o">+=</span> <span class="mi">1</span>
+    <span class="n">elapsed</span> <span class="o">=</span> <span class="n">time</span><span class="o">.</span><span class="n">time</span><span class="p">()</span> <span class="o">-</span> <span class="n">arg</span><span class="p">[</span><span class="s2">&quot;start&quot;</span><span class="p">]</span>
+    <span class="n">t_per_package</span> <span class="o">=</span> <span class="n">elapsed</span> <span class="o">/</span> <span class="n">arg</span><span class="p">[</span><span class="s2">&quot;seen&quot;</span><span class="p">]</span>
+    <span class="n">remaining</span> <span class="o">=</span> <span class="p">(</span><span class="n">arg</span><span class="p">[</span><span class="s2">&quot;expected&quot;</span><span class="p">]</span> <span class="o">-</span> <span class="n">arg</span><span class="p">[</span><span class="s2">&quot;seen&quot;</span><span class="p">])</span> <span class="o">*</span> <span class="n">t_per_package</span>
+    <span class="k">if</span> <span class="n">options</span><span class="o">.</span><span class="n">verbose</span><span class="p">:</span>
+        <span class="nb">print</span><span class="p">(</span>
+            <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">name</span><span class="si">}</span><span class="s2"> </span><span class="si">{</span><span class="n">arg</span><span class="p">[</span><span class="s1">&#39;seen&#39;</span><span class="p">]</span><span class="si">}</span><span class="s2"> @ </span><span class="si">{</span><span class="n">elapsed</span><span class="si">:</span><span class="s2">.1f</span><span class="si">}</span><span class="s2"> =&gt; </span><span class="si">{</span><span class="n">remaining</span><span class="si">:</span><span class="s2">.1f</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">,</span>
+            <span class="n">file</span><span class="o">=</span><span class="n">sys</span><span class="o">.</span><span class="n">stderr</span><span class="p">,</span>
+        <span class="p">)</span>
+    <span class="k">return</span> <span class="n">arg</span>
+</code></pre></div>
+<ul>
+<li>Now for a little interactive testing</li>
+</ul>
+<div class="highlight"><pre><span></span><code>$ python get-release-counts-robust.py
+<span class="m">0</span>,1
+<span class="m">0</span>-0,0
+00000a,1
+<span class="m">0</span>-0-1,1
+^C
+</code></pre></div>
+<ul>
+<li>Does the verbose flag work?</li>
+</ul>
+<div class="highlight"><pre><span></span><code>$ python get-release-counts-robust.py --verbose
+<span class="m">0</span>,1
+<span class="m">0</span> <span class="m">1</span> @ <span class="m">0</span>.1 <span class="o">=</span>&gt; <span class="m">52028</span>.1
+<span class="m">0</span>-0,0
+<span class="m">0</span>-0 <span class="m">2</span> @ <span class="m">0</span>.3 <span class="o">=</span>&gt; <span class="m">58556</span>.5
+^C
+</code></pre></div>
+<ul>
+<li>Easier to see if we redirect <code>stdout</code> to <code>/dev/null</code></li>
+</ul>
+<div class="highlight"><pre><span></span><code>$ python get-release-counts-robust.py --verbose &gt; /dev/null
+<span class="m">0</span> <span class="m">1</span> @ <span class="m">0</span>.2 <span class="o">=</span>&gt; <span class="m">55858</span>.6
+<span class="m">0</span>-0 <span class="m">2</span> @ <span class="m">0</span>.3 <span class="o">=</span>&gt; <span class="m">56518</span>.2
+00000a <span class="m">3</span> @ <span class="m">0</span>.5 <span class="o">=</span>&gt; <span class="m">56123</span>.8
+^C
+</code></pre></div>
+<ul>
+<li>Start after some package?</li>
+</ul>
+<div class="highlight"><pre><span></span><code>$ python get-release-counts-robust.py --verbose --after pytest &gt; /dev/null
+pytest123 <span class="m">1</span> @ <span class="m">0</span>.3 <span class="o">=</span>&gt; <span class="m">104411</span>.9
+pytest2md <span class="m">2</span> @ <span class="m">0</span>.5 <span class="o">=</span>&gt; <span class="m">87620</span>.0
+pytest30 <span class="m">3</span> @ <span class="m">0</span>.6 <span class="o">=</span>&gt; <span class="m">79357</span>.2
+^C
+</code></pre></div>
+<ul>
+<li>This code is more than three times as long as the original</li>
+<li>But it will be easier for the next person (including our future self) to understand</li>
+<li>And it's going to be a lot easier to test,
+    because we don't want to be testing by hand as the code evolves</li>
+</ul>
+      </div>
+    </div>
+  </body>
+</html>

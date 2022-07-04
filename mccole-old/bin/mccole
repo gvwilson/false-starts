@@ -1,0 +1,9 @@
+#!/usr/bin/env python
+
+"""Make McCole module runnable."""
+
+import sys
+
+from mccole import mccole
+
+mccole.main(sys.argv[1:])

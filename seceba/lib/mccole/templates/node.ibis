@@ -1,0 +1,18 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    {% include "preamble.html" %}
+    <title>{{ site.title }}{% if node.title %}: {{ node.title }}{% endif %}</title>
+  </head>
+  <body>
+    <div class="row">
+      <div class="column">
+	{% include "contents.html" %}
+      </div>
+      <div class="column bordered">
+	{% include "title.html" %}
+        {{ node.html }}
+      </div>
+    </div>
+  </body>
+</html>

@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>{{ site.title }}: {{ title }}</title>
+    <link rel="stylesheet" href="@root/theme/nitinat.css">
+    <link rel="stylesheet" href="@root/theme/tango.css">
+  </head>
+  <body>
+    <h1>{{ site.title}}: {{ title }}</h1>
+    <table>
+      <tr><th>Key</th><th>Value</th></tr>
+      {% for key, value in data.items() %}
+      <tr><td>{{ key }}</td><td>{{ value }}</td></tr>
+      {% endfor %}
+    </table>
+  </body>
+</html>

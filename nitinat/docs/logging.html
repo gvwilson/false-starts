@@ -1,0 +1,358 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Nitinat</title>
+    <link rel="stylesheet" href="theme/nitinat.css">
+    <link rel="stylesheet" href="theme/tango.css">
+  </head>
+  <body>
+    <div class="row">
+      <div class="column smaller">
+        <h2><a href="index.html">Nitinat</a></h2>
+        <p>
+          A model data analysis project in Python
+        </p>
+	<ol type="1">
+  
+  <li>
+    <a href="starting.html">
+      
+        Starting
+      
+    </a>
+  </li>
+  
+  <li>
+    <a href="project.html">
+      
+        Setting Up a Python Project
+      
+    </a>
+  </li>
+  
+  <li>
+    <a href="dataset.html">
+      
+        Handling Data
+      
+    </a>
+  </li>
+  
+  <li>
+    <a href="reproducible.html">
+      
+        Making Tasks Reproducible
+      
+    </a>
+  </li>
+  
+  <li>
+    <a href="results.html">
+      
+        Producing Results
+      
+    </a>
+  </li>
+  
+  <li>
+    <a href="quality.html">
+      
+        Checking Code Quality
+      
+    </a>
+  </li>
+  
+  <li>
+    <a href="setback-01.html">
+      
+        The First Setback
+      
+    </a>
+  </li>
+  
+  <li>
+    <a href="configuration.html">
+      
+        Consistent Configuration
+      
+    </a>
+  </li>
+  
+  <li>
+    <a href="testing.html">
+      
+        Improving Testing
+      
+    </a>
+  </li>
+  
+  <li>
+    <a href="logging.html">
+      <strong>
+        Logging
+      </strong>
+    </a>
+  </li>
+  
+  <li>
+    <a href="technical-debt-01.html">
+      
+        Technical Debt
+      
+    </a>
+  </li>
+  
+  <li>
+    <a href="parameters.html">
+      
+        Handling Model Parameters
+      
+    </a>
+  </li>
+  
+  <li>
+    <a href="pipeline-01.html">
+      
+        Creating a Pipeline
+      
+    </a>
+  </li>
+  
+  <li>
+    <a href="technical-debt-02.html">
+      
+        Technical Debt Revisited
+      
+    </a>
+  </li>
+  
+  <li>
+    <a href="pipeline-02.html">
+      
+        Pipeline Revisited
+      
+    </a>
+  </li>
+  
+  <li>
+    <a href="website-01.html">
+      
+        Creating a Website
+      
+    </a>
+  </li>
+  
+  <li>
+    <a href="pipeline-03.html">
+      
+        A Pipeline with Provenance
+      
+    </a>
+  </li>
+  
+  <li>
+    <a href="website-02.html">
+      
+        Improving the Website
+      
+    </a>
+  </li>
+  
+  <li>
+    <a href="documentation.html">
+      
+        Documenting Code
+      
+    </a>
+  </li>
+  
+  <li>
+    <a href="packaging.html">
+      
+        Creating a Package
+      
+    </a>
+  </li>
+  
+  <li>
+    <a href="ci.html">
+      
+        Continuous Integration
+      
+    </a>
+  </li>
+  
+  <li>
+    <a href="indexing.html">
+      
+        Indexing Datasets
+      
+    </a>
+  </li>
+  
+  <li>
+    <a href="dependencies.html">
+      
+        Handling Task Dependencies
+      
+    </a>
+  </li>
+  
+  <li>
+    <a href="layered.html">
+      
+        Layered Configuration
+      
+    </a>
+  </li>
+  
+  <li>
+    <a href="database.html">
+      
+        Accessing a Database
+      
+    </a>
+  </li>
+  
+</ol>
+<ol type="A">
+  
+  <li>
+    <a href="data.html">
+      
+        Parameter Sets
+      
+    </a>
+  </li>
+  
+  <li>
+    <a href="license.html">
+      
+        License
+      
+    </a>
+  </li>
+  
+  <li>
+    <a href="links.html">
+      
+        Links
+      
+    </a>
+  </li>
+  
+  <li>
+    <a href="credits.html">
+      
+        Credits
+      
+    </a>
+  </li>
+  
+</ol>
+
+	<ul>
+	  <li><a href="nitinat/index.html">Documentation</a></li>
+	  <li><a href="https://github.com/gvwilson/nitinat/">Source</a></li>
+	</ul>
+      </div>
+      <div class="column bordered">
+        <h1>Logging</h1>
+        <ul>
+<li>Please use an interactive debugger rather than <code>print</code> statements when you're developing or debugging</li>
+<li>But please also add some logging to any code that's going into production<ul>
+<li>Like <code>print</code>, but the level of detail and the destination can be configured without changing the code</li>
+</ul>
+</li>
+<li>Python's <code>logging</code> library takes a few steps to set up in <code>__init__.py</code>:</li>
+</ul>
+<div class="highlight"><pre><span></span><code><span class="kn">import</span> <span class="nn">logging</span>
+<span class="kn">import</span> <span class="nn">time</span>
+
+<span class="n">CONFIG</span> <span class="o">=</span> <span class="p">{</span>
+    <span class="s2">&quot;LOGGER&quot;</span><span class="p">:</span> <span class="kc">None</span><span class="p">,</span>
+    <span class="s2">&quot;LOGGING_NAME&quot;</span><span class="p">:</span> <span class="s2">&quot;Nitinat&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;LOGGING_LEVEL&quot;</span><span class="p">:</span> <span class="s2">&quot;warn&quot;</span><span class="p">,</span>
+<span class="p">}</span>
+
+<span class="k">def</span> <span class="nf">get_logger</span><span class="p">():</span>
+    <span class="sd">&quot;&quot;&quot;Get the logger used by this module.&quot;&quot;&quot;</span>
+    <span class="k">if</span> <span class="n">CONFIG</span><span class="p">[</span><span class="s2">&quot;LOGGER&quot;</span><span class="p">]</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+        <span class="n">name</span> <span class="o">=</span> <span class="n">CONFIG</span><span class="p">[</span><span class="s2">&quot;LOGGING_NAME&quot;</span><span class="p">]</span>
+        <span class="n">logger</span> <span class="o">=</span> <span class="n">logging</span><span class="o">.</span><span class="n">getLogger</span><span class="p">(</span><span class="n">name</span><span class="p">)</span>
+        <span class="n">logger</span><span class="o">.</span><span class="n">setLevel</span><span class="p">(</span><span class="n">CONFIG</span><span class="p">[</span><span class="s2">&quot;LOGGING_LEVEL&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">upper</span><span class="p">())</span>
+        <span class="n">formatter</span> <span class="o">=</span> <span class="n">logging</span><span class="o">.</span><span class="n">Formatter</span><span class="p">(</span>
+            <span class="n">fmt</span><span class="o">=</span><span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">name</span><span class="si">}</span><span class="s2"> %(asctime)s %(message)s&quot;</span><span class="p">,</span>
+            <span class="n">datefmt</span><span class="o">=</span><span class="s2">&quot;%y-%m-</span><span class="si">%d</span><span class="s2">:%H:%M:%S&quot;</span><span class="p">,</span>
+        <span class="p">)</span>
+        <span class="n">formatter</span><span class="o">.</span><span class="n">converter</span> <span class="o">=</span> <span class="n">time</span><span class="o">.</span><span class="n">gmtime</span>
+        <span class="n">handler</span> <span class="o">=</span> <span class="n">logging</span><span class="o">.</span><span class="n">StreamHandler</span><span class="p">()</span>
+        <span class="n">handler</span><span class="o">.</span><span class="n">setFormatter</span><span class="p">(</span><span class="n">formatter</span><span class="p">)</span>
+        <span class="n">logger</span><span class="o">.</span><span class="n">addHandler</span><span class="p">(</span><span class="n">handler</span><span class="p">)</span>
+        <span class="n">CONFIG</span><span class="p">[</span><span class="s2">&quot;LOGGER&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">logger</span>
+    <span class="k">return</span> <span class="n">CONFIG</span><span class="p">[</span><span class="s2">&quot;LOGGER&quot;</span><span class="p">]</span>
+</code></pre></div>
+<ul>
+<li>We store configuration values in <code>CONFIG</code> (which we can use to configure other parts of the module too)<ul>
+<li>The logger is initially <code>None</code>: we'll create it on demand the first time it's needed and recycle after that<ul>
+<li>A <a href="https://en.wikipedia.org/wiki/Singleton_pattern">singleton</a></li>
+</ul>
+</li>
+<li>We give the logger a name to distinguish its messages from those produced by other modules</li>
+<li>And we specify the default level of detail (choices are <code>DEBUG</code>, <code>INFO</code>, <code>WARN</code>, <code>ERROR</code>, and <code>CRITICAL</code>)</li>
+<li>When we create the logger, we specify the level, the format of messages, and that we want messages to standard error</li>
+</ul>
+</li>
+<li>Our data-cleaning function now looks like:</li>
+</ul>
+<div class="highlight"><pre><span></span><code><span class="k">def</span> <span class="nf">clean_raw_data</span><span class="p">(</span><span class="n">filename</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Extract subset of interest from raw data.&quot;&quot;&quot;</span>
+    <span class="n">logger</span> <span class="o">=</span> <span class="n">get_logger</span><span class="p">()</span>
+    <span class="n">df</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_csv</span><span class="p">(</span><span class="n">filename</span><span class="p">,</span> <span class="n">encoding</span><span class="o">=</span><span class="n">EXCEL_ENCODING</span><span class="p">)</span>
+    <span class="n">df</span> <span class="o">=</span> <span class="n">df</span><span class="p">[[</span><span class="n">col</span> <span class="k">for</span> <span class="n">col</span> <span class="ow">in</span> <span class="n">COLUMNS</span><span class="o">.</span><span class="n">keys</span><span class="p">()]]</span>
+    <span class="n">df</span><span class="o">.</span><span class="n">rename</span><span class="p">(</span><span class="n">columns</span><span class="o">=</span><span class="n">COLUMNS</span><span class="p">,</span> <span class="n">inplace</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+    <span class="n">logger</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;clean </span><span class="si">{</span><span class="n">filename</span><span class="si">}</span><span class="s2">: </span><span class="si">{</span><span class="nb">len</span><span class="p">(</span><span class="n">df</span><span class="o">.</span><span class="n">columns</span><span class="p">)</span><span class="si">}</span><span class="s2"> columns x </span><span class="si">{</span><span class="nb">len</span><span class="p">(</span><span class="n">df</span><span class="o">.</span><span class="n">index</span><span class="p">)</span><span class="si">}</span><span class="s2"> rows&quot;</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">df</span>
+</code></pre></div>
+<ul>
+<li>Get the logger<ul>
+<li>Report a message at <code>INFO</code> level</li>
+</ul>
+</li>
+<li>And we change <code>tasks.py</code> to:</li>
+</ul>
+<div class="highlight"><pre><span></span><code><span class="nd">@task</span><span class="p">(</span><span class="n">optional</span><span class="o">=</span><span class="p">[</span><span class="s2">&quot;logging&quot;</span><span class="p">])</span>
+<span class="k">def</span> <span class="nf">clean_data</span><span class="p">(</span><span class="n">c</span><span class="p">,</span> <span class="n">logging</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Produce cleaned-up dataset.&quot;&quot;&quot;</span>
+    <span class="n">_configure_logging</span><span class="p">(</span><span class="n">logging</span><span class="p">)</span>
+    <span class="n">df</span> <span class="o">=</span> <span class="n">clean_raw_data</span><span class="p">(</span><span class="n">RAW_FILE</span><span class="p">)</span>
+    <span class="n">df</span><span class="o">.</span><span class="n">to_csv</span><span class="p">(</span><span class="n">CLEAN_FILE</span><span class="p">)</span>
+
+
+<span class="k">def</span> <span class="nf">_configure_logging</span><span class="p">(</span><span class="n">log_level</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Initialize logging.&quot;&quot;&quot;</span>
+    <span class="k">if</span> <span class="n">log_level</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+        <span class="n">CONFIG</span><span class="p">[</span><span class="s2">&quot;LOGGING_LEVEL&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">log_level</span><span class="o">.</span><span class="n">upper</span><span class="p">()</span>
+</code></pre></div>
+<ul>
+<li>The <code>optional</code> argument to <code>@task</code> tells <a href="https://www.pyinvoke.org/">Invoke</a> that this task takes a <code>--logging=NAME</code> command-line option</li>
+<li>If that option is provided, we re-set the logging level<ul>
+<li>We don't re-create the logger when this happens, which is either a bug or a feature</li>
+</ul>
+</li>
+<li>Let's try running it:</li>
+</ul>
+<div class="highlight"><pre><span></span><code>$ inv clean-data
+<span class="c1"># no output</span>
+$ inv clean-data --logging<span class="o">=</span>info
+Nitinat <span class="m">22</span>-03-23:15:12:45 clean data/canadian-dietary-radionuclides-2000-2020.csv: <span class="m">8</span> columns x <span class="m">18698</span> rows
+</code></pre></div>
+<ul>
+<li>With a bit more work we can put the logging configuration in a configuration file to make it even easier</li>
+</ul>
+      </div>
+    </div>
+  </body>
+</html>

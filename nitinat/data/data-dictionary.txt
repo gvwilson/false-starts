@@ -1,0 +1,61 @@
+Data Dictionary for Total Diet Study Radionuclide Results
+
+
+% Recovery	Proportion of the amount of analyte, present in or added to the analytical portion of the test material, which is extracted and presented for measurement.	
+
+Analysis Completion Date	The date that the analytical result was determined to be complete, accurate, valid and fit for dissemination by the submitting organization.	
+
+Analyte Group		A group of chemicals or compounds that the Analyte belongs to.
+
+Analyte Name		The chemical or compound that was analysed.
+
+Basis for Result	Whether the sample result is based on Dry Weight, Wet Weight, Fat content or As consumed.
+
+Bq/Kg		becquerel per kilogram
+
+Food Group	The collective group of foods based on the Codex Alimentarius food classification system.
+
+Food Name	The specific, non-branded, food name.
+
+HC ERHSD RPB Radionuclides	Health Canada, Environmental and Radiation Health Sciences Directorate, Radiation Protection Bureau, Radionuclides
+	
+Instrumentation		The specific equipment used to analyse a sample.
+
+Lab Name		The laboratory where the sample was analysed.
+
+LOD, LOQ, MDL		The method used to specify non-zero, non-specific findings (i.e., Limit of Detection, Limit of Quantification, Method Detection Limit).	
+
+MDA		Minimum Detectable Activity
+
+Method Comments		Any comments related to the methodology and testing of the sample.
+
+Product Description	Additional information about the food product or explanation of visual characteristics of the food product. Some projects use this field to capture other sample identifiers (such as Total Diet Study or Originating Lab ID numbers).	
+
+Project Code		The project identifier used within CANLINE.
+
+Quality Assurance	Whether the test method used has received official accreditation, successfully participated in proficiency tests or used only QA and reference standards.
+
+Result Comments		Comments can be recorded for each individual test result.
+
+Result Operator		The operator in front of the numerical result value for a test result: =, <LOD/MDL, or ND. Where both <LOD/MDL (below the Limit of Detection/Method Detection Limit) and ND (Not Detected) mean the results are below the method limit. 
+
+Result Value	Quantitative/numerical result of the analysis. When results are below the method limit, the results will be shown as “0" with either <LOD/MDL or ND (Not Detected) as the result operator.
+
+Sample Code	An alphanumeric or other unique designation assigned to the sample of a food product to distinctly identify it.
+
+Sample Collection Date		The particular point in time when a sample is collected by a sampler for testing or analysis.
+
+Sample Type	Whether the food sample is a single item or a composite from a standard recipe.
+
+Sampling Location City Name	The city where the food item was purchased.
+
+Sampling Location Country	The country where the food item was purchased.
+
+Sampling Location Province	The province/territory where the food item was purchased.
+
+Sampling Location Type		The type of vendor, for example, grocery store or restaurant where the food item was purchased.
+
+Test Method Name,Test Method Code 	The full name and code by which an analytical method has been referred to.
+
+Units of measurement	The unit for the result value as well as the method limits (LOD, LOQ, MDL).	
+	

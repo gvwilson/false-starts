@@ -1,0 +1,751 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Mesachie</title>
+    <link rel="stylesheet" href="../mccole.css">
+    <link rel="stylesheet" href="../tango.css">
+    <script type="text/x-mathjax-config">
+      MathJax.Hub.Config({
+        TeX: { equationNumbers: { autoNumber: "AMS" } }
+      })
+    </script>
+    <script type="text/javascript" async src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+  </head>
+  <body>
+    <div class="row">
+      <div class="column">
+        <h2><a href="../">Mesachie</a></h2>
+        <p>
+          A compassionate, evidence-based introduction
+        </p>
+	<ol type="1">
+  
+  <li>
+    <a href="../intro/">
+      
+        Introduction
+      
+    </a>
+  </li>
+  
+  <li>
+    <a href="../project/">
+      
+        A Minimum Viable Project
+      
+    </a>
+  </li>
+  
+  <li>
+    <a href="../team/">
+      
+        A Minimum Viable Team
+      
+    </a>
+  </li>
+  
+  <li>
+    <a href="../dstools/">
+      <strong>
+        Data Science Tools
+      </strong>
+    </a>
+  </li>
+  
+</ol>
+<ol type="A">
+  
+  <li>
+    <a href="../license/">
+      
+        License
+      
+    </a>
+  </li>
+  
+  <li>
+    <a href="../conduct/">
+      
+        Code of Conduct
+      
+    </a>
+  </li>
+  
+  <li>
+    <a href="../reviewers/">
+      
+        Reviewers
+      
+    </a>
+  </li>
+  
+  <li>
+    <a href="../bib/">
+      
+        Bibliography
+      
+    </a>
+  </li>
+  
+  <li>
+    <a href="../links/">
+      
+        Links
+      
+    </a>
+  </li>
+  
+  <li>
+    <a href="../gloss/">
+      
+        Glossary
+      
+    </a>
+  </li>
+  
+</ol>
+
+      </div>
+      <div class="column bordered">
+        <h1>Data Science Tools</h1>
+        <ul>
+<li>Motivating problem: how big is the average Python package?</li>
+<li>What do we mean by "big"?<ul>
+<li>Count lines and characters for now</li>
+</ul>
+</li>
+<li>What do we mean by "average"?<ul>
+<li>Analyze the packages on this computer to start</li>
+</ul>
+</li>
+</ul>
+<h2>Getting Data</h2>
+<ul>
+<li>Where is Python installed?</li>
+</ul>
+<p><div class="highlight"><pre><span></span><code><span class="kn">import</span> <span class="nn">sys</span>
+<span class="nb">print</span><span class="p">(</span><span class="s1">&#39;</span><span class="se">\n</span><span class="s1">&#39;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">sys</span><span class="o">.</span><span class="n">path</span><span class="p">))</span>
+</code></pre></div>
+<div class="highlight"><pre><span></span><code>/Users/gregwilson/conda/envs/nitinat/lib/python39.zip
+/Users/gregwilson/conda/envs/nitinat/lib/python3.9
+/Users/gregwilson/conda/envs/nitinat/lib/python3.9/lib-dynload
+/Users/gregwilson/conda/envs/nitinat/lib/python3.9/site-packages
+</code></pre></div></p>
+<ul>
+<li>The blank at the start is the empty string, which means "current directory"</li>
+<li>Use the shell to find and display Python file sizes</li>
+</ul>
+<p><div class="highlight"><pre><span></span><code>find /Users/gregwilson/conda -name <span class="s1">&#39;*.py&#39;</span> -exec wc -l -c <span class="o">{}</span> <span class="se">\;</span>
+</code></pre></div>
+<div class="highlight"><pre><span></span><code>     181    3955 /Users/gregwilson/conda/pkgs/python-flatbuffers-1.12-pyhd8ed1ab_1/site-packages/flatbuffers/number_types.py
+      42    1581 /Users/gregwilson/conda/pkgs/python-flatbuffers-1.12-pyhd8ed1ab_1/site-packages/flatbuffers/encode.py
+      81    2342 /Users/gregwilson/conda/pkgs/python-flatbuffers-1.12-pyhd8ed1ab_1/site-packages/flatbuffers/compat.py
+      43    1669 /Users/gregwilson/conda/pkgs/python-flatbuffers-1.12-pyhd8ed1ab_1/site-packages/flatbuffers/util.py
+      18     717 /Users/gregwilson/conda/pkgs/python-flatbuffers-1.12-pyhd8ed1ab_1/site-packages/flatbuffers/__init__.py
+      42    1165 /Users/gregwilson/conda/pkgs/python-flatbuffers-1.12-pyhd8ed1ab_1/site-packages/flatbuffers/packer.py
+     771   25858 /Users/gregwilson/conda/pkgs/python-flatbuffers-1.12-pyhd8ed1ab_1/site-packages/flatbuffers/builder.py
+     129    4708 /Users/gregwilson/conda/pkgs/python-flatbuffers-1.12-pyhd8ed1ab_1/site-packages/flatbuffers/table.py
+       9     181 /Users/gregwilson/conda/pkgs/python-flatbuffers-1.12-pyhd8ed1ab_1/info/test/run_test.py
+      51     905 /Users/gregwilson/conda/pkgs/flatten-dict-0.4.2-pyhd8ed1ab_1/site-packages/flatten_dict/reducers.py
+...
+</code></pre></div></p>
+<ul>
+<li>We could convert this output to <a class="glossref" href="../gloss/#csv" markdown="1">comma-separated values</a> (CSV)
+    with command-line tools like <a href="https://en.wikipedia.org/wiki/AWK">awk</a> or <a href="https://en.wikipedia.org/wiki/sed">sed</a><ul>
+<li>But since we're using Python anyway...</li>
+</ul>
+</li>
+</ul>
+<div class="highlight"><span class="filename">wc2csv.py</span><pre><span></span><code><span class="kn">import</span> <span class="nn">sys</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="s1">&#39;Lines,Characters,Path&#39;</span><span class="p">)</span>
+<span class="k">for</span> <span class="n">line</span> <span class="ow">in</span> <span class="n">sys</span><span class="o">.</span><span class="n">stdin</span><span class="p">:</span>
+    <span class="n">fields</span> <span class="o">=</span> <span class="n">line</span><span class="o">.</span><span class="n">split</span><span class="p">()</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;</span><span class="si">{}</span><span class="s1">,</span><span class="si">{}</span><span class="s1">,</span><span class="si">{}</span><span class="s1">&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="o">*</span><span class="n">fields</span><span class="p">))</span>
+</code></pre></div>
+<ul>
+<li>Run it as shown below<ul>
+<li>Break lines to make commands more visible (and to prevent long lines)</li>
+</ul>
+</li>
+</ul>
+<p><div class="highlight"><pre><span></span><code>find /Users/gregwilson/conda -name <span class="s1">&#39;*.py&#39;</span> -exec wc -l -c <span class="o">{}</span> <span class="se">\;</span> <span class="se">\</span>
+  <span class="p">|</span> python wc2csv.py <span class="se">\</span>
+  &gt; python-local-package-size.csv
+head python-local-package-size.csv
+</code></pre></div>
+<div class="highlight"><pre><span></span><code>Lines,Characters,Path
+181,3955,/Users/gregwilson/conda/pkgs/python-flatbuffers-1.12-pyhd8ed1ab_1/site-packages/flatbuffers/number_types.py
+42,1581,/Users/gregwilson/conda/pkgs/python-flatbuffers-1.12-pyhd8ed1ab_1/site-packages/flatbuffers/encode.py
+81,2342,/Users/gregwilson/conda/pkgs/python-flatbuffers-1.12-pyhd8ed1ab_1/site-packages/flatbuffers/compat.py
+43,1669,/Users/gregwilson/conda/pkgs/python-flatbuffers-1.12-pyhd8ed1ab_1/site-packages/flatbuffers/util.py
+18,717,/Users/gregwilson/conda/pkgs/python-flatbuffers-1.12-pyhd8ed1ab_1/site-packages/flatbuffers/__init__.py
+42,1165,/Users/gregwilson/conda/pkgs/python-flatbuffers-1.12-pyhd8ed1ab_1/site-packages/flatbuffers/packer.py
+771,25858,/Users/gregwilson/conda/pkgs/python-flatbuffers-1.12-pyhd8ed1ab_1/site-packages/flatbuffers/builder.py
+129,4708,/Users/gregwilson/conda/pkgs/python-flatbuffers-1.12-pyhd8ed1ab_1/site-packages/flatbuffers/table.py
+9,181,/Users/gregwilson/conda/pkgs/python-flatbuffers-1.12-pyhd8ed1ab_1/info/test/run_test.py
+...
+</code></pre></div></p>
+<ul>
+<li>This command takes 15 minutes to run and produces 24Mbyte<ul>
+<li>We're going to want to save the data and re-use it</li>
+</ul>
+</li>
+<li>This is <a class="glossref" href="../gloss/#tidy_data" markdown="1">tidy data</a><ol>
+<li>Each column contains one statistical variable
+    (i.e., one property that was measured or observed)</li>
+<li>Each different observation is in a different row</li>
+<li>There is one table for each set of observations</li>
+<li>If there are multiple tables,
+    each table has a column containing a unique <a class="glossref" href="../gloss/#key" markdown="1">key</a>
+    so that related data can be linked</li>
+</ol>
+</li>
+</ul>
+<h2>Analyzing Tabular Data</h2>
+<ul>
+<li>There's a lot of tabular data in the world</li>
+<li>People want to do a lot of complex things with it, so Python's tools can be bewildering at first<ol>
+<li>Built-in lists and the <code>array</code> module</li>
+<li><a href="https://numpy.org/">NumPy</a> provides multidimensional arrays</li>
+<li><a href="https://pandas.pydata.org/">Pandas</a> provides <a class="glossref" href="../gloss/#dataframe" markdown="1">dataframes</a> with named columns for tidy data</li>
+</ol>
+</li>
+<li>We will use a small subset of Pandas<ul>
+<li>Gives us tables whose columns can have different datatypes</li>
+<li>Access columns by name</li>
+<li>Access rows by index</li>
+</ul>
+</li>
+<li>Load our CSV data into memory and have a look<ul>
+<li>Only takes a second</li>
+</ul>
+</li>
+</ul>
+<p><div class="highlight"><span class="filename">pandas-read-display.py</span><pre><span></span><code><span class="kn">import</span> <span class="nn">pandas</span>
+
+<span class="n">data</span> <span class="o">=</span> <span class="n">pandas</span><span class="o">.</span><span class="n">read_csv</span><span class="p">(</span><span class="s1">&#39;python-local-package-size.csv&#39;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">data</span><span class="p">)</span>
+</code></pre></div>
+<div class="highlight"><pre><span></span><code>        Lines  Characters                                               Path
+0         181        3955  /Users/gregwilson/conda/pkgs/python-flatbuffer...
+1          42        1581  /Users/gregwilson/conda/pkgs/python-flatbuffer...
+2          81        2342  /Users/gregwilson/conda/pkgs/python-flatbuffer...
+3          43        1669  /Users/gregwilson/conda/pkgs/python-flatbuffer...
+4          18         717  /Users/gregwilson/conda/pkgs/python-flatbuffer...
+...       ...         ...                                                ...
+213060     35        1875  /Users/gregwilson/conda/share/qt/3rd_party_lic...
+213061    143        5056  /Users/gregwilson/conda/share/qt/3rd_party_lic...
+213062     62        1948  /Users/gregwilson/conda/share/qt/3rd_party_lic...
+213063    171        6228  /Users/gregwilson/conda/share/qt/3rd_party_lic...
+213064    112        3924  /Users/gregwilson/conda/share/doc/dbus/example...
+
+[213065 rows x 3 columns]
+</code></pre></div></p>
+<ul>
+<li>The <a class="glossref" href="../gloss/#header_row" markdown="1">header row</a> tells us the names of the columns</li>
+<li>We can get these names using the dataframe's <code>columns</code> <a class="glossref" href="../gloss/#property" markdown="1">property</a><ul>
+<li>Not a method call</li>
+</ul>
+</li>
+</ul>
+<p><div class="highlight"><span class="filename">pandas-read-display.py</span><pre><span></span><code><span class="nb">print</span><span class="p">(</span><span class="n">data</span><span class="o">.</span><span class="n">columns</span><span class="p">)</span>
+</code></pre></div>
+<div class="highlight"><pre><span></span><code>Index([&#39;Lines&#39;, &#39;Characters&#39;, &#39;Path&#39;], dtype=&#39;object&#39;)
+</code></pre></div></p>
+<ul>
+<li>Result is an <code>Index</code> object containing the columns' names and other information</li>
+<li>Its <code>values</code> property contains just the names</li>
+</ul>
+<p><div class="highlight"><span class="filename">pandas-read-display.py</span><pre><span></span><code><span class="nb">print</span><span class="p">(</span><span class="n">data</span><span class="o">.</span><span class="n">columns</span><span class="o">.</span><span class="n">values</span><span class="p">)</span>
+</code></pre></div>
+<div class="highlight"><pre><span></span><code>[&#39;Lines&#39; &#39;Characters&#39; &#39;Path&#39;]
+</code></pre></div></p>
+<ul>
+<li>We normally import Pandas using an <a class="glossref" href="../gloss/#alias" markdown="1">alias</a> called <code>pd</code>
+    to save a few characters of typing and (more importantly) make code a little easier to read</li>
+<li>Re-load our data that way<ul>
+<li>And use a more meaningful name than <code>data</code></li>
+<li>Then select a column by name</li>
+</ul>
+</li>
+</ul>
+<p><div class="highlight"><span class="filename">pandas-select-col.py</span><pre><span></span><code><span class="kn">import</span> <span class="nn">pandas</span> <span class="k">as</span> <span class="nn">pd</span>
+
+<span class="n">packages</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_csv</span><span class="p">(</span><span class="s1">&#39;python-local-package-size.csv&#39;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">packages</span><span class="p">[</span><span class="s1">&#39;Path&#39;</span><span class="p">])</span>
+</code></pre></div>
+<div class="highlight"><pre><span></span><code>0         /Users/gregwilson/conda/pkgs/python-flatbuffer...
+1         /Users/gregwilson/conda/pkgs/python-flatbuffer...
+2         /Users/gregwilson/conda/pkgs/python-flatbuffer...
+3         /Users/gregwilson/conda/pkgs/python-flatbuffer...
+4         /Users/gregwilson/conda/pkgs/python-flatbuffer...
+                                ...                        
+213060    /Users/gregwilson/conda/share/qt/3rd_party_lic...
+213061    /Users/gregwilson/conda/share/qt/3rd_party_lic...
+213062    /Users/gregwilson/conda/share/qt/3rd_party_lic...
+213063    /Users/gregwilson/conda/share/qt/3rd_party_lic...
+213064    /Users/gregwilson/conda/share/doc/dbus/example...
+Name: Path, Length: 213065, dtype: object
+</code></pre></div></p>
+<ul>
+<li>The line at the end tells us:<ul>
+<li>The name of the column we selected</li>
+<li>How many records there are</li>
+<li>The column's data type</li>
+</ul>
+</li>
+<li>We can select several columns at once by giving a list of names<ul>
+<li>Which results in double square brackets</li>
+<li>Outer brackets mean "we're selecting something"</li>
+<li>Inner ones means "we're providing a list to specify what we're selecting"</li>
+</ul>
+</li>
+</ul>
+<p><div class="highlight"><span class="filename">pandas-select-col.py</span><pre><span></span><code><span class="nb">print</span><span class="p">(</span><span class="n">packages</span><span class="p">[[</span><span class="s1">&#39;Lines&#39;</span><span class="p">,</span> <span class="s1">&#39;Characters&#39;</span><span class="p">]])</span>
+</code></pre></div>
+<div class="highlight"><pre><span></span><code>        Lines  Characters
+0         181        3955
+1          42        1581
+2          81        2342
+3          43        1669
+4          18         717
+...       ...         ...
+213060     35        1875
+213061    143        5056
+213062     62        1948
+213063    171        6228
+213064    112        3924
+
+[213065 rows x 2 columns]
+</code></pre></div></p>
+<ul>
+<li>What if we want to select a row?</li>
+</ul>
+<p><div class="highlight"><span class="filename">pandas-select-row-fail.py</span><pre><span></span><code><span class="nb">print</span><span class="p">(</span><span class="n">packages</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span>
+</code></pre></div>
+<div class="highlight"><pre><span></span><code>Traceback (most recent call last):
+  File &quot;/Users/gregwilson/conda/envs/nitinat/lib/python3.9/site-packages/pandas/core/indexes/base.py&quot;, line 3621, in get_loc
+    return self._engine.get_loc(casted_key)
+  File &quot;pandas/_libs/index.pyx&quot;, line 136, in pandas._libs.index.IndexEngine.get_loc
+  File &quot;pandas/_libs/index.pyx&quot;, line 163, in pandas._libs.index.IndexEngine.get_loc
+  File &quot;pandas/_libs/hashtable_class_helper.pxi&quot;, line 5198, in pandas._libs.hashtable.PyObjectHashTable.get_item
+  File &quot;pandas/_libs/hashtable_class_helper.pxi&quot;, line 5206, in pandas._libs.hashtable.PyObjectHashTable.get_item
+KeyError: 0
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File &quot;/Users/gregwilson/writing/mesachie/src/dstools/pandas-select-col.py&quot;, line 8, in &lt;module&gt;
+    print(packages[0])
+  File &quot;/Users/gregwilson/conda/envs/nitinat/lib/python3.9/site-packages/pandas/core/frame.py&quot;, line 3505, in __getitem__
+    indexer = self.columns.get_loc(key)
+  File &quot;/Users/gregwilson/conda/envs/nitinat/lib/python3.9/site-packages/pandas/core/indexes/base.py&quot;, line 3623, in get_loc
+    raise KeyError(key) from err
+KeyError: 0
+</code></pre></div></p>
+<ul>
+<li>Pandas error messages aren't particularly readable</li>
+<li>Pandas doesn't allow us to select rows by numeric index<ul>
+<li>Ambiguous, since <code>1</code> could mean "first column" rather than "first row"</li>
+</ul>
+</li>
+<li>Instead, use a property of the dataframe called <code>iloc</code> (for "indexed location")</li>
+</ul>
+<p><div class="highlight"><span class="filename">pandas-select-row-iloc.py</span><pre><span></span><code><span class="nb">print</span><span class="p">(</span><span class="n">packages</span><span class="o">.</span><span class="n">iloc</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span>
+</code></pre></div>
+<div class="highlight"><pre><span></span><code>Lines                                                       181
+Characters                                                 3955
+Path          /Users/gregwilson/conda/pkgs/python-flatbuffer...
+Name: 0, dtype: object
+</code></pre></div></p>
+<ul>
+<li>
+<p>Displays a two-column table with keys and values</p>
+<ul>
+<li>Count from zero (for <a href="http://exple.tive.org/blarg/2013/10/22/citation-needed/">surprising reasons</a>)</li>
+</ul>
+</li>
+<li>
+<p>We can use a <a class="glossref" href="../gloss/#slice" markdown="1">slice</a> to select multiple rows</p>
+<ul>
+<li><span class="rule">If you're writing a loop to process a table, you're doing something wrong</span></li>
+</ul>
+</li>
+</ul>
+<p><div class="highlight"><span class="filename">pandas-select-row-iloc.py</span><pre><span></span><code><span class="nb">print</span><span class="p">(</span><span class="n">packages</span><span class="o">.</span><span class="n">iloc</span><span class="p">[</span><span class="mi">0</span><span class="p">:</span><span class="mi">5</span><span class="p">])</span>
+</code></pre></div>
+<div class="highlight"><pre><span></span><code>   Lines  Characters                                               Path
+0    181        3955  /Users/gregwilson/conda/pkgs/python-flatbuffer...
+1     42        1581  /Users/gregwilson/conda/pkgs/python-flatbuffer...
+2     81        2342  /Users/gregwilson/conda/pkgs/python-flatbuffer...
+3     43        1669  /Users/gregwilson/conda/pkgs/python-flatbuffer...
+4     18         717  /Users/gregwilson/conda/pkgs/python-flatbuffer...
+</code></pre></div></p>
+<ul>
+<li>We can mix names and numbers to select subsections by column and then row<ul>
+<li>Don't need <code>iloc</code> in this case because
+    selecting by column gives us back a one-dimensional <code>Series</code> object
+    that interprets an integer index the way we want</li>
+</ul>
+</li>
+</ul>
+<p><div class="highlight"><span class="filename">pandas-select-row-iloc.py</span><pre><span></span><code><span class="nb">print</span><span class="p">(</span><span class="n">packages</span><span class="p">[</span><span class="s1">&#39;Characters&#39;</span><span class="p">][</span><span class="mi">0</span><span class="p">:</span><span class="mi">3</span><span class="p">])</span>
+</code></pre></div>
+<div class="highlight"><pre><span></span><code>0    3955
+1    1581
+2    2342
+Name: Characters, dtype: int64
+</code></pre></div></p>
+<ul>
+<li>Can also select by row and then column using <code>iloc</code><ul>
+<li>But indexing out of order makes code harder to read, so don't do this</li>
+</ul>
+</li>
+</ul>
+<p><div class="highlight"><span class="filename">pandas-select-row-iloc.py</span><pre><span></span><code><span class="nb">print</span><span class="p">(</span><span class="n">packages</span><span class="o">.</span><span class="n">iloc</span><span class="p">[</span><span class="mi">0</span><span class="p">:</span><span class="mi">3</span><span class="p">][</span><span class="s1">&#39;Characters&#39;</span><span class="p">])</span>
+</code></pre></div>
+<div class="highlight"><pre><span></span><code>0    3955
+1    1581
+2    2342
+Name: Characters, dtype: int64
+</code></pre></div></p>
+<h2>Visualizing a Dataframe</h2>
+<ul>
+<li><a href="https://matplotlib.org/"><code>matplotlib</code></a> is the most widely used plotting module for Python,
+    but is fairly low-level</li>
+<li><a href="https://plot.ly/python/plotly-express/">Plotly Express</a> is newer and better suited to creating graphics for browsers<ul>
+<li>Usually import using the alias <code>px</code></li>
+</ul>
+</li>
+<li>Use this to create a simple scatter plot<ul>
+<li>The figure object's <code>show</code> method runs a local server and opens the image in the browser for viewing</li>
+<li>Its <code>write_image</code> method saves it as a file</li>
+<li>We put the generated figure in a <code>figures</code> sub-directory to avoid clutter</li>
+<li>And use <a class="glossref" href="../gloss/#svg" markdown="1">SVG</a> because <a class="glossref" href="../gloss/#vector_graphics" markdown="1">vector graphics</a> resizes better than <a class="glossref" href="../gloss/#raster_graphics" markdown="1">raster graphics</a></li>
+</ul>
+</li>
+</ul>
+<div class="highlight"><span class="filename">scatter-lines-characters.py</span><pre><span></span><code><span class="kn">import</span> <span class="nn">pandas</span> <span class="k">as</span> <span class="nn">pd</span>
+<span class="kn">import</span> <span class="nn">plotly.express</span> <span class="k">as</span> <span class="nn">px</span>
+
+<span class="n">packages</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_csv</span><span class="p">(</span><span class="s1">&#39;python-local-package-size.csv&#39;</span><span class="p">)</span>
+<span class="n">fig</span> <span class="o">=</span> <span class="n">px</span><span class="o">.</span><span class="n">scatter</span><span class="p">(</span><span class="n">packages</span><span class="p">,</span> <span class="n">x</span><span class="o">=</span><span class="s1">&#39;Lines&#39;</span><span class="p">,</span> <span class="n">y</span><span class="o">=</span><span class="s1">&#39;Characters&#39;</span><span class="p">)</span>
+<span class="n">fig</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+<span class="n">fig</span><span class="o">.</span><span class="n">write_image</span><span class="p">(</span><span class="s1">&#39;scatter-lines-characters.svg&#39;</span><span class="p">)</span>
+</code></pre></div>
+<figure id="scatter-lines-characters">
+  <img src="./scatter-lines-characters.svg" alt="Scatter plot with most values clustered in the range X equals 0 to 5,000 and Y equals 0 to 0.2 million, with some outliers."/>
+  <figcaption markdown="1">FIXME: Characters vs. Lines</figcaption>
+</figure>
+
+<h2>Calculations with Dataframes</h2>
+<ul>
+<li>Best way to explore Pandas is by example</li>
+<li>Since we don't know what answers to expect from calculations using the package data,
+    construct a small example that we can check while we explore</li>
+</ul>
+<p><div class="highlight"><span class="filename">aggregation.py</span><pre><span></span><code><span class="n">example</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">(</span>
+    <span class="n">data</span><span class="o">=</span><span class="p">[[</span>  <span class="mi">1</span><span class="p">,</span>   <span class="mi">2</span><span class="p">,</span>   <span class="mi">3</span><span class="p">],</span>
+          <span class="p">[</span> <span class="mi">10</span><span class="p">,</span>  <span class="mi">20</span><span class="p">,</span>  <span class="mi">30</span><span class="p">],</span>
+          <span class="p">[</span><span class="mi">100</span><span class="p">,</span> <span class="mi">200</span><span class="p">,</span> <span class="mi">300</span><span class="p">]],</span>
+    <span class="n">columns</span><span class="o">=</span><span class="p">[</span><span class="s1">&#39;left&#39;</span><span class="p">,</span> <span class="s1">&#39;middle&#39;</span><span class="p">,</span> <span class="s1">&#39;right&#39;</span><span class="p">]</span>
+<span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">example</span><span class="p">)</span>
+</code></pre></div>
+<div class="highlight"><pre><span></span><code>   left  middle  right
+0     1       2      3
+1    10      20     30
+2   100     200    300
+</code></pre></div></p>
+<ul>
+<li>Break this down:<ul>
+<li><code>pd</code> is the alias for Pandas</li>
+<li><code>DataFrame</code> is the kind of object we want to create</li>
+<li><code>data</code> is a list-of-lists with the values we want in our dataframe</li>
+<li><code>columns</code> is the names we want to give the columns</li>
+<li>We could provide <code>data</code> and <code>columns</code> in the opposite order
+    and everything would still work
+    because we're naming them explicitly</li>
+<li>Result is three columns and three rows</li>
+</ul>
+</li>
+<li>We can do arithmetic on entire columns</li>
+</ul>
+<p><div class="highlight"><span class="filename">aggregation.py</span><pre><span></span><code><span class="nb">print</span><span class="p">(</span><span class="n">example</span><span class="p">[</span><span class="s1">&#39;middle&#39;</span><span class="p">]</span> <span class="o">+</span> <span class="n">example</span><span class="p">[</span><span class="s1">&#39;right&#39;</span><span class="p">])</span>
+</code></pre></div>
+<div class="highlight"><pre><span></span><code>0      5
+1     50
+2    500
+dtype: int64
+</code></pre></div></p>
+<ul>
+<li>If we use a plain old number it is automatically <a class="glossref" href="../gloss/#broadcast" markdown="1">broadcast</a> to the size of the column</li>
+</ul>
+<p><div class="highlight"><span class="filename">aggregation.py</span><pre><span></span><code><span class="nb">print</span><span class="p">(</span><span class="mi">7</span> <span class="o">*</span> <span class="n">example</span><span class="p">[</span><span class="s1">&#39;left&#39;</span><span class="p">])</span>
+</code></pre></div>
+<div class="highlight"><pre><span></span><code>0      7
+1     70
+2    700
+Name: left, dtype: int64
+</code></pre></div></p>
+<ul>
+<li>Sums, averages, and other functions that turn many values into one are called <a class="glossref" href="../gloss/#aggregation" markdown="1">aggregations</a><ul>
+<li><code>count</code>: number of elements (excluding <a class="glossref" href="../gloss/#nan" markdown="1"><code>NaN</code></a>)</li>
+<li><code>describe</code>: descriptive statistics</li>
+<li><code>first</code>: first value</li>
+<li><code>last</code>: last value</li>
+<li><code>max</code>: largest value</li>
+<li><code>mean</code>: average value</li>
+<li><code>min</code>: least value</li>
+<li><code>nth</code> : \( n^{th} \) value</li>
+<li><code>sem</code>: standard error of the mean</li>
+<li><code>size</code>: group size (including <code>NaN</code>)</li>
+<li><code>std</code>: standard deviation</li>
+<li><code>sum</code>: sum of values</li>
+<li><code>var</code>: variance</li>
+</ul>
+</li>
+</ul>
+<div class="callout">
+<h3>Not a Number, Not Available, Null, and None</h3>
+<p><code>NaN</code> stands for "Not a Number", a special value used to represent things like
+0/0 <cite>Kahan1997</cite>.  Despite the similarity in their names, it is <em>not</em>
+the same thing as <a class="glossref" href="../gloss/#na" markdown="1"><code>NA</code></a> (Not Available), which is a
+placeholder for missing values.  To make things more confusing, <a class="glossref" href="../gloss/#sql" markdown="1">SQL</a> (the standard language for querying <a class="glossref" href="../gloss/#relational_database" markdown="1">relational databases</a>) uses <a class="glossref" href="../gloss/#null" markdown="1"><code>null</code></a> instead of <code>NA</code> to signal missing data, while many
+programming languages use <code>null</code> to mean "a reference that doesn't refer to
+anything".  Python uses <code>None</code> instead of <code>null</code>, but we must be careful when
+reading and writing data to distinguish between empty strings, missing values,
+and the country code for Namibia.</p>
+</div>
+<ul>
+<li>Use the method <code>agg</code> to calculate aggregates<ul>
+<li>Give it the name of a function as a string</li>
+</ul>
+</li>
+</ul>
+<p><div class="highlight"><span class="filename">aggregation.py</span><pre><span></span><code><span class="nb">print</span><span class="p">(</span><span class="n">example</span><span class="o">.</span><span class="n">agg</span><span class="p">(</span><span class="s1">&#39;sum&#39;</span><span class="p">))</span>
+</code></pre></div>
+<div class="highlight"><pre><span></span><code>left      111
+middle    222
+right     333
+dtype: int64
+</code></pre></div></p>
+<ul>
+<li>The sum of column <code>left</code> is 111, of column <code>middle</code> is 222, and of <code>right</code> is 333<ul>
+<li>Once again <code>dtype</code> is the data type</li>
+</ul>
+</li>
+<li>We can calculate several aggregate values at once by giving <code>DataFrame.agg</code> a list of function names<ul>
+<li>Exercise: is this more efficient or not?</li>
+</ul>
+</li>
+</ul>
+<p><div class="highlight"><span class="filename">aggregation.py</span><pre><span></span><code><span class="nb">print</span><span class="p">(</span><span class="n">example</span><span class="o">.</span><span class="n">agg</span><span class="p">([</span><span class="s1">&#39;sum&#39;</span><span class="p">,</span> <span class="s1">&#39;mean&#39;</span><span class="p">]))</span>
+</code></pre></div>
+<div class="highlight"><pre><span></span><code>       left  middle  right
+sum   111.0   222.0  333.0
+mean   37.0    74.0  111.0
+</code></pre></div></p>
+<h2>Selecting Subsets of Data</h2>
+<ul>
+<li>Suppose we want to look at the low values in the data</li>
+<li>Do this by <a class="glossref" href="../gloss/#filter" markdown="1">filtering</a> data and calculating values for the rows we have kept<ul>
+<li>"Keep" would have been a better name than "filter", but we're stuck with it</li>
+</ul>
+</li>
+<li>Create another small dataframe to demonstrate</li>
+</ul>
+<p><div class="highlight"><span class="filename">filter.py</span><pre><span></span><code><span class="n">colors</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">(</span>
+    <span class="n">columns</span><span class="o">=</span><span class="p">[</span><span class="s1">&#39;name&#39;</span><span class="p">,</span> <span class="s1">&#39;red&#39;</span><span class="p">,</span> <span class="s1">&#39;green&#39;</span><span class="p">,</span> <span class="s1">&#39;blue&#39;</span><span class="p">],</span>
+    <span class="n">data</span><span class="o">=</span><span class="p">[</span>
+        <span class="p">[</span><span class="s1">&#39;yellow&#39;</span><span class="p">,</span>  <span class="mf">1.0</span><span class="p">,</span> <span class="mf">1.0</span><span class="p">,</span> <span class="mf">0.0</span><span class="p">],</span>
+        <span class="p">[</span><span class="s1">&#39;aqua&#39;</span><span class="p">,</span>    <span class="mf">0.0</span><span class="p">,</span> <span class="mf">1.0</span><span class="p">,</span> <span class="mf">1.0</span><span class="p">],</span>
+        <span class="p">[</span><span class="s1">&#39;fuchsia&#39;</span><span class="p">,</span> <span class="mf">1.0</span><span class="p">,</span> <span class="mf">0.0</span><span class="p">,</span> <span class="mf">1.0</span><span class="p">]</span>
+    <span class="p">]</span>
+<span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">colors</span><span class="p">)</span>
+</code></pre></div>
+<div class="highlight"><pre><span></span><code>      name  red  green  blue
+0   yellow  1.0    1.0   0.0
+1     aqua  0.0    1.0   1.0
+2  fuchsia  1.0    0.0   1.0
+</code></pre></div></p>
+<ul>
+<li>We know how to select the <code>red</code> column</li>
+</ul>
+<p><div class="highlight"><span class="filename">filter.py</span><pre><span></span><code><span class="n">red</span> <span class="o">=</span> <span class="n">colors</span><span class="p">[</span><span class="s1">&#39;red&#39;</span><span class="p">]</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">red</span><span class="p">)</span>
+</code></pre></div>
+<div class="highlight"><pre><span></span><code>0    1.0
+1    0.0
+2    1.0
+Name: red, dtype: float64
+</code></pre></div></p>
+<ul>
+<li>Now let's see where values are 1.0 and where they aren't</li>
+</ul>
+<p><div class="highlight"><span class="filename">filter.py</span><pre><span></span><code><span class="n">has_red</span> <span class="o">=</span> <span class="p">(</span><span class="n">red</span> <span class="o">==</span> <span class="mf">1.0</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">has_red</span><span class="p">)</span>
+</code></pre></div>
+<div class="highlight"><pre><span></span><code>0     True
+1    False
+2     True
+Name: red, dtype: bool
+</code></pre></div></p>
+<ul>
+<li>The expression <code>(red == 1.0)</code> is no different from <code>(red + 3)</code>,
+    except the result is <a class="glossref" href="../gloss/#boolean" markdown="1">Boolean</a> instead of numeric</li>
+<li>If we use a Boolean vector as an index,
+    the result is a smaller table containing only the rows where the index was <code>True</code></li>
+</ul>
+<p><div class="highlight"><span class="filename">filter.py</span><pre><span></span><code><span class="n">rows_with_red</span> <span class="o">=</span> <span class="n">colors</span><span class="p">[</span><span class="n">has_red</span><span class="p">]</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">rows_with_red</span><span class="p">)</span>
+</code></pre></div>
+<div class="highlight"><pre><span></span><code>      name  red  green  blue
+0   yellow  1.0    1.0   0.0
+2  fuchsia  1.0    0.0   1.0
+</code></pre></div></p>
+<ul>
+<li>So we can calculate the average red, green, and blue for all colors for the whole table:</li>
+</ul>
+<p><div class="highlight"><span class="filename">filter.py</span><pre><span></span><code><span class="nb">print</span><span class="p">(</span><span class="n">colors</span><span class="o">.</span><span class="n">agg</span><span class="p">(</span><span class="s1">&#39;mean&#39;</span><span class="p">))</span>
+</code></pre></div>
+<div class="highlight"><pre><span></span><code>FutureWarning: Dropping of nuisance columns in DataFrame reductions (with &#39;numeric_only=None&#39;) is deprecated;
+in a future version this will raise TypeError.
+Select only valid columns before calling the reduction.
+red      0.666667
+green    0.666667
+blue     0.666667
+dtype: float64
+</code></pre></div></p>
+<ul>
+<li>Error message is because we're trying to calculate the mean of three color names</li>
+<li>We could select all the color value columns...</li>
+<li>...or select everything except <code>name</code>:<ul>
+<li>Need <code>axis=1</code> to specify that we're dropping vertically rather than horizontally</li>
+</ul>
+</li>
+</ul>
+<p><div class="highlight"><span class="filename">filter.py</span><pre><span></span><code><span class="nb">print</span><span class="p">(</span><span class="n">colors</span><span class="o">.</span><span class="n">drop</span><span class="p">(</span><span class="s1">&#39;name&#39;</span><span class="p">,</span> <span class="n">axis</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span><span class="o">.</span><span class="n">agg</span><span class="p">(</span><span class="s1">&#39;mean&#39;</span><span class="p">))</span>
+</code></pre></div>
+<div class="highlight"><pre><span></span><code>red      0.666667
+green    0.666667
+blue     0.666667
+dtype: float64
+</code></pre></div></p>
+<ul>
+<li>So let's average the color values in colors that contain some red:</li>
+</ul>
+<p><div class="highlight"><span class="filename">filter.py</span><pre><span></span><code><span class="nb">print</span><span class="p">(</span><span class="n">colors</span><span class="o">.</span><span class="n">drop</span><span class="p">(</span><span class="s1">&#39;name&#39;</span><span class="p">,</span> <span class="n">axis</span><span class="o">=</span><span class="mi">1</span><span class="p">)[</span><span class="n">colors</span><span class="p">[</span><span class="s1">&#39;red&#39;</span><span class="p">]</span> <span class="o">==</span> <span class="mf">1.0</span><span class="p">]</span><span class="o">.</span><span class="n">agg</span><span class="p">(</span><span class="s1">&#39;mean&#39;</span><span class="p">))</span>
+</code></pre></div>
+<div class="highlight"><pre><span></span><code>red      1.0
+green    0.5
+blue     0.5
+dtype: float64
+</code></pre></div></p>
+<ul>
+<li>This style of programming is called <a class="glossref" href="../gloss/#method_chaining" markdown="1">method chaining</a><ul>
+<li>Each operation like <code>loc</code> and <code>agg</code> creates a new object</li>
+<li>We immediately call a method of that new object</li>
+<li>Then call a method of the object that method returns, and so on</li>
+</ul>
+</li>
+<li>Behind the scenes, Pandas re-uses most of the data rather than copying it to make things faster</li>
+</ul>
+<h2>Lines and Characters in Python Files</h2>
+<ul>
+<li>Created a scatter plot earlier</li>
+<li>Construct a <a class="glossref" href="../gloss/#histogram" markdown="1">histogram</a> to see how many <a class="glossref" href="../gloss/#outlier" markdown="1">outliers</a> there are<ul>
+<li>Add width and height for the print version</li>
+</ul>
+</li>
+</ul>
+<div class="highlight"><span class="filename">ratio.py</span><pre><span></span><code><span class="kn">import</span> <span class="nn">pandas</span> <span class="k">as</span> <span class="nn">pd</span>
+<span class="kn">import</span> <span class="nn">plotly.express</span> <span class="k">as</span> <span class="nn">px</span>
+
+<span class="n">packages</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_csv</span><span class="p">(</span><span class="s1">&#39;python-local-package-size.csv&#39;</span><span class="p">)</span>
+<span class="n">packages</span> <span class="o">=</span> <span class="n">packages</span><span class="p">[</span><span class="n">packages</span><span class="p">[</span><span class="s1">&#39;Lines&#39;</span><span class="p">]</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">]</span>
+<span class="n">packages</span><span class="p">[</span><span class="s1">&#39;ratio&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">packages</span><span class="p">[</span><span class="s1">&#39;Characters&#39;</span><span class="p">]</span> <span class="o">/</span> <span class="n">packages</span><span class="p">[</span><span class="s1">&#39;Lines&#39;</span><span class="p">]</span>
+
+<span class="n">fig</span> <span class="o">=</span> <span class="n">px</span><span class="o">.</span><span class="n">histogram</span><span class="p">(</span><span class="n">packages</span><span class="p">,</span> <span class="n">x</span><span class="o">=</span><span class="s1">&#39;ratio&#39;</span><span class="p">)</span>
+<span class="n">fig</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+<span class="n">fig</span><span class="o">.</span><span class="n">write_image</span><span class="p">(</span><span class="s1">&#39;hist-ratio-unscaled.svg&#39;</span><span class="p">,</span> <span class="n">width</span><span class="o">=</span><span class="mi">600</span><span class="p">,</span> <span class="n">height</span><span class="o">=</span><span class="mi">400</span><span class="p">)</span>
+</code></pre></div>
+<figure id="hist-ratio-unscaled">
+  <img src="./hist-ratio-unscaled.svg" alt="Ratio of Characters to Lines (Unscaled)"/>
+  <figcaption markdown="1">FIXME: Linear-linear histogram with a single sharp spike at X equals 0 going up to Y equals 2,200 and nothing else visible up to X equals 9,000.</figcaption>
+</figure>
+
+<ul>
+<li>That's not very informative<ul>
+<li>A few large values near x=0</li>
+<li>But a few very small values that go up over x=8000</li>
+</ul>
+</li>
+<li>Plot the logarithm of the ratio to show things more clearly <span f="hist-ratio-scaled"/></li>
+</ul>
+<div class="highlight"><span class="filename">ratio.py</span><pre><span></span><code><span class="n">fig</span> <span class="o">=</span> <span class="n">px</span><span class="o">.</span><span class="n">histogram</span><span class="p">(</span><span class="n">packages</span><span class="p">,</span> <span class="n">x</span><span class="o">=</span><span class="s1">&#39;ratio&#39;</span><span class="p">,</span> <span class="n">nbins</span><span class="o">=</span><span class="mi">100</span><span class="p">,</span> <span class="n">log_y</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+<span class="n">fig</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+<span class="n">fig</span><span class="o">.</span><span class="n">write_image</span><span class="p">(</span><span class="s1">&#39;hist-ratio-scaled.svg&#39;</span><span class="p">)</span>
+</code></pre></div>
+<figure id="hist-ratio-scaled">
+  <img src="./hist-ratio-scaled.svg" alt="Ratio of Characters to Lines (Scaled)"/>
+  <figcaption markdown="1">FIXME: Log-linear histogram with a single sharp spike at X equals 0 going up to Y equals 3,000 and a sharp decline to Y equals 2 near X equals 1,800 and one outlier of Y equals 2 at X equals 9,000.</figcaption>
+</figure>
+
+<ul>
+<li>Play with a threshold for a bit and discover that less than 0.3% of records are above 100 characters per line</li>
+<li>Plot all the values except these <em>without</em> logarithmic scaling<ul>
+<li>Report how many were excluded so that readers know they're not seeing all the data</li>
+</ul>
+</li>
+</ul>
+<p><div class="highlight"><span class="filename">ratio.py</span><pre><span></span><code><span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Excluding </span><span class="si">{</span><span class="nb">len</span><span class="p">(</span><span class="n">packages</span><span class="p">[</span><span class="n">packages</span><span class="p">[</span><span class="s1">&#39;ratio&#39;</span><span class="p">]</span> <span class="o">&gt;</span> <span class="mi">100</span><span class="p">])</span><span class="si">}</span><span class="s2">/</span><span class="si">{</span><span class="nb">len</span><span class="p">(</span><span class="n">packages</span><span class="p">)</span><span class="si">}</span><span class="s2"> data points&quot;</span><span class="p">)</span>
+<span class="n">fig</span> <span class="o">=</span> <span class="n">px</span><span class="o">.</span><span class="n">histogram</span><span class="p">(</span><span class="n">packages</span><span class="p">[</span><span class="n">packages</span><span class="p">[</span><span class="s1">&#39;ratio&#39;</span><span class="p">]</span> <span class="o">&lt;=</span> <span class="mi">100</span><span class="p">],</span> <span class="n">x</span><span class="o">=</span><span class="s1">&#39;ratio&#39;</span><span class="p">,</span> <span class="n">nbins</span><span class="o">=</span><span class="mi">100</span><span class="p">)</span>
+<span class="n">fig</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+<span class="n">fig</span><span class="o">.</span><span class="n">write_image</span><span class="p">(</span><span class="s1">&#39;hist-ratio-most.svg&#39;</span><span class="p">)</span>
+</code></pre></div>
+<div class="highlight"><pre><span></span><code>Excluding 92 data points
+</code></pre></div></p>
+<figure id="hist-ratio-most">
+  <img src="./hist-ratio-most.svg" alt="Ratio of Characters to Lines (Most)"/>
+  <figcaption markdown="1">FIXME: Linear-linear histogram with apparently normal distribution peaking at Y equals 2200 near X equals 35.</figcaption>
+</figure>
+
+<ul>
+<li>Data is easier to see</li>
+<li>But what (if anything) does it <em>mean</em>?</li>
+<li>For that, we need some statistics</li>
+</ul>
+<h2>Exercises</h2>
+<h3>Dissecting the <code>find</code> Command</h3>
+<p>Use <a href="https://explainshell.com/">explainshell</a> to dissect the <code>find</code> command used to get Python file sizes.
+Why is the semi-colon needed, and why does it have to have a backslash in front of it?</p>
+<h3>One-Sided Average</h3>
+<p>Is "average" a meaningful statistic for a <a class="glossref" href="../gloss/#one_sided_distribution" markdown="1">one-sided distribution</a>
+with a <a class="glossref" href="../gloss/#long_tail" markdown="1">long tail</a>?
+What would be a better way to characterize this distribution?</p>
+<h3>Finding Python Files</h3>
+<p>Write a short Python script to find Python source files and get their size.
+(Hint: use the <a href="https://docs.python.org/3/library/glob.html"><code>glob</code></a> module to find files.)</p>
+<h3>Empty Python Files</h3>
+<p>Why do empty Python files exist?
+Why do some files have such very long lines?
+Do any files have some characters but zero lines?
+How should we represent these in our visualization?</p>
+<h3>Meaningful Axis Labels</h3>
+<p>Add meaningful axis labels to all of the plots.</p>
+<h3>Characters Per Line</h3>
+<p>What does the distribution of characters per line tell you about these files?
+How does the ratio for your own files compare?</p>
+<h3>Resetting a Dataframe's Index</h3>
+<p>What does resetting the index of a dataframe do?
+Why do we have to reset the index
+in the script that counts the frequency of '.'-separated components of names?</p>
+      </div>
+    </div>
+  </body>
+</html>

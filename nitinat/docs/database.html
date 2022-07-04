@@ -1,0 +1,356 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Nitinat</title>
+    <link rel="stylesheet" href="theme/nitinat.css">
+    <link rel="stylesheet" href="theme/tango.css">
+  </head>
+  <body>
+    <div class="row">
+      <div class="column smaller">
+        <h2><a href="index.html">Nitinat</a></h2>
+        <p>
+          A model data analysis project in Python
+        </p>
+	<ol type="1">
+  
+  <li>
+    <a href="starting.html">
+      
+        Starting
+      
+    </a>
+  </li>
+  
+  <li>
+    <a href="project.html">
+      
+        Setting Up a Python Project
+      
+    </a>
+  </li>
+  
+  <li>
+    <a href="dataset.html">
+      
+        Handling Data
+      
+    </a>
+  </li>
+  
+  <li>
+    <a href="reproducible.html">
+      
+        Making Tasks Reproducible
+      
+    </a>
+  </li>
+  
+  <li>
+    <a href="results.html">
+      
+        Producing Results
+      
+    </a>
+  </li>
+  
+  <li>
+    <a href="quality.html">
+      
+        Checking Code Quality
+      
+    </a>
+  </li>
+  
+  <li>
+    <a href="setback-01.html">
+      
+        The First Setback
+      
+    </a>
+  </li>
+  
+  <li>
+    <a href="configuration.html">
+      
+        Consistent Configuration
+      
+    </a>
+  </li>
+  
+  <li>
+    <a href="testing.html">
+      
+        Improving Testing
+      
+    </a>
+  </li>
+  
+  <li>
+    <a href="logging.html">
+      
+        Logging
+      
+    </a>
+  </li>
+  
+  <li>
+    <a href="technical-debt-01.html">
+      
+        Technical Debt
+      
+    </a>
+  </li>
+  
+  <li>
+    <a href="parameters.html">
+      
+        Handling Model Parameters
+      
+    </a>
+  </li>
+  
+  <li>
+    <a href="pipeline-01.html">
+      
+        Creating a Pipeline
+      
+    </a>
+  </li>
+  
+  <li>
+    <a href="technical-debt-02.html">
+      
+        Technical Debt Revisited
+      
+    </a>
+  </li>
+  
+  <li>
+    <a href="pipeline-02.html">
+      
+        Pipeline Revisited
+      
+    </a>
+  </li>
+  
+  <li>
+    <a href="website-01.html">
+      
+        Creating a Website
+      
+    </a>
+  </li>
+  
+  <li>
+    <a href="pipeline-03.html">
+      
+        A Pipeline with Provenance
+      
+    </a>
+  </li>
+  
+  <li>
+    <a href="website-02.html">
+      
+        Improving the Website
+      
+    </a>
+  </li>
+  
+  <li>
+    <a href="documentation.html">
+      
+        Documenting Code
+      
+    </a>
+  </li>
+  
+  <li>
+    <a href="packaging.html">
+      
+        Creating a Package
+      
+    </a>
+  </li>
+  
+  <li>
+    <a href="ci.html">
+      
+        Continuous Integration
+      
+    </a>
+  </li>
+  
+  <li>
+    <a href="indexing.html">
+      
+        Indexing Datasets
+      
+    </a>
+  </li>
+  
+  <li>
+    <a href="dependencies.html">
+      
+        Handling Task Dependencies
+      
+    </a>
+  </li>
+  
+  <li>
+    <a href="layered.html">
+      
+        Layered Configuration
+      
+    </a>
+  </li>
+  
+  <li>
+    <a href="database.html">
+      <strong>
+        Accessing a Database
+      </strong>
+    </a>
+  </li>
+  
+</ol>
+<ol type="A">
+  
+  <li>
+    <a href="data.html">
+      
+        Parameter Sets
+      
+    </a>
+  </li>
+  
+  <li>
+    <a href="license.html">
+      
+        License
+      
+    </a>
+  </li>
+  
+  <li>
+    <a href="links.html">
+      
+        Links
+      
+    </a>
+  </li>
+  
+  <li>
+    <a href="credits.html">
+      
+        Credits
+      
+    </a>
+  </li>
+  
+</ol>
+
+	<ul>
+	  <li><a href="nitinat/index.html">Documentation</a></li>
+	  <li><a href="https://github.com/gvwilson/nitinat/">Source</a></li>
+	</ul>
+      </div>
+      <div class="column bordered">
+        <h1>Accessing a Database</h1>
+        <ul>
+<li>Sooner or later every project needs to get data from a database<ul>
+<li>A relational database like <a href="https://www.postgresql.org/">PostgreSQL</a> or <a href="https://sqlite.org/">SQLite</a></li>
+<li>As opposed to a document database like <a href="https://www.mongodb.com/">MongoDB</a> or <a href="https://cloud.google.com/firestore/">Firestore</a></li>
+</ul>
+</li>
+<li>Write queries for relational databases using <a href="https://en.wikipedia.org/wiki/SQL">SQL</a> (pronounced in a variety of ways)<ul>
+<li>For an introduction, see <a href="http://swcarpentry.github.io/sql-novice-survey/">the Carpentries lesson</a></li>
+</ul>
+</li>
+<li>One way to get data into a program is to use a Unix command-line pipe</li>
+</ul>
+<div class="highlight"><pre><span></span><code>$ sqlite3 mydata.db myquery.sql <span class="p">|</span> python myscript.py
+</code></pre></div>
+<ul>
+<li>This becomes very clumsy very quickly</li>
+<li>Another approachis to embed SQL commands as text in the Python program:</li>
+</ul>
+<p><div class="highlight"><pre><span></span><code><span class="n">connection</span> <span class="o">=</span> <span class="n">sqlite3</span><span class="o">.</span><span class="n">connect</span><span class="p">(</span><span class="n">db_file_name</span><span class="p">)</span>
+
+<span class="n">query</span> <span class="o">=</span> <span class="s2">&quot;&quot;&quot;</span><span class="se">\</span>
+<span class="s2">  SELECT sample_date, analysis_date, analyte, reading</span>
+<span class="s2">  FROM Samples</span>
+<span class="s2">  WHERE (analyte = &quot;Potassium-40&quot;) and (reading &gt; 0)</span>
+<span class="s2">  ORDER BY reading DESC</span>
+<span class="s2">  LIMIT 5;</span>
+<span class="s2">&quot;&quot;&quot;</span>
+
+<span class="n">cursor</span> <span class="o">=</span> <span class="n">connection</span><span class="o">.</span><span class="n">execute</span><span class="p">(</span><span class="n">query</span><span class="p">)</span>
+<span class="k">for</span> <span class="n">row</span> <span class="ow">in</span> <span class="n">cursor</span><span class="p">:</span>
+    <span class="nb">print</span><span class="p">(</span><span class="n">row</span><span class="p">)</span>
+
+<span class="n">connection</span><span class="o">.</span><span class="n">close</span><span class="p">()</span>
+</code></pre></div>
+<div class="highlight"><pre><span></span><code>(&#39;2013-09-15&#39;, &#39;2014-05-15&#39;, &#39;Potassium-40&#39;, 660.7555)
+(&#39;2015-01-15&#39;, &#39;2015-06-15&#39;, &#39;Potassium-40&#39;, 641.0498)
+(&#39;2020-11-01&#39;, &#39;2021-08-23&#39;, &#39;Potassium-40&#39;, 633.3652)
+(&#39;2019-10-25&#39;, &#39;2020-03-23&#39;, &#39;Potassium-40&#39;, 619.2273)
+(&#39;2019-10-25&#39;, &#39;2020-03-23&#39;, &#39;Potassium-40&#39;, 611.1997)
+</code></pre></div></p>
+<ul>
+<li>A third approach is to use an <a href="https://en.wikipedia.org/wiki/Object%E2%80%93relational_mapping">object-relational mapper</a><ul>
+<li>Translates objects into queries and query results back into objects</li>
+</ul>
+</li>
+<li>Most popular for Python is <a href="https://www.sqlalchemy.org/">SQLAlchemy</a>, which does a lot but is complex</li>
+<li><a href="https://ibis-project.org/">Ibis</a> isn't as mature, but also isn't as large</li>
+<li><code>pip install sqlalchemy ibis-framework</code><ul>
+<li>Ibis uses SQLAlchemy under the hood</li>
+</ul>
+</li>
+<li>Query result is a <a href="https://pandas.pydata.org/">Pandas</a> dataframe, which is nice</li>
+</ul>
+<p><div class="highlight"><pre><span></span><code><span class="n">connection</span> <span class="o">=</span> <span class="n">ibis</span><span class="o">.</span><span class="n">sqlite</span><span class="o">.</span><span class="n">connect</span><span class="p">(</span><span class="n">db_file_name</span><span class="p">)</span>
+<span class="n">samples</span> <span class="o">=</span> <span class="n">connection</span><span class="o">.</span><span class="n">table</span><span class="p">(</span><span class="s2">&quot;Samples&quot;</span><span class="p">)</span>
+<span class="n">query</span> <span class="o">=</span> <span class="n">samples</span><span class="p">[</span><span class="s2">&quot;sample_date&quot;</span><span class="p">,</span> <span class="s2">&quot;analysis_date&quot;</span><span class="p">,</span> <span class="s2">&quot;analyte&quot;</span><span class="p">,</span> <span class="s2">&quot;reading&quot;</span><span class="p">]</span>\
+    <span class="o">.</span><span class="n">filter</span><span class="p">((</span><span class="n">samples</span><span class="o">.</span><span class="n">analyte</span> <span class="o">==</span> <span class="s2">&quot;Potassium-40&quot;</span><span class="p">)</span> <span class="o">&amp;</span> <span class="p">(</span><span class="n">samples</span><span class="o">.</span><span class="n">reading</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">))</span>\
+    <span class="o">.</span><span class="n">sort_by</span><span class="p">(</span><span class="n">ibis</span><span class="o">.</span><span class="n">desc</span><span class="p">(</span><span class="s2">&quot;reading&quot;</span><span class="p">))</span>\
+    <span class="o">.</span><span class="n">limit</span><span class="p">(</span><span class="mi">5</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">query</span><span class="o">.</span><span class="n">execute</span><span class="p">())</span>
+</code></pre></div>
+<div class="highlight"><pre><span></span><code>  sample_date analysis_date       analyte   reading
+0  2013-09-15    2014-05-15  Potassium-40  660.7555
+1  2015-01-15    2015-06-15  Potassium-40  641.0498
+2  2020-11-01    2021-08-23  Potassium-40  633.3652
+3  2019-10-25    2020-03-23  Potassium-40  619.2273
+4  2019-10-25    2020-03-23  Potassium-40  611.1997
+</code></pre></div></p>
+<ul>
+<li>In most cases, the only thing that changes when switching to different database server is creating the connection</li>
+</ul>
+<div class="highlight"><pre><span></span><code><span class="n">connection</span> <span class="o">=</span> <span class="n">ibis</span><span class="o">.</span><span class="n">postgresql</span><span class="o">.</span><span class="n">connect</span><span class="p">(</span><span class="s2">&quot;user:password@localhost:5432/dbname&quot;</span><span class="p">)</span>
+</code></pre></div>
+<ul>
+<li>All of the queries stay the same...</li>
+<li>...until you use something that is database-specific, because every DB has its own dialect of SQL<ul>
+<li>That's a problem with the embedded SQL approach as well</li>
+</ul>
+</li>
+<li>But now it all goes sideways</li>
+<li><code>inv website</code> fails with <code>AttributeError: module 'ibis' has no attribute 'loaders'</code></li>
+<li>Because <a href="http://www.dmulholl.com/docs/ivy/main/">Ivy</a> depends on an HTML template module called (wait for it) Ibis</li>
+<li>The <code>ibis-framework</code> package creates something we need to import with <code>import ibis</code></li>
+<li><em>This isn't supposed to happen</em> (and bug reports have been filed)</li>
+</ul>
+<div class="callout">
+<h3>Where These Examples Are</h3>
+<p>The code that creates the database and does queries with embedded SQL and Ibis
+lives in <code>bin/sql-example.py</code> rather than in the <code>nitinat</code> package.</p>
+</div>
+      </div>
+    </div>
+  </body>
+</html>

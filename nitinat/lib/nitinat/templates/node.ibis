@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>{{ site.title }}</title>
+    <link rel="stylesheet" href="@root/theme/nitinat.css">
+    <link rel="stylesheet" href="@root/theme/tango.css">
+  </head>
+  <body>
+    <div class="row">
+      <div class="column smaller">
+        <h2><a href="@root/">{{ site.title }}</a></h2>
+        <p>
+          {{ site.tagline }}
+        </p>
+	{% include "contents.html" %}
+	<ul>
+	  <li><a href="@root/nitinat/index.html">Documentation</a></li>
+	  <li><a href="{{ site.github }}">Source</a></li>
+	</ul>
+      </div>
+      <div class="column bordered">
+        <h1>{{ node.title }}</h1>
+        {{ node.html }}
+      </div>
+    </div>
+  </body>
+</html>

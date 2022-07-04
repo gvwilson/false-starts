@@ -1,0 +1,388 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Nitinat</title>
+    <link rel="stylesheet" href="theme/nitinat.css">
+    <link rel="stylesheet" href="theme/tango.css">
+  </head>
+  <body>
+    <div class="row">
+      <div class="column smaller">
+        <h2><a href="index.html">Nitinat</a></h2>
+        <p>
+          A model data analysis project in Python
+        </p>
+	<ol type="1">
+  
+  <li>
+    <a href="starting.html">
+      
+        Starting
+      
+    </a>
+  </li>
+  
+  <li>
+    <a href="project.html">
+      
+        Setting Up a Python Project
+      
+    </a>
+  </li>
+  
+  <li>
+    <a href="dataset.html">
+      
+        Handling Data
+      
+    </a>
+  </li>
+  
+  <li>
+    <a href="reproducible.html">
+      
+        Making Tasks Reproducible
+      
+    </a>
+  </li>
+  
+  <li>
+    <a href="results.html">
+      
+        Producing Results
+      
+    </a>
+  </li>
+  
+  <li>
+    <a href="quality.html">
+      
+        Checking Code Quality
+      
+    </a>
+  </li>
+  
+  <li>
+    <a href="setback-01.html">
+      
+        The First Setback
+      
+    </a>
+  </li>
+  
+  <li>
+    <a href="configuration.html">
+      
+        Consistent Configuration
+      
+    </a>
+  </li>
+  
+  <li>
+    <a href="testing.html">
+      
+        Improving Testing
+      
+    </a>
+  </li>
+  
+  <li>
+    <a href="logging.html">
+      
+        Logging
+      
+    </a>
+  </li>
+  
+  <li>
+    <a href="technical-debt-01.html">
+      
+        Technical Debt
+      
+    </a>
+  </li>
+  
+  <li>
+    <a href="parameters.html">
+      
+        Handling Model Parameters
+      
+    </a>
+  </li>
+  
+  <li>
+    <a href="pipeline-01.html">
+      
+        Creating a Pipeline
+      
+    </a>
+  </li>
+  
+  <li>
+    <a href="technical-debt-02.html">
+      
+        Technical Debt Revisited
+      
+    </a>
+  </li>
+  
+  <li>
+    <a href="pipeline-02.html">
+      
+        Pipeline Revisited
+      
+    </a>
+  </li>
+  
+  <li>
+    <a href="website-01.html">
+      
+        Creating a Website
+      
+    </a>
+  </li>
+  
+  <li>
+    <a href="pipeline-03.html">
+      <strong>
+        A Pipeline with Provenance
+      </strong>
+    </a>
+  </li>
+  
+  <li>
+    <a href="website-02.html">
+      
+        Improving the Website
+      
+    </a>
+  </li>
+  
+  <li>
+    <a href="documentation.html">
+      
+        Documenting Code
+      
+    </a>
+  </li>
+  
+  <li>
+    <a href="packaging.html">
+      
+        Creating a Package
+      
+    </a>
+  </li>
+  
+  <li>
+    <a href="ci.html">
+      
+        Continuous Integration
+      
+    </a>
+  </li>
+  
+  <li>
+    <a href="indexing.html">
+      
+        Indexing Datasets
+      
+    </a>
+  </li>
+  
+  <li>
+    <a href="dependencies.html">
+      
+        Handling Task Dependencies
+      
+    </a>
+  </li>
+  
+  <li>
+    <a href="layered.html">
+      
+        Layered Configuration
+      
+    </a>
+  </li>
+  
+  <li>
+    <a href="database.html">
+      
+        Accessing a Database
+      
+    </a>
+  </li>
+  
+</ol>
+<ol type="A">
+  
+  <li>
+    <a href="data.html">
+      
+        Parameter Sets
+      
+    </a>
+  </li>
+  
+  <li>
+    <a href="license.html">
+      
+        License
+      
+    </a>
+  </li>
+  
+  <li>
+    <a href="links.html">
+      
+        Links
+      
+    </a>
+  </li>
+  
+  <li>
+    <a href="credits.html">
+      
+        Credits
+      
+    </a>
+  </li>
+  
+</ol>
+
+	<ul>
+	  <li><a href="nitinat/index.html">Documentation</a></li>
+	  <li><a href="https://github.com/gvwilson/nitinat/">Source</a></li>
+	</ul>
+      </div>
+      <div class="column bordered">
+        <h1>A Pipeline with Provenance</h1>
+        <ul>
+<li>We want to know what each run of a pipeline actually did<ul>
+<li>Automatically record functions and their parameters in a structured way</li>
+<li>Would also like to introduce a little error handling</li>
+</ul>
+</li>
+<li>Rewrite <code>pipeline</code> to capture functions' parameters:</li>
+</ul>
+<div class="highlight"><pre><span></span><code><span class="k">def</span> <span class="nf">pipeline</span><span class="p">(</span><span class="n">config_file</span><span class="p">,</span> <span class="n">available</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Construct and run a processing pipeline.&quot;&quot;&quot;</span>
+    <span class="c1"># Set up.</span>
+    <span class="n">raw_config</span> <span class="o">=</span> <span class="n">_read_config</span><span class="p">(</span><span class="n">config_file</span><span class="p">)</span>
+    <span class="n">overall</span><span class="p">,</span> <span class="n">stages</span> <span class="o">=</span> <span class="n">split_config</span><span class="p">(</span><span class="n">raw_config</span><span class="p">)</span>
+
+    <span class="c1"># Run each stage in turn.</span>
+    <span class="n">data</span> <span class="o">=</span> <span class="kc">None</span>
+    <span class="n">provenance</span> <span class="o">=</span> <span class="p">[]</span>
+    <span class="k">for</span> <span class="n">stage</span> <span class="ow">in</span> <span class="n">stages</span><span class="p">:</span>
+        <span class="n">func_name</span><span class="p">,</span> <span class="n">params</span> <span class="o">=</span> <span class="n">pre_stage</span><span class="p">(</span><span class="n">overall</span><span class="p">,</span> <span class="n">stage</span><span class="p">)</span>
+        <span class="n">record</span><span class="p">,</span> <span class="n">data</span> <span class="o">=</span> <span class="n">run_stage</span><span class="p">(</span><span class="n">available</span><span class="p">,</span> <span class="n">func_name</span><span class="p">,</span> <span class="n">params</span><span class="p">,</span> <span class="n">data</span><span class="p">)</span>
+        <span class="n">provenance</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">record</span><span class="p">)</span>
+        <span class="k">if</span> <span class="n">record</span><span class="p">[</span><span class="s2">&quot;exc&quot;</span><span class="p">]</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="k">return</span> <span class="n">provenance</span><span class="p">,</span> <span class="kc">None</span>
+
+    <span class="c1"># Return final result.</span>
+    <span class="k">return</span> <span class="n">provenance</span><span class="p">,</span> <span class="n">data</span>
+</code></pre></div>
+<ul>
+<li>Convert overall configuration and stage configuration into function name and parameters<ul>
+<li>Run that stage, getting a record of what happened and the data to pass on</li>
+<li>Save that record</li>
+<li>If an exception occurred, stop the pipeline</li>
+<li>Only return data if the pipeline ran to the end</li>
+</ul>
+</li>
+<li>Getting the function name and parameters is just dictionary juggling:</li>
+</ul>
+<div class="highlight"><pre><span></span><code><span class="k">def</span> <span class="nf">pre_stage</span><span class="p">(</span><span class="n">overall</span><span class="p">,</span> <span class="n">stage</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Get function, parameters, and provenance record.&quot;&quot;&quot;</span>
+    <span class="n">func_name</span> <span class="o">=</span> <span class="n">stage</span><span class="p">[</span><span class="s2">&quot;function&quot;</span><span class="p">]</span>
+    <span class="n">params</span> <span class="o">=</span> <span class="n">overall</span> <span class="o">|</span> <span class="n">stage</span>
+    <span class="k">del</span> <span class="n">params</span><span class="p">[</span><span class="s2">&quot;function&quot;</span><span class="p">]</span>
+    <span class="k">return</span> <span class="n">func_name</span><span class="p">,</span> <span class="n">params</span>
+</code></pre></div>
+<ul>
+<li>Running the stage:</li>
+</ul>
+<div class="highlight"><pre><span></span><code><span class="k">def</span> <span class="nf">run_stage</span><span class="p">(</span><span class="n">available</span><span class="p">,</span> <span class="n">func_name</span><span class="p">,</span> <span class="n">params</span><span class="p">,</span> <span class="n">data</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Run a single stage, recording provenance.&quot;&quot;&quot;</span>
+    <span class="n">func</span> <span class="o">=</span> <span class="n">get_function</span><span class="p">(</span><span class="n">available</span><span class="p">,</span> <span class="n">func_name</span><span class="p">)</span>
+    <span class="k">try</span><span class="p">:</span>
+        <span class="n">start</span> <span class="o">=</span> <span class="n">_now</span><span class="p">()</span>
+        <span class="n">data</span> <span class="o">=</span> <span class="n">func</span><span class="p">(</span><span class="o">**</span><span class="n">params</span><span class="p">)</span> <span class="k">if</span> <span class="p">(</span><span class="n">data</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">)</span> <span class="k">else</span> <span class="n">func</span><span class="p">(</span><span class="n">data</span><span class="p">,</span> <span class="o">**</span><span class="n">params</span><span class="p">)</span>
+        <span class="n">params</span><span class="p">[</span><span class="s2">&quot;exc&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span>
+    <span class="k">except</span> <span class="ne">Exception</span> <span class="k">as</span> <span class="n">exc</span><span class="p">:</span>
+        <span class="n">params</span><span class="p">[</span><span class="s2">&quot;exc&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="nb">repr</span><span class="p">(</span><span class="n">exc</span><span class="p">)</span>
+    <span class="k">finally</span><span class="p">:</span>
+        <span class="n">params</span><span class="p">[</span><span class="s2">&quot;elapsed&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="p">(</span><span class="n">_now</span><span class="p">()</span> <span class="o">-</span> <span class="n">start</span><span class="p">)</span><span class="o">.</span><span class="n">total_seconds</span><span class="p">()</span>
+        <span class="n">params</span><span class="p">[</span><span class="s2">&quot;function&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">func_name</span>
+    <span class="k">return</span> <span class="n">params</span><span class="p">,</span> <span class="n">data</span>
+</code></pre></div>
+<ul>
+<li>Steps:<ul>
+<li>Look up the function</li>
+<li>Record a start time</li>
+<li>Call the function</li>
+<li>If an exception occurred, save it</li>
+<li><em>Always</em> record the end time and the function name</li>
+</ul>
+</li>
+<li>Updating the tests</li>
+</ul>
+<div class="highlight"><pre><span></span><code><span class="k">def</span> <span class="nf">test_pipeline3_two_stages_with_parameters_no_overall</span><span class="p">(</span><span class="n">available</span><span class="p">):</span>
+    <span class="n">config</span> <span class="o">=</span> <span class="p">[{</span><span class="s2">&quot;function&quot;</span><span class="p">:</span> <span class="s2">&quot;reader&quot;</span><span class="p">},</span> <span class="p">{</span><span class="s2">&quot;function&quot;</span><span class="p">:</span> <span class="s2">&quot;head&quot;</span><span class="p">,</span> <span class="s2">&quot;num&quot;</span><span class="p">:</span> <span class="mi">2</span><span class="p">}]</span>
+    <span class="k">with</span> <span class="p">(</span>
+        <span class="n">patch</span><span class="p">(</span><span class="n">READ_CONFIG</span><span class="p">,</span> <span class="n">return_value</span><span class="o">=</span><span class="n">config</span><span class="p">),</span>
+        <span class="n">patch</span><span class="p">(</span><span class="n">NOW</span><span class="p">,</span> <span class="n">side_effect</span><span class="o">=</span><span class="n">times</span><span class="p">(</span><span class="mi">2</span><span class="p">)),</span>
+    <span class="p">):</span>
+        <span class="n">provenance</span><span class="p">,</span> <span class="n">result</span> <span class="o">=</span> <span class="n">pipeline</span><span class="p">(</span><span class="s2">&quot;test.yml&quot;</span><span class="p">,</span> <span class="n">available</span><span class="p">)</span>
+        <span class="k">assert</span> <span class="nb">len</span><span class="p">(</span><span class="n">result</span><span class="p">)</span> <span class="o">==</span> <span class="mi">2</span>
+        <span class="k">assert</span> <span class="n">result</span><span class="o">.</span><span class="n">equals</span><span class="p">(</span><span class="n">simple_df</span><span class="p">()</span><span class="o">.</span><span class="n">iloc</span><span class="p">[[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">]])</span>
+        <span class="k">assert</span> <span class="n">provenance</span> <span class="o">==</span> <span class="p">[</span>
+            <span class="p">{</span><span class="s2">&quot;exc&quot;</span><span class="p">:</span> <span class="kc">None</span><span class="p">,</span> <span class="s2">&quot;elapsed&quot;</span><span class="p">:</span> <span class="mf">1.0</span><span class="p">,</span> <span class="s2">&quot;function&quot;</span><span class="p">:</span> <span class="s2">&quot;reader&quot;</span><span class="p">},</span>
+            <span class="p">{</span><span class="s2">&quot;exc&quot;</span><span class="p">:</span> <span class="kc">None</span><span class="p">,</span> <span class="s2">&quot;elapsed&quot;</span><span class="p">:</span> <span class="mf">1.0</span><span class="p">,</span> <span class="s2">&quot;function&quot;</span><span class="p">:</span> <span class="s2">&quot;head&quot;</span><span class="p">,</span> <span class="s2">&quot;num&quot;</span><span class="p">:</span> <span class="mi">2</span><span class="p">},</span>
+        <span class="p">]</span>
+</code></pre></div>
+<ul>
+<li>Need a helper function <code>times</code> to generate predictable times</li>
+</ul>
+<div class="highlight"><pre><span></span><code><span class="n">NOW</span> <span class="o">=</span> <span class="s2">&quot;nitinat.pipeline3._now&quot;</span>
+
+<span class="k">def</span> <span class="nf">times</span><span class="p">(</span><span class="n">num_stages</span><span class="p">):</span>
+    <span class="k">return</span> <span class="p">[</span><span class="n">datetime</span><span class="p">(</span><span class="mi">2022</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="n">i</span><span class="p">)</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">2</span> <span class="o">*</span> <span class="n">num_stages</span><span class="p">)]</span>
+</code></pre></div>
+<ul>
+<li>Always test error handling</li>
+</ul>
+<div class="highlight"><pre><span></span><code><span class="k">def</span> <span class="nf">test_pipeline3_two_stages_with_failure</span><span class="p">(</span><span class="n">available</span><span class="p">):</span>
+    <span class="n">config</span> <span class="o">=</span> <span class="p">[{</span><span class="s2">&quot;function&quot;</span><span class="p">:</span> <span class="s2">&quot;reader&quot;</span><span class="p">},</span> <span class="p">{</span><span class="s2">&quot;function&quot;</span><span class="p">:</span> <span class="s2">&quot;failure&quot;</span><span class="p">}]</span>
+    <span class="k">with</span> <span class="p">(</span>
+        <span class="n">patch</span><span class="p">(</span><span class="n">READ_CONFIG</span><span class="p">,</span> <span class="n">return_value</span><span class="o">=</span><span class="n">config</span><span class="p">),</span>
+        <span class="n">patch</span><span class="p">(</span><span class="n">NOW</span><span class="p">,</span> <span class="n">side_effect</span><span class="o">=</span><span class="n">times</span><span class="p">(</span><span class="mi">2</span><span class="p">)),</span>
+    <span class="p">):</span>
+        <span class="n">provenance</span><span class="p">,</span> <span class="n">result</span> <span class="o">=</span> <span class="n">pipeline</span><span class="p">(</span><span class="s2">&quot;test.yml&quot;</span><span class="p">,</span> <span class="n">available</span><span class="p">)</span>
+        <span class="k">assert</span> <span class="n">result</span> <span class="ow">is</span> <span class="kc">None</span>
+        <span class="k">assert</span> <span class="n">provenance</span> <span class="o">==</span> <span class="p">[</span>
+            <span class="p">{</span><span class="s2">&quot;exc&quot;</span><span class="p">:</span> <span class="kc">None</span><span class="p">,</span> <span class="s2">&quot;elapsed&quot;</span><span class="p">:</span> <span class="mf">1.0</span><span class="p">,</span> <span class="s2">&quot;function&quot;</span><span class="p">:</span> <span class="s2">&quot;reader&quot;</span><span class="p">},</span>
+            <span class="p">{</span>
+                <span class="s2">&quot;exc&quot;</span><span class="p">:</span> <span class="s2">&quot;ValueError(&#39;failure message&#39;)&quot;</span><span class="p">,</span>
+                <span class="s2">&quot;elapsed&quot;</span><span class="p">:</span> <span class="mf">1.0</span><span class="p">,</span>
+                <span class="s2">&quot;function&quot;</span><span class="p">:</span> <span class="s2">&quot;failure&quot;</span><span class="p">,</span>
+            <span class="p">},</span>
+        <span class="p">]</span>
+</code></pre></div>
+<ul>
+<li>Note that <code>run_stage</code> converts exceptions to strings using <code>repr</code><ul>
+<li>Python doesn't implement <code>==</code> on exception objects</li>
+<li>And <code>str(exc)</code> produces the error message, not the exception class</li>
+<li>Once again, we are designing for testability</li>
+</ul>
+</li>
+</ul>
+      </div>
+    </div>
+  </body>
+</html>

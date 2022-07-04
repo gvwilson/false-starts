@@ -1,0 +1,358 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Nitinat</title>
+    <link rel="stylesheet" href="theme/nitinat.css">
+    <link rel="stylesheet" href="theme/tango.css">
+  </head>
+  <body>
+    <div class="row">
+      <div class="column smaller">
+        <h2><a href="index.html">Nitinat</a></h2>
+        <p>
+          A model data analysis project in Python
+        </p>
+	<ol type="1">
+  
+  <li>
+    <a href="starting.html">
+      
+        Starting
+      
+    </a>
+  </li>
+  
+  <li>
+    <a href="project.html">
+      
+        Setting Up a Python Project
+      
+    </a>
+  </li>
+  
+  <li>
+    <a href="dataset.html">
+      
+        Handling Data
+      
+    </a>
+  </li>
+  
+  <li>
+    <a href="reproducible.html">
+      
+        Making Tasks Reproducible
+      
+    </a>
+  </li>
+  
+  <li>
+    <a href="results.html">
+      
+        Producing Results
+      
+    </a>
+  </li>
+  
+  <li>
+    <a href="quality.html">
+      
+        Checking Code Quality
+      
+    </a>
+  </li>
+  
+  <li>
+    <a href="setback-01.html">
+      
+        The First Setback
+      
+    </a>
+  </li>
+  
+  <li>
+    <a href="configuration.html">
+      
+        Consistent Configuration
+      
+    </a>
+  </li>
+  
+  <li>
+    <a href="testing.html">
+      
+        Improving Testing
+      
+    </a>
+  </li>
+  
+  <li>
+    <a href="logging.html">
+      
+        Logging
+      
+    </a>
+  </li>
+  
+  <li>
+    <a href="technical-debt-01.html">
+      
+        Technical Debt
+      
+    </a>
+  </li>
+  
+  <li>
+    <a href="parameters.html">
+      
+        Handling Model Parameters
+      
+    </a>
+  </li>
+  
+  <li>
+    <a href="pipeline-01.html">
+      
+        Creating a Pipeline
+      
+    </a>
+  </li>
+  
+  <li>
+    <a href="technical-debt-02.html">
+      
+        Technical Debt Revisited
+      
+    </a>
+  </li>
+  
+  <li>
+    <a href="pipeline-02.html">
+      
+        Pipeline Revisited
+      
+    </a>
+  </li>
+  
+  <li>
+    <a href="website-01.html">
+      
+        Creating a Website
+      
+    </a>
+  </li>
+  
+  <li>
+    <a href="pipeline-03.html">
+      
+        A Pipeline with Provenance
+      
+    </a>
+  </li>
+  
+  <li>
+    <a href="website-02.html">
+      
+        Improving the Website
+      
+    </a>
+  </li>
+  
+  <li>
+    <a href="documentation.html">
+      <strong>
+        Documenting Code
+      </strong>
+    </a>
+  </li>
+  
+  <li>
+    <a href="packaging.html">
+      
+        Creating a Package
+      
+    </a>
+  </li>
+  
+  <li>
+    <a href="ci.html">
+      
+        Continuous Integration
+      
+    </a>
+  </li>
+  
+  <li>
+    <a href="indexing.html">
+      
+        Indexing Datasets
+      
+    </a>
+  </li>
+  
+  <li>
+    <a href="dependencies.html">
+      
+        Handling Task Dependencies
+      
+    </a>
+  </li>
+  
+  <li>
+    <a href="layered.html">
+      
+        Layered Configuration
+      
+    </a>
+  </li>
+  
+  <li>
+    <a href="database.html">
+      
+        Accessing a Database
+      
+    </a>
+  </li>
+  
+</ol>
+<ol type="A">
+  
+  <li>
+    <a href="data.html">
+      
+        Parameter Sets
+      
+    </a>
+  </li>
+  
+  <li>
+    <a href="license.html">
+      
+        License
+      
+    </a>
+  </li>
+  
+  <li>
+    <a href="links.html">
+      
+        Links
+      
+    </a>
+  </li>
+  
+  <li>
+    <a href="credits.html">
+      
+        Credits
+      
+    </a>
+  </li>
+  
+</ol>
+
+	<ul>
+	  <li><a href="nitinat/index.html">Documentation</a></li>
+	  <li><a href="https://github.com/gvwilson/nitinat/">Source</a></li>
+	</ul>
+      </div>
+      <div class="column bordered">
+        <h1>Documenting Code</h1>
+        <ul>
+<li>Documenting little scripts written for personal use isn't worthwhile</li>
+<li>But those scripts grow and are used by other people<ul>
+<li>Including your future self</li>
+</ul>
+</li>
+<li>We've been writing minimal docstrings</li>
+<li><a href="https://pdoc3.github.io/pdoc/">pdoc3</a> is the simplest documentation available<ul>
+<li>Less effort to set up than <a href="https://www.sphinx-doc.org/">Sphinx</a></li>
+<li>Less frustrating than <a href="https://www.mkdocs.org/">MkDocs</a></li>
+</ul>
+</li>
+<li><code>pip install pdoc3</code> gives us a command <code>pdoc</code></li>
+<li>Run <code>pdoc --html --output-dir docs nitinat</code> from the command line<ul>
+<li>Creates <code>docs/nitinat/index.html</code> and other files</li>
+</ul>
+</li>
+<li>Add it to <code>tasks.py</code><ul>
+<li>In the same task that builds the website</li>
+<li>After Ivy runs</li>
+</ul>
+</li>
+</ul>
+<div class="highlight"><pre><span></span><code><span class="nd">@task</span>
+<span class="k">def</span> <span class="nf">website</span><span class="p">(</span><span class="n">c</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Build website.&quot;&quot;&quot;</span>
+    <span class="n">c</span><span class="o">.</span><span class="n">run</span><span class="p">(</span><span class="s2">&quot;ivy build&quot;</span><span class="p">)</span>
+    <span class="n">c</span><span class="o">.</span><span class="n">run</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;pdoc --force --html --output-dir docs nitinat&quot;</span><span class="p">)</span>
+</code></pre></div>
+<ul>
+<li>But wait: what if we change the Ivy configuration to put documentation somewhere else?</li>
+<li>Python programs can import files in the same directory</li>
+</ul>
+<div class="highlight"><pre><span></span><code><span class="nd">@task</span>
+<span class="k">def</span> <span class="nf">website</span><span class="p">(</span><span class="n">c</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Build website.&quot;&quot;&quot;</span>
+    <span class="kn">from</span> <span class="nn">config</span> <span class="kn">import</span> <span class="n">out_dir</span>
+    <span class="n">c</span><span class="o">.</span><span class="n">run</span><span class="p">(</span><span class="s2">&quot;ivy build&quot;</span><span class="p">)</span>
+    <span class="n">c</span><span class="o">.</span><span class="n">run</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;pdoc --force --html --output-dir </span><span class="si">{</span><span class="n">out_dir</span><span class="si">}</span><span class="s2"> nitinat&quot;</span><span class="p">)</span>
+</code></pre></div>
+<ul>
+<li>Is this a good idea?<ul>
+<li>Pro: every decision in a program should be made exactly once</li>
+<li>Con: will the next reader understand where configuration is coming from?</li>
+</ul>
+</li>
+<li>We use <a href="https://www.sphinx-doc.org/en/master/usage/extensions/example_google.html">Google-style docstrings</a></li>
+</ul>
+<div class="highlight"><pre><span></span><code><span class="k">def</span> <span class="nf">pre_stage</span><span class="p">(</span><span class="n">overall</span><span class="p">,</span> <span class="n">stage</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Prepare for running a stage.</span>
+
+<span class="sd">    Args:</span>
+<span class="sd">        overall (dict): overall configuration.</span>
+<span class="sd">        stage (dict): configuration for this stage.</span>
+
+<span class="sd">    Returns:</span>
+<span class="sd">        - str: function name</span>
+<span class="sd">        - dict: function parameters</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">func_name</span> <span class="o">=</span> <span class="n">stage</span><span class="p">[</span><span class="s2">&quot;function&quot;</span><span class="p">]</span>
+    <span class="n">params</span> <span class="o">=</span> <span class="n">overall</span> <span class="o">|</span> <span class="n">stage</span>
+    <span class="k">del</span> <span class="n">params</span><span class="p">[</span><span class="s2">&quot;function&quot;</span><span class="p">]</span>
+    <span class="k">return</span> <span class="n">func_name</span><span class="p">,</span> <span class="n">params</span>
+</code></pre></div>
+<div class="callout">
+<dl>
+<dt><code>def pre_stage(overall, stage)</code></dt>
+<dd>
+<div class="desc"><p>Prepare for running a stage.</p>
+<p><strong>Args</strong></p>
+<dl>
+<dt><strong><code>overall</code></strong> : <code>dict</code></dt>
+<dd>overall configuration.</dd>
+<dt><strong><code>stage</code></strong> : <code>dict</code></dt>
+<dd>configuration for this stage.</dd>
+</dl>
+<p><strong>Returns</strong></p>
+<ul>
+<li><code>str</code>: function name</li>
+<li><code>dict</code>: function parameters</li>
+</ul>
+</div>
+</dl>
+</div>
+
+<ul>
+<li>Can also include examples, describe the exceptions that are raised, link to other pages, etc.</li>
+<li>The more users you have, the higher the proportion of project effort goes into documentation<ul>
+<li>If you'd like to be rich, famous, and popular, figure out a way to regression test docs</li>
+</ul>
+</li>
+</ul>
+      </div>
+    </div>
+  </body>
+</html>

@@ -1,0 +1,407 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Nitinat</title>
+    <link rel="stylesheet" href="theme/nitinat.css">
+    <link rel="stylesheet" href="theme/tango.css">
+  </head>
+  <body>
+    <div class="row">
+      <div class="column smaller">
+        <h2><a href="index.html">Nitinat</a></h2>
+        <p>
+          A model data analysis project in Python
+        </p>
+	<ol type="1">
+  
+  <li>
+    <a href="starting.html">
+      
+        Starting
+      
+    </a>
+  </li>
+  
+  <li>
+    <a href="project.html">
+      
+        Setting Up a Python Project
+      
+    </a>
+  </li>
+  
+  <li>
+    <a href="dataset.html">
+      
+        Handling Data
+      
+    </a>
+  </li>
+  
+  <li>
+    <a href="reproducible.html">
+      
+        Making Tasks Reproducible
+      
+    </a>
+  </li>
+  
+  <li>
+    <a href="results.html">
+      
+        Producing Results
+      
+    </a>
+  </li>
+  
+  <li>
+    <a href="quality.html">
+      
+        Checking Code Quality
+      
+    </a>
+  </li>
+  
+  <li>
+    <a href="setback-01.html">
+      
+        The First Setback
+      
+    </a>
+  </li>
+  
+  <li>
+    <a href="configuration.html">
+      
+        Consistent Configuration
+      
+    </a>
+  </li>
+  
+  <li>
+    <a href="testing.html">
+      
+        Improving Testing
+      
+    </a>
+  </li>
+  
+  <li>
+    <a href="logging.html">
+      
+        Logging
+      
+    </a>
+  </li>
+  
+  <li>
+    <a href="technical-debt-01.html">
+      
+        Technical Debt
+      
+    </a>
+  </li>
+  
+  <li>
+    <a href="parameters.html">
+      
+        Handling Model Parameters
+      
+    </a>
+  </li>
+  
+  <li>
+    <a href="pipeline-01.html">
+      
+        Creating a Pipeline
+      
+    </a>
+  </li>
+  
+  <li>
+    <a href="technical-debt-02.html">
+      
+        Technical Debt Revisited
+      
+    </a>
+  </li>
+  
+  <li>
+    <a href="pipeline-02.html">
+      
+        Pipeline Revisited
+      
+    </a>
+  </li>
+  
+  <li>
+    <a href="website-01.html">
+      
+        Creating a Website
+      
+    </a>
+  </li>
+  
+  <li>
+    <a href="pipeline-03.html">
+      
+        A Pipeline with Provenance
+      
+    </a>
+  </li>
+  
+  <li>
+    <a href="website-02.html">
+      
+        Improving the Website
+      
+    </a>
+  </li>
+  
+  <li>
+    <a href="documentation.html">
+      
+        Documenting Code
+      
+    </a>
+  </li>
+  
+  <li>
+    <a href="packaging.html">
+      <strong>
+        Creating a Package
+      </strong>
+    </a>
+  </li>
+  
+  <li>
+    <a href="ci.html">
+      
+        Continuous Integration
+      
+    </a>
+  </li>
+  
+  <li>
+    <a href="indexing.html">
+      
+        Indexing Datasets
+      
+    </a>
+  </li>
+  
+  <li>
+    <a href="dependencies.html">
+      
+        Handling Task Dependencies
+      
+    </a>
+  </li>
+  
+  <li>
+    <a href="layered.html">
+      
+        Layered Configuration
+      
+    </a>
+  </li>
+  
+  <li>
+    <a href="database.html">
+      
+        Accessing a Database
+      
+    </a>
+  </li>
+  
+</ol>
+<ol type="A">
+  
+  <li>
+    <a href="data.html">
+      
+        Parameter Sets
+      
+    </a>
+  </li>
+  
+  <li>
+    <a href="license.html">
+      
+        License
+      
+    </a>
+  </li>
+  
+  <li>
+    <a href="links.html">
+      
+        Links
+      
+    </a>
+  </li>
+  
+  <li>
+    <a href="credits.html">
+      
+        Credits
+      
+    </a>
+  </li>
+  
+</ol>
+
+	<ul>
+	  <li><a href="nitinat/index.html">Documentation</a></li>
+	  <li><a href="https://github.com/gvwilson/nitinat/">Source</a></li>
+	</ul>
+      </div>
+      <div class="column bordered">
+        <h1>Creating a Package</h1>
+        <ul>
+<li>Programming mostly consists of gluing libraries together to build more libraries<ul>
+<li>"Create a little language in which the solution to your problem is straightforward"</li>
+</ul>
+</li>
+<li>Python's packages are one of its greatest strengths, but Python's packaging tools are one of its greatest weaknesses<ul>
+<li>Things are getting better, but we're not there yet</li>
+</ul>
+</li>
+<li>The first step is to decide what kind of package and what tools to use<ul>
+<li><a href="https://docs.conda.io/">conda</a> is the "right" answer, but complex to set up (even with copy and paste)</li>
+<li>New tools like <a href="https://python-poetry.org/">poetry</a> and <a href="https://flit.pypa.io/">flit</a> are the future</li>
+<li>We're going to stick to [pip][pip] because at least its headaches are well understood</li>
+</ul>
+</li>
+<li>Add a few lines to <code>pyproject.toml</code> to tell it what build system we're using</li>
+</ul>
+<div class="highlight"><pre><span></span><code>[build-system]
+requires = [&quot;setuptools&quot;]
+build-backend = &quot;setuptools.build_meta&quot;
+
+[tool.black]
+line-length = 80
+
+[tool.flake8]
+max-line-length = 80
+
+[tool.isort]
+profile = &quot;black&quot;
+</code></pre></div>
+<ul>
+<li>Re-create the <code>setup.cfg</code> file we <a href="technical-debt-02.html">got rid of</a><ul>
+<li>To create a package, Python eventually calls <code>setuptools.setup</code></li>
+<li>We can do this directly in a file that's typically called <code>setup.py</code></li>
+<li>Or put parameter values for that function call in <code>setup.cfg</code></li>
+</ul>
+</li>
+</ul>
+<div class="highlight"><pre><span></span><code>[metadata]
+name = nitinat
+version = attr: nitinat.__version__
+author = Greg Wilson
+author_email = greg@deepgenomics.com
+description = A model data analysis project
+long_description = file: README.md
+long_description_content_type = text/markdown
+url = https://github.com/gvwilson/nitinat
+classifiers =
+    Programming Language :: Python :: 3
+    License :: OSI Approved :: MIT License
+    Operating System :: OS Independent
+
+[options]
+packages = nitinat
+python_requires = &gt;=3.9
+install_requires =
+  kaleido &gt;= 0.2
+  pandas &gt;= 1.4
+  plotly &gt;= 5.6
+  pydantic &gt;= 1.9.0
+  pyyaml &gt;= 5.4
+  requests &gt;= 2.27
+  statsmodels &gt;= 0.13
+</code></pre></div>
+<ul>
+<li>The <code>[metadata]</code> section describes our package<ul>
+<li><code>attr: nitinat.__version__</code> means "load the <code>nitinat</code> package and use its <code>__version__</code> (to avoid duplicating information)</li>
+<li><code>file: README.md</code> means "read this file and use its content verbatim"</li>
+<li>The <code>classifiers</code> are used to categorize the package on <a href="https://pypi.org/">PyPI</a>: please look there for other relevant values</li>
+</ul>
+</li>
+<li>The <code>[options]</code> section is what we want to build<ul>
+<li><code>install_requires</code> defines the dependencies that are needed for installation, not for development</li>
+</ul>
+</li>
+</ul>
+<div class="callout">
+<h3><code>setup.cfg</code> vs. <code>requirements.txt</code></h3>
+<p>The information in <code>[install_requires]</code> is a subset of what's in <code>requirements.txt</code>.
+There are ways to avoid this duplication,
+but they're all brittle and we hope the need for them will go away within a year.
+For now, duplicating is easier than debugging.</p>
+</div>
+<ul>
+<li>Install the package in "edit mode" in the current conda environment:</li>
+</ul>
+<div class="highlight"><pre><span></span><code>$ pip install -e .
+Obtaining file:///u/nitinat
+  Installing build dependencies ... <span class="k">done</span>
+  Checking <span class="k">if</span> build backend supports build_editable ... <span class="k">done</span>
+  Getting requirements to build wheel ... <span class="k">done</span>
+  Installing backend dependencies ... <span class="k">done</span>
+  Preparing metadata <span class="o">(</span>pyproject.toml<span class="o">)</span> ... <span class="k">done</span>
+Requirement already satisfied: requests&gt;<span class="o">=</span><span class="m">2</span>.27 <span class="se">\</span>
+  <span class="k">in</span> /u/conda/envs/nitinat/lib/python3.9/site-packages <span class="o">(</span>from <span class="nv">nitinat</span><span class="o">==</span><span class="m">0</span>.1.0<span class="o">)</span> <span class="o">(</span><span class="m">2</span>.27.1<span class="o">)</span>
+Requirement already satisfied: pyyaml&gt;<span class="o">=</span><span class="m">5</span>.4 <span class="se">\</span>
+  <span class="k">in</span> /u/conda/envs/nitinat/lib/python3.9/site-packages <span class="o">(</span>from <span class="nv">nitinat</span><span class="o">==</span><span class="m">0</span>.1.0<span class="o">)</span> <span class="o">(</span><span class="m">5</span>.4.1<span class="o">)</span>
+...more like this...
+Installing collected packages: nitinat
+  Running setup.py develop <span class="k">for</span> nitinat
+Successfully installed nitinat-0.1.0
+</code></pre></div>
+<ul>
+<li>Did that work?<ul>
+<li>We now have a directory <code>./nitinat.egg-info/</code> with leftovers from the build</li>
+</ul>
+</li>
+<li>Go into another directory (so that <code>import</code> doesn't pick up the sub-directory) and import it</li>
+</ul>
+<div class="highlight"><pre><span></span><code>$ <span class="nb">cd</span> /tmp
+$ python
+Python <span class="m">3</span>.9.12 <span class="p">|</span> packaged by conda-forge <span class="p">|</span> <span class="o">(</span>main, Mar <span class="m">24</span> <span class="m">2022</span>, <span class="m">23</span>:27:05<span class="o">)</span> 
+<span class="o">[</span>Clang <span class="m">12</span>.0.1 <span class="o">]</span> on darwin
+Type <span class="s2">&quot;help&quot;</span>, <span class="s2">&quot;copyright&quot;</span>, <span class="s2">&quot;credits&quot;</span> or <span class="s2">&quot;license&quot;</span> <span class="k">for</span> more information.
+&gt;&gt;&gt; import nitinat
+&gt;&gt;&gt; nitinat.__version__
+<span class="s1">&#39;0.1.0&#39;</span>
+&gt;&gt;&gt; nitinat.__path__
+<span class="o">[</span><span class="s1">&#39;/u/nitinat/nitinat&#39;</span><span class="o">]</span>
+</code></pre></div>
+<ul>
+<li>Can build this and upload it to PyPI using <a href="https://twine.readthedocs.io/">twine</a><ul>
+<li>Yes, another tool...</li>
+</ul>
+</li>
+<li>Or install directly from GitHub:</li>
+</ul>
+<div class="highlight"><pre><span></span><code>$ pip install git+ssh://git@github.com/gvwilson/nitinat
+</code></pre></div>
+<ul>
+<li>This installs into the current environment just like any other package</li>
+<li>But the package isn't as findable and can't (easily) be listed as a dependency by other packages</li>
+</ul>
+<div class="callout">
+<h3>Oops</h3>
+<p>Did <code>git add</code> and <code>git commit</code>, then pulled changes on another machine,
+but <code>site/project.md</code> wasn't there.
+Turns out that the default <code>.gitignore</code> file for Python projects ignores <code>site/</code>
+because that's the output directory for <a href="https://www.mkdocs.org/">MkDocs</a>.
+Renamed <code>site</code> back to <code>src</code>.</p>
+</div>
+      </div>
+    </div>
+  </body>
+</html>
