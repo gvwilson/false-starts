@@ -1,0 +1,153 @@
+# A
+
+- key: active_listening
+  en:
+    term: "active listening"
+    def: >
+      A discussion technique in which people summarize each other's statements
+      in order to ensure they have understood them correctly.
+
+- key: adhd
+  en:
+    term: "attention-deficit/hyperactivity disorder"
+    def: >
+      A constellation of personality traits that include someone having
+      difficulty controlling what they pay attention to and higher-than-average
+      physical restlessness.
+    acronym: ADHD
+
+# B
+
+# C
+
+- key: crunch_mode
+  en:
+    term: "crunch mode"
+    def: >
+      To work long hours with little sleep under deadline pressure.  It
+      inevitably makes matters worse, since the time needed to fix mistakes
+      is greater than the number of extra hours worked.
+
+# D
+
+- key: decision_meeting
+  en:
+    term: "decision meeting"
+    def: >
+      A meeting whose purpose is to make binding decisions.  The term is used in
+      contrast with [discussion meeting](#discussion_meeting).
+
+- key: discussion_meeting
+  en:
+    term: "discussion meeting"
+    def: >
+      A meeting whose purpose is to share ideas or explore design alternatives.
+      The term is used in contrast with [decision meeting](#decision_meeting).
+
+# E
+
+- key: effort_importance_grid
+  en:
+    term: "effort-importance grid"
+    def: >
+      A project planning tool that classifies work items according to how much
+      effort they will require and how important they are.
+
+# F
+
+- key: flow
+  en:
+    term: "flow"
+    def: >
+      A mental state in which someone feels completely immersed in a task.
+
+# G
+
+- key: governance
+  en:
+    term: "governance"
+    def: >
+      The process of governing, or the set of rules by which something is
+      governed.  The governance of a software project establishes who is allowed
+      to make what decisions and how.
+
+# H
+
+- key: hitchhiker
+  en:
+    term: "hitchiker"
+    def: >
+      Someone who takes credit for a project without actually doing their share
+      of the work.
+
+# I
+
+# J
+
+# K
+
+# L
+
+# M
+
+- key: marthas_rules
+  en:
+    term: "Martha's Rules"
+    def: >
+      A simple set of rules for making decisions in small groups.
+
+# N
+
+- key: neurodivergent
+  en:
+    term: "neurodivergent"
+    def: >
+      Someone whose brain works differently from the average when it comes to
+      sociability, learning, attention, and mood. The term is used in contrast
+      with [neurotypical](#neurotypical).
+
+- key: neurotypical
+  en:
+    term: "neurotypical"
+    def: >
+      Someone near the middle of the bell curve with respect to sociability,
+      learning, attention, and mood. The term is used in contrast with
+      [neurodivergent](#neurodivergent).
+
+# O
+
+# P
+
+# Q
+
+# R
+
+# S
+
+- key: sense_vote
+  en:
+    term: "sense vote"
+    def: >
+      A preliminary vote used to determine whether further discussion is needed in a meeting.
+
+- key: status_meeting
+  en:
+    term: "status meeting"
+    def: >
+      A brief meeting in which project members report what they've done,
+      what they're planning to do, and what's in their way.
+
+# T
+
+# U
+
+# V
+
+# W
+
+# X
+
+# Y
+
+# Z
+
