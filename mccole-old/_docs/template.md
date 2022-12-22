@@ -1,3 +1,0 @@
-# Template
-
-::: mccole.template

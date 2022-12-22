@@ -1,0 +1,10 @@
+From: Premkumar Devanbu <ptdevanbu@ucdavis.edu>
+Date: Mon, 11 Jul 2022 10:15:31 -0700
+Subject: Re: software engineering research vignettes
+To: Greg Wilson <gvwilson@third-bit.com>
+
+Hi Greg, I do have a homework on the naturalness, stuff, done with discrete non-parametric n-gram models (which isn't SOTA, but not using DL models avoids the need for GPUs). It's attached. 
+
+I think it's a nice way to introduce students to the ideas of code naturalness, which now seems to be veritable typhoon blowing through the tools biz (c.f. CoPilot). it uses a github project that we released, that's been used by a LOT of people, forked a bunch. Generally seems pretty stable. (https://github.com/SLP-team/SLP-Core)
+
+Note that the assignment is for a graduate class, though? You might need to adapt to simplify or something.

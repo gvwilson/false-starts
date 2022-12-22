@@ -1,0 +1,10 @@
+From: "Cassee, Nathan" <n.w.cassee@tue.nl>
+Date: Tue, 19 Jul 2022 08:00:30 +0000
+
+For qualitative datasets my mind immediately went a recent paper we published where we studied content and sentiment polarity (RQ1, RQ4) of SATD comments (see: https://cassee.dev/files/satd-and-polarity.pdf). Both of these analysis might be suitable for the content of your course. However, the motivation of the work (SATD & Sentiment) might too abstract for undergraduates? I’m not sure if that’s a problem.
+
+Another study from Alexander is a comparison of SATD in open-source and closed-source (https://www.win.tue.nl/~aserebre/EMSE2021Fiorella.pdf). Attached to the paper is a replication package with transcripts for interviews, and answers for a survey.
+
+Finally, something that might be very relevant for students is a study of AI job ads (https://www.win.tue.nl/~aserebre/CAIN2022.pdf). However, Alexander can’t share the data unfortunately, so if you want to give this as homework students will have to find job ads themselves (linkedin?).
+
+I hope these studies are what you were thinking of, if you have any questions please let us know!

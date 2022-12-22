@@ -1,3 +1,0 @@
-# Accounting
-
-::: mccole.accounting

@@ -1,0 +1,16 @@
+From: Christoph Treude <christoph.treude@unimelb.edu.au>
+Date: Mon, 18 Jul 2022 16:27:37 +1000
+Subject: Re: [EXT] re: short vignettes
+
+I think an easily accessible dataset from my work is related to our "Where
+does Google find API documentation?" workshop paper from a few years ago:
+https://ctreude.files.wordpress.com/2018/03/wapi18.pdf. The dataset is
+already available online https://zenodo.org/record/1195863#.YtT49HZBze9
+
+In addition to the research questions mentioned in the paper (Where does
+Google find API documentation? Do resources found for recently introduced
+API elements differ from the rest?), the same data could be used to
+investigate questions such as, which parts of APIs are the least
+documented? How does coverage on Stack Overflow and on GitHub correlate?
+Which domains commonly appear together in search results (i.e., association
+rule mining)?

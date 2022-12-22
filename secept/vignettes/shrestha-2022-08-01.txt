@@ -1,0 +1,20 @@
+From: Nischal Shrestha <nshrest@ncsu.edu>
+Date: Mon, 1 Aug 2022 11:42:03 -0400
+
+Looking back at my papers/data, I'm not sure I have any that fit well with
+your specs. For example, the closest one might be the ICSE20 paper I did on
+cross language interference where I had pulled Stack Overflow data on
+several language pairs (co-tagged):
+
+The analysis here was qualitative and a tad laborious, where Colton
+(co-author) and I examined 30 SO posts for each pair assessing if there
+were misconceptions based on the asker/answerer. By 3rd or 4th year,
+students might have already interacted a ton with Stack Overflow googling
+problems they have had in their coding assignments so it could be feasible
+for them to do this analysis and see if they get different results? Let me
+know what you think!
+
+If it sounds like a good fit I can try to dig up the data for you.
+
+Best,
+Nischal

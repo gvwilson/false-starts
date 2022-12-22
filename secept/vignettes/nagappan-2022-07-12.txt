@@ -1,0 +1,24 @@
+From: Mei Nagappan <mei.nagappan@uwaterloo.ca>
+Date: Tue, 12 Jul 2022 09:46:09 -0400
+Subject: Re: short vignettes
+
+Hi Greg,
+
+This might be the best paper:
+https://link.springer.com/article/10.1007/s10664-017-9512-6
+
+It has this dataset here: https://reporeapers.github.io/results/1.html
+
+The whole dataset, training data, and validation data are also available.
+They can train models described in the paper or come up with their own
+models too. They can also get more data if they want, but that would be
+quite hard. The CSV files would be a great start.
+
+Let me know what you think.
+
+Thanks,
+Mei
+
+----------------------------------------
+
+I think we do logistic regression. I do remember we did random forest. So they should be able to do that. K means is also a good way to see what groups of projects they get.

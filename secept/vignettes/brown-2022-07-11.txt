@@ -1,0 +1,21 @@
+Date: Mon, 11 Jul 2022 10:38:38 +0100
+Subject: Re: software engineering research vignettes
+To: Greg Wilson <gvwilson@third-bit.com>
+
+Hi Greg,
+
+We have the slight problem that our data is not generally cleared for 
+public access in the ethics, so it would need to be processed to a stage 
+where it's broadly anonymous.
+
+One paper that came to mind is one where we're just submitting the
+final version to a journal (so should be published in a month or
+two). I've attached it. I can send the data behind any of those graphs
+(see end of paper) if that would help? However we didn't actually do
+any statistical analysis as we were just exploring (I'd prefer to do
+no tests than go fishing), so I don't know if that makes it a bad fit
+for what you're thinking of.
+
+Thanks,
+
+Neil.

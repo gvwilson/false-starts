@@ -1,0 +1,20 @@
+From: Georgios Gousios <G.Gousios@tudelft.nl>
+To: Greg Wilson <gvwilson@third-bit.com>
+Subject: Re: research vignettes
+Date: Mon, 11 Jul 2022 07:30:32 +0000
+
+Hi Greg,
+
+For my big data processing course, I had the following notebook, where I pa=
+rtially replicated my ICSE 2014 pull request paper.=20
+
+https://gousios.org/courses/bigdata/pullreqs.html
+
+However, the emphasis here is using Spark for data science and ML learning =
+purposes, which is probably not what you where thinking. Perhaps you could =
+have your students replicate this code with scikit-learn etc and validate t=
+he results of the original paper.
+
+Hope this helps!
+
+Georgios

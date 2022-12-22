@@ -1,0 +1,13 @@
+From: Andy Zaidman - EWI <A.E.Zaidman@tudelft.nl>
+Subject: Re: short vignettes
+Date: Tue, 19 Jul 2022 09:52:33 +0000
+
+No problem in reaching out, always willing to help if I can! (and sorry for the delayed reaction)
+
+We also tend to do something what you describe in our courses. What could be interesting is to look at the MSR challenge and see whether some of the short papers from that challenge can be reproduced.
+
+The 2017 mining challenge was on TravisTorrent, the dataset that we created in Delft. See here: https://2017.msrconf.org/#/challenge
+The dataset is still available and there are quite a few interesting papers that came from it… See the schedule for MSR https://2017.msrconf.org/#/program
+
+Is this helpful?
+(you could also look at the mining challenges from 2018 (interaction data) or 2019 (stack overflow)… there are also interesting results to be obtained from those!)

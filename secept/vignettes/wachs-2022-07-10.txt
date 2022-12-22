@@ -1,0 +1,35 @@
+Date: Sun, 10 Jul 2022 21:16:59 +0200
+From: "johannes.wachs" <johannes.wachs@wu.ac.at>
+To: Greg Wilson <gvwilson@third-bit.com>
+Cc: Markus Strohmaier <markus.strohmaier@uni-mannheim.de>
+Subject: Re: software engineering vignettes
+
+Thanks Markus for connecting us!
+
+Hi Greg - I'm an occasional reader of your blog, so it is very cool to hear from you. But let me cut to the chase.
+
+The lead author Lukas Moldon deserves a lot of credit for sharing these nice replication materials:
+https://github.com/lukasmoldon/GHStreaksThesis
+and the datasets, including processed ones:
+https://zenodo.org/record/4710603#.YssgaJPP3fB
+
+The idea of the paper was to see if streaking behavior changed after GitHub removed streak counters (Current active streak and all-time longest streak) from user profiles, without prior warning. We looked at changes in streak lengths, regularity, weekend activity, the distribution of activity within streaks, and more. Lukas' bachelor's thesis studied other aspects including geographic  and programming language heterogeneity and gender differences.
+
+Unfortunately the data are somewhat large and in a way a bit unwieldy. For your application I would recommend browsing the "streak_advanced" folder of the GitHub repo, in which each script carries out a specific analysis:
+https://github.com/lukasmoldon/GHStreaksThesis/tree/master/streak_advanced
+
+The input data is mentioned at the beginning of each script. Usually you need 'user_streaks.json' - available from Zenodo and weighing 2.1gb.
+
+One suggestion would be to have them run this script
+https://github.com/lukasmoldon/GHStreaksThesis/blob/master/streak_advanced/mondayStreaks/computeMondayStreakPlotData.py
+Which generates this plot:
+ 
+ 
+An alternative would be to calculate some conditional probabilities of streaking behavior: given some time slice, what is the probability that a streak of length K makes it to K+1, K+5, etc. Interesting values of K are 5, 12 and round numbers (49->50, 99->100; we humans can't resist these). After the design change these probabilities are lower.
+
+I hope this helps and gives some ideas. I am actually on parental leave - otherwise would be happy to get into greater detail and help you create a vignette, hands-on. Perhaps in a future semester? Do stay in touch!
+
+best wishes,
+Johannes
+---
+https://johanneswachs.com

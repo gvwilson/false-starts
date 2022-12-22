@@ -1,0 +1,45 @@
+In eXplainable Artificial Intelligence (XAI), there are many ways to present information
+in an explanation for the end-user. However, how should such users process the information
+to ensure they maximize the information gain from the explanation and localize faults in
+explanations? Researchers at Oregon State University hypothesized that scaffolding how 
+people consume explanations might empower people to find bugs in an explanation.
+
+They adapted a process from the U.S. Army, After-Action Review (AAR) to create
+After-Action Review for AI (AAR/AI) and empirically test their hypothesis.
+Their data, which you will complete to re-create their findings, contained the following 
+information:
+
+PID 			- Participant ID
+
+Treatment 		- Whether participants used AAR/AI or were allowed to process the information any way
+	    		  that they wanted with no AAR/AI.
+
+Problem Report Count	- The total number of problems that participants identified, whether they actually were
+			  or not.
+
+True-Positive Score	- The total number of problems that participants identified that were ACTUALLY problems.
+
+Recall			- The proportion of the total number of bugs that they found.
+			  This is defined by (True-Positive Score)/(True-Positive Score + False-Negative Score)
+			  For the purposes of this assignment, assume the denominator is 20.
+
+Precision		- The proportion of PARTICIPANTS' problem report count that were ACTUALLY problems.
+			  This is defined by (True-Positive Score)/(True-Positive Score + False-Positive Score)
+			  For the purposes of this assignment, assume the denominator is 20.
+
+
+Link to the paper:	https://dl.acm.org/doi/full/10.1145/3487065
+
+----------------------------------------------------------------------
+
+2022-08-07 addendum from Jonathan Dodge:
+
+I wanted to offer a minor clarification; the vignette describes TP score as:
+
+"The total number of problems that participants identified that were ACTUALLY problems."
+
+To expand a little more, we had 10 bugs in the explanations and awarded a single
+TP score point for LOCATING the bug correctly and a second point for DESCRIBING
+it correctly. This is why the denominator in recall/precision is 20; each bug
+had 2 components. This is also why PID 111 on row 7 of the spreadsheet was able
+to achieve a TP score of 12 while submitting only 11 bug reports.

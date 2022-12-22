@@ -1,0 +1,911 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="icon" type="image/x-icon" href="../favicon.ico">
+    <title>The Compassionate Programmer</title>
+    <link rel="stylesheet" href="../mccole.css">
+    <link rel="stylesheet" href="../tango.css">
+    <script>
+      MathJax = {
+        tex: {
+          inlineMath: [['\\(', '\\)']]
+        }
+      };
+    </script>
+    <script
+      type="text/javascript"
+      id="MathJax-script"
+      async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js">
+    </script>
+  </head>
+  <body>
+    <div class="row">
+      <div class="column">
+        <h2><a href="../">TCP</a></h2>
+        <ol class="toc-chapter">
+  
+  <li>
+    <a href="../introduction/">
+      Introduction
+    </a>
+  </li>
+  
+  <li>
+    <a href="../teamwork/">
+      Teamwork
+    </a>
+  </li>
+  
+  <li>
+    <a href="../tooling/">
+      Tooling
+    </a>
+  </li>
+  
+  <li>
+    <a href="../communication/">
+      <strong>Communication</strong>
+    </a>
+  </li>
+  
+  <li>
+    <a href="../process/">
+      Process
+    </a>
+  </li>
+  
+  <li>
+    <a href="../pipeline/">
+      Building a Pipeline
+    </a>
+  </li>
+  
+  <li>
+    <a href="../devops/">
+      Developer Operations
+    </a>
+  </li>
+  
+  <li>
+    <a href="../roles/">
+      Roles and Responsibilities
+    </a>
+  </li>
+  
+  <li>
+    <a href="../testing/">
+      Testing
+    </a>
+  </li>
+  
+  <li>
+    <a href="../design/">
+      Design
+    </a>
+  </li>
+  
+  <li>
+    <a href="../performance/">
+      Performance
+    </a>
+  </li>
+  
+  <li>
+    <a href="../rights/">
+      Rights
+    </a>
+  </li>
+  
+  <li>
+    <a href="../responsibilities/">
+      Responsibilities
+    </a>
+  </li>
+  
+  <li>
+    <a href="../conclusion/">
+      Conclusion
+    </a>
+  </li>
+  
+</ol>
+<ol class="toc-appendix">
+  
+  <li>
+    <a href="../bibliography/">
+      Bibliography
+    </a>
+  </li>
+  
+  <li>
+    <a href="../syllabus/">
+      Syllabus
+    </a>
+  </li>
+  
+  <li>
+    <a href="../license/">
+      License
+    </a>
+  </li>
+  
+  <li>
+    <a href="../conduct/">
+      Code of Conduct
+    </a>
+  </li>
+  
+  <li>
+    <a href="../tips/">
+      Tips
+    </a>
+  </li>
+  
+  <li>
+    <a href="../checklists/">
+      Checklists
+    </a>
+  </li>
+  
+  <li>
+    <a href="../glossary/">
+      Glossary
+    </a>
+  </li>
+  
+  <li>
+    <a href="../links/">
+      Links
+    </a>
+  </li>
+  
+  <li>
+    <a href="../credits/">
+      Credits
+    </a>
+  </li>
+  
+  <li>
+    <a href="../contents/">
+      Index
+    </a>
+  </li>
+  
+</ol>
+
+      </div>
+      <div class="column bordered">
+        <main>
+	  
+          <h1>Communication</h1>
+	  
+          
+  
+
+  
+
+  
+  <ul class="syllabus">
+  
+  <li markdown="1">Use an issue tracker as a shared to-do list for a project.</li>
+  
+  <li markdown="1">Label issues to help search and triage.</li>
+  
+  <li markdown="1">Include a short reproducible example in every bug report.</li>
+  
+  <li markdown="1">Document the public interface of code.</li>
+  
+  <li markdown="1">Embed documentation in code and use a documentation generator to format it.</li>
+  
+  <li markdown="1">Create different documentation for novices, competent practitioners, and experts.</li>
+  
+  <li markdown="1">Create a blog to summarize and discuss progress.</li>
+  
+  <li markdown="1">Create FAQ entries by recycling users' questions.</li>
+  
+  </ul>
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+
+          <p>Knowing how to steer isn't enough to drive a car:
+you need to know how to signal when you're turning or changing lanes.
+Similarly,
+knowing how to program isn't enough to build software:
+you must coordinate with your teammates.</p>
+<h2 id="communication-todo">Section 4.1: To Do</h2>
+<p>You probably have a to-do list somewhere.
+It might be in a notebook,
+on your phone,
+or in your head,
+but however you maintain it,
+it lists the things you're supposed to do,
+when they're due,
+and how urgent they are.</p>
+<p>An <span class="ix-entry" ix-key="issue tracker;issue" markdown="1"><a class="gl-ref" href="../glossary/#issue_tracker" markdown="1">issue tracker</a></span>
+is a structured, shared to-do list.
+(They are also called <span class="ix-entry" ix-key="bug tracker" markdown="1">bug trackers</span>
+because programmers originally used them
+to keep track of bugs they needed to fixed.)
+While a team uses version control to record and share the project's history,
+it should use an issue tracker to record and share the project's future.
+Without it,
+you and your teammates will constantly have to ask each other
+"What are you working on?",
+"What am I supposed to be working on?",
+and "Who was supposed to do that?"</p>
+<p>To create a new issue,
+you enter a title and a short description;
+the system then assigns it a unique serial number.
+You can usually also specify:</p>
+<ul>
+<li>
+<p>what kind of issue it is,
+    such as a bug report,
+    a request for a new feature,
+    or a question to be answered;</p>
+</li>
+<li>
+<p>who is responsible for it
+    (i.e., who's supposed to fix the bug);</p>
+</li>
+<li>
+<p>how important it is; and</p>
+</li>
+<li>
+<p>when it's due.</p>
+</li>
+</ul>
+<p>An issue tracker is only as useful as what you put into it.
+Empirical studies find that if you are describing a bug,
+the most important thing is to provide enough information for someone to reproduce the problem
+<span class="bib-ref">[<a class="bib-ref" href="../bibliography/#Zimmermann2010">Zimmermann2010</a>, <a class="bib-ref" href="../bibliography/#Soltani2020">Soltani2020</a>]</span>.
+This may include:</p>
+<ul>
+<li>
+<p>what version of the software you were using;</p>
+</li>
+<li>
+<p>what platform it was running on;</p>
+</li>
+<li>
+<p>what you did to make it crash;</p>
+</li>
+<li>
+<p>any data or configuration files the program relies on; and</p>
+</li>
+<li>
+<p>whatever stack traces, error reports, or log messages the program produced.</p>
+</li>
+</ul>
+<p>Here's a bug report for a tool that reads and merges spreadsheets:</p>
+<div class="highlight"><pre><span></span><code>id: 47
+date: 2021-02-19T09:30:20+0500
+title: Accented characters not read properly in title of first column
+labels: bug serious
+
+- The spreadsheet attached has two rows and two columns.
+  The first row is column titles and the second is data; all cells contain the word `ümlaut`.
+
+- `read_sources([&quot;example.xlsx&quot;])` creates a dataframe with the right rows and columns,
+  but the `ü` in the title of the first column appears as `u` (without the umlaut).
+  The accented character is correct in all other cells.
+
+- Downstream column merging in `collate_data()` is incorrect because of this mis-read,
+  so we wind up with one extra column in the collated dataframe.
+</code></pre></div>
+<p>The ID on the first line is assigned by the issue tracker
+and often serves as a shorthand name for the issue in conversation.
+("Hey, is anyone working on number fifty-five yet?")
+The timestamp is in <span class="ix-entry" ix-key="issue!timestamps" markdown="1"><a class="gl-ref" href="../glossary/#utc" markdown="1">UTC</a></span>
+because teams are increasingly scattered across several time zones.</p>
+<p>The <span class="ix-entry" ix-key="issue!good titles" markdown="1">title</span> is the most important part of the issue.
+Projects can accumulate hundreds or thousands of issues over time;
+a good subject line makes them easier to browse and search.
+The <code>labels</code> improve <span class="ix-entry" ix-key="discoverability!of issues" markdown="1"><a class="gl-ref" href="../glossary/#discoverability" markdown="1">discoverability</a></span>,
+but are more important for triage (discussed below).</p>
+<p>Finally,
+the <span class="ix-entry" ix-key="issue!description of" markdown="1">description</span> briefly summarizes the problem.
+A good description includes a short
+<span class="ix-entry" ix-key="reproducible example (reprex)" markdown="1"><a class="gl-ref" href="../glossary/#reprex" markdown="1">reproducible example</a></span> (or "reprex")
+that explains how to reproduce the problem in the simplest way.
+A reprex helps the reader understand the issue much better than,
+"The program crashes when I open strange files."
+Experience also shows that if people are required to come up with a reprex when filing an issue,
+they will often solve their own problem along the way.</p>
+<h3>Labeling and Triage</h3>
+<p>Using an issue tracker makes it much easier to summarize the project's status:
+just look at issues that have been opened or changed since the last meeting.
+You can use this to create the agenda for status meetings (<a class="x-ref" href="../teamwork/">Chapter 2</a>)
+and to remind yourself what you were doing three months ago
+when you need to create a final report.</p>
+<div class="callout">
+<h3>Summarizing Makes You Think</h3>
+<p>Some teams use the issue tracker directly as the agenda for their status meetings.
+However,
+going through the issues and summarizing them once a week
+is a good opportunity to do triage
+and often reminds team members of things that <em>aren't</em> in the issue tracker.</p>
+</div>
+<p>The bigger a project gets, the harder it is to find things.
+Most issue trackers therefore let people add <span class="ix-entry" ix-key="issue!labels" markdown="1"><a class="gl-ref" href="../glossary/#issue_label" markdown="1">labels</a></span> to issues
+so that they will be easier to search and organize.</p>
+<p>You can define whatever labels you want for issues.
+A small project should always have:</p>
+<dl>
+<dt>Bug</dt>
+<dd>Something should work but doesn't.</dd>
+<dt>Change</dt>
+<dd>Something should be added or modified.</dd>
+<dt>Task</dt>
+<dd>something needs to be done but won't show up in code
+(e.g., organizing the next team meeting).</dd>
+</dl>
+<div class="callout">
+<h3>Issues versus pull requests</h3>
+<p>Some teams use the same labels for issues and pull requests,
+but this leads to confusion:
+does <code>Bug</code> mean a bug report or a bug fix?
+Separate labels makes this clearer:
+for example,
+a project could use <code>Fix</code> to label pull requests that fix bugs
+and <code>Enhancement</code> for ones that add new features.</p>
+</div>
+<p>Almost every project adds more labels to this basic set,
+including things like:</p>
+<dl>
+<dt>Question</dt>
+<dd>where is something or how is something supposed to work?
+Teams often turn these issues and their answers into <span class="ix-entry" ix-key="FAQ" markdown="1">FAQ</span> entries
+(discussed below).</dd>
+<dt>Proposal</dt>
+<dd>something the team needs to discuss and make a decision about
+(<a class="x-ref" href="../teamwork/">Chapter 2</a>).</dd>
+<dt>Urgent</dt>
+<dd>Work needs to be done right away.
+(This label is typically reserved for security fixes).</dd>
+<dt>Current</dt>
+<dd>This issue is included in the current round of work.</dd>
+<dt>Backlog</dt>
+<dd>Someone has looked at the issue and believes it needs to be tackled,
+but there's no immediate plan to do it.</dd>
+<dt>Won't Fix</dt>
+<dd>Someone has decided that the issue isn't going to be addressed,
+either because it's out of scope or because it's not actually a bug.
+An issue marked this way is usually then closed.</dd>
+<dt>Duplicate</dt>
+<dd>This issue is a duplicate of one that's already in the system.
+Issues marked this way are usually also then closed.</dd>
+</dl>
+<div class="callout">
+<h3>Milestones</h3>
+<p>Some projects use labels for upcoming assignments or releases
+instead of labeling states like <code>Current</code> and <code>Backlog</code>.
+This approach works in the short term,
+but becomes unwieldy the number of assignments or releases grows.
+Instead,
+a team can create a <span class="ix-entry" ix-key="milestone (in issue tracker);issue tracker!milestones" markdown="1"><a class="gl-ref" href="../glossary/#milestone" markdown="1">milestone</a></span>
+to group a set of issues together.
+Milestones can have a due date and show progress toward completion
+so that the team can easily see how much work is left.</p>
+</div>
+<h2 id="communication-channels">Section 4.2: Other Channels</h2>
+<p>Issues are the best way to keep track of where you are,
+but teams can and should communicate in other ways.
+These channels can be fully <span class="ix-entry" ix-key="communication!synchronous" markdown="1">synchronous</span> like video calls,
+fully <span class="ix-entry" ix-key="communication!asynchronous" markdown="1">asynchronous</span> like email,
+or somewhere in between like chat.
+Synchronous channels are better for quick back-and-forth and for maintaining social connections,
+but they bias communication in favor of people who are more self-confident,
+more fluent in the language of discussion,
+or have better network connections.
+Additionally,
+finding things afterward is hard or impossible.</p>
+<p>If you prefer fewer interruptions and more time to think
+you should use <span class="ix-entry" ix-key="communication!email;email (for team communication)" markdown="1">email</span>.
+It allows everyone to deal with issues when it's convenient for them
+while supporting long-running conversations and findability.
+Projects should always use mailing lists rather than person-to-person messages
+so that people don't have to remember to CC the rest of the team
+and to create a shared archive to search later.
+The second point is as important as the first:
+if you can't go back and find out what was said a month ago—or
+if someone <em>else</em> can't do that—you might as well not have said it.</p>
+<div class="callout">
+<h3>Filters are your friend</h3>
+<p>Every email client allows you to set up <span class="ix-entry" ix-key="email!filters" markdown="1"><a class="gl-ref" href="../glossary/#mail_filter" markdown="1">filters</a></span>
+that automatically move messages into specific folders.
+I have fourteen of these set up right now
+to organize messages belonging to particular projects;
+it only took a couple of minutes to set up,
+and it means I can focus on one problem at a time when checking mail.</p>
+</div>
+<p>Most teams now use semi-synchronous <span class="ix-entry" ix-key="communication!chat;chat!inevitable use of" markdown="1">chat</span>
+like <a href="https://slack.com/">Slack</a> more than either video calls or email.
+Chat combines the conversationality of a video call
+with the ability to ignore messages without missing them
+(and to edit a reply before sending it).
+It also enables people to manage multiple parallel conversations like mail threads.
+However,
+chat is a more interruptive medium than email,
+which means team members are less able to focus (<a class="x-ref" href="../teamwork/">Chapter 2</a>).
+It also feels harder to find things in old chat conversations than in email archives,
+in part because chat channels proliferate more rapidly than mailing lists.</p>
+<p>Many teams now have bots send notifications when builds fail,
+software is deployed,
+or security vulnerabilities are detected.
+These messages help maintain <span class="ix-entry" ix-key="peripheral awareness" markdown="1"><a class="gl-ref" href="../glossary/#peripheral_awareness" markdown="1">peripheral awareness</a></span>,
+but if they are frequent or usually don't require action,
+team members quickly learn to ignore them.
+We will discuss this more in <a class="x-ref" href="../devops/">Chapter 7</a>.</p>
+<p>However the team communicates,
+it should have guidelines to ensure that
+the conversation isn't dominated by its most self-confident members.
+The tricks in <a class="x-ref" href="../teamwork/">Chapter 2</a> for ensuring that meetings are fair
+apply here as well.
+For example,
+on one project I was involved in,
+team members in the americas would sometimes wake up to find a thread
+with fifty or sixty messages among two or three people in Europe.
+This was so overwhelming that they would simply not try to catch up.
+Once we brought in a rule saying,
+"One message per person per thread per day,"
+many more people began contributing,
+and everyone's contributions became more thoughtful.</p>
+<div class="callout">
+<h3>How Did He Know?</h3>
+<p>In his 1961 story "<a href="https://en.wikipedia.org/wiki/Harrison_Bergeron">Harrison Bergeron</a>",
+<span class="ix-entry" ix-key="Vonnegut, Kurt" markdown="1">Kurt Vonnegut</span>
+described a future in which everyone is forced to be equal.
+Good-looking people have to wear masks,
+athletic people have to wear weights,
+and intelligent people
+are forced to carry around radios that interrupt their thoughts at random intervals.</p>
+<p>Slack and other instant messaging tools are our radios.</p>
+</div>
+<h3>Other Channels</h3>
+<p><span class="ix-entry" ix-key="software portal" markdown="1"><a class="gl-ref" href="../glossary/#software_portal" markdown="1">Software portals</a></span>
+like <a href="https://bitbucket.org/">Bitbucket</a>, <a href="https://github.com/">GitHub</a>, and <a href="https://gitlab.com/">GitLab</a>
+provide many other ways to communicate,
+which project members use in a wide variety of ways <span class="bib-ref">[<a class="bib-ref" href="../bibliography/#Treude2011">Treude2011</a>]</span>.
+<span class="ix-entry" ix-key="wiki;communication!wiki" markdown="1">Wikis</span> seem like a good way to keep notes,
+create documentation,
+and so on,
+but if team members already know how to use version control,
+they will get more mileage out of <span class="ix-entry" ix-key="Markdown" markdown="1">Markdown</span> pages:
+they can use commits to synchronize changes to documentation with changes to code
+and pull requests provide an opportunity for review.</p>
+<p><span class="ix-entry" ix-key="communication!blog;blog!as team journal" markdown="1">Blogs</span>,
+on the other hand,
+are very useful.
+Team members can blog regularly about their progress;
+such a journal is useful for people watching the project from the outside,
+like instructors,
+but also serves as a live draft of a project's final report.</p>
+<p>If you are going to create a blog,
+use a <span class="ix-entry" ix-key="static site generator" markdown="1"><a class="gl-ref" href="../glossary/#static_site_generator" markdown="1">static site generator</a></span>
+to format and publish content consistently.
+<span class="ix-entry" ix-key="GitHub Pages" markdown="1"><a href="https://pages.github.com/">GitHub Pages</a></span> uses
+a Ruby-based tool called <span class="ix-entry" ix-key="Jekyll;static site generator!Jekyll" markdown="1"><a href="https://jekyllrb.com/">Jekyll</a></span>,
+but <a href="https://jamstack.org/generators/">every language provides alternatives</a>.</p>
+<h2 id="communication-documentation">Section 4.3: Documentation</h2>
+<p>An old proverb says, "Trust, but verify."
+The equivalent in programming is,
+"Write clear code, but <span class="ix-entry" ix-key="documentation!as communication" markdown="1">document</span>."
+No matter how well software is written,
+it always embodies decisions that aren't explicit
+or accommodates complications that won't be obvious to the next reader.
+Putting it another way,
+the best function names in the world aren't going to answer the question,
+"Why does the software do this?"</p>
+<p>We can divide people in any domain into novices, competent practitioners, and experts
+<span class="bib-ref">[<a class="bib-ref" href="../bibliography/#Wilson2019">Wilson2019</a>]</span>.
+Each group needs a different kind of documentation:</p>
+<ul>
+<li>
+<p>A <span class="ix-entry" ix-key="novice!documentation needs;documentation!for novices" markdown="1">novice</span>
+    needs a tutorial that introduces key ideas one by one
+    and shows how they fit together.</p>
+</li>
+<li>
+<p>A <span class="ix-entry" ix-key="competent practitioner!documentation needs;documentation!for competent practitioners" markdown="1">competent practitioner</span>
+    needs reference guides, cookbooks, and Q&amp;A sites
+    with solutions close enough to what she needs
+    that she can tweak them the rest of the way.</p>
+</li>
+<li>
+<p><span class="ix-entry" ix-key="expert!documentation needs;documentation!for experts" markdown="1">Experts</span>
+    need guides as well—nobody's memory is perfect—but they also want
+    discussions of alternatives and tradeoffs.</p>
+</li>
+</ul>
+<p>No documentation can serve all three groups equally well.
+Tutorials help novices build a <span class="ix-entry" ix-key="mental model" markdown="1"><a class="gl-ref" href="../glossary/#mental_model" markdown="1">mental model</a></span>,
+but competent practitioners will be frustrated
+by their slow pace and low information density.
+They want single-point solutions to specific problems,
+and are able to search for what they need.</p>
+<h3>Creating an FAQ</h3>
+<p>A good <span class="ix-entry" ix-key="FAQ" markdown="1">FAQ</span> uses the terms and concepts that people bring to the software
+rather than the vocabulary of its authors.
+The questions are things people actually search for online,
+not things the program's developers wish they would ask.</p>
+<p>Creating and maintaining an FAQ is a lot of work.
+A lot of that effort may be wasted
+because it's hard for the authors or maintainers of a piece of software
+to anticipate what newcomers will be mystified by.
+A better approach is the "answer on demand" approach of <span class="ix-entry" ix-key="Stack Overflow" markdown="1"><a href="https://stackoverflow.com/">Stack Overflow</a></span>.
+Its guide to <a href="https://stackoverflow.com/help/how-to-ask">asking a good question</a> is:</p>
+<dl>
+<dt>Write the most specific title you can.</dt>
+<dd>"Why does division sometimes give a different result in Python 2.7 and Python 3.5?"
+is much better than, "Help! Math in Python!!"</dd>
+<dt>Give context before giving sample code.</dt>
+<dd>A few sentences to explain what you are trying to do and why
+helps people determine if their question matches the one in the article.</dd>
+<dt>Provide a minimal reprex.</dt>
+<dd>Readers will have a much easier time figuring out
+if this article matches their question
+if they can see a few lines of code.</dd>
+<dt>Tag, tag, tag.</dt>
+<dd>Keywords make everything easier to find.
+They are even more effective if the system encourages people to re-use tags
+so that they don't proliferate <span class="bib-ref">[<a class="bib-ref" href="../bibliography/#Lin2020">Lin2020</a>]</span>.</dd>
+<dt>Use "I" and question words (how/what/when/where/why).</dt>
+<dd>Writing this way forces people to think more clearly
+about what they're actually asking.</dd>
+<dt>Keep each answers short.</dt>
+<dd>Break every answer down into single steps
+and devote half of each answer to troubleshooting.
+Doing this may feel trivializing if you already know the answer,
+but is often as much as a person searching and reading can handle.
+It also helps writers realize just how much implicit knowledge they are assuming.</dd>
+<dt>Allow for a chorus of explanations.</dt>
+<dd>Do not be afraid of providing multiple explanations to a single question
+that suggest different approaches
+or are written for different prior levels of understanding.
+This is one of the things that has made Stack Overflow so successful:
+different users are best served by a <span class="ix-entry" ix-key="chorus of explanation" markdown="1">chorus of explanations</span>
+<span class="bib-ref">[<a class="bib-ref" href="../bibliography/#Caulfield2016">Caulfield2016</a>]</span>.</dd>
+</dl>
+<h3>Documenting Code</h3>
+<p>Every language has <a class="gl-ref" href="../glossary/#doc_generator" markdown="1">documentation generators</a>
+that extract information from  <a class="gl-ref" href="../glossary/#docstring" markdown="1">docstring</a> or <a class="gl-ref" href="../glossary/#doc_comment" markdown="1">doc comments</a>
+and produces cross-indexed HTML pages.
+Programmers believe they are more likely to update
+<span class="ix-entry" ix-key="documentation!embedded" markdown="1">embedded documentation</span> like this
+because it is right there with the code
+instead of in a separate file.</p>
+<p>Each piece of embedded documentation should begin with an active verb
+like "extract" or "normalize"
+and describe either how inputs are turned into outputs
+or what side effects the function has.
+Some examples of good one-line docstrings are:</p>
+<ul>
+<li>"Create a list of capital cities from a list of countries."</li>
+<li>"Clip signals to lie in [0...1]."</li>
+<li>"Reduce the red component of each pixel."</li>
+</ul>
+<p>Once you start writing code for other people
+your <span class="ix-entry" ix-key="documentation!what to include" markdown="1">documentation</span> should include:</p>
+<ul>
+<li>
+<p>The name and purpose of every public class, function, and constant.</p>
+</li>
+<li>
+<p>The name, purpose, and default value (if any) of every parameter.</p>
+</li>
+<li>
+<p>Any side effects the functions and methods have.</p>
+</li>
+<li>
+<p>What value every function or method returns.</p>
+</li>
+<li>
+<p>What exceptions those functions can raise and when.</p>
+</li>
+</ul>
+<p>The word "public" in the first rule is important.
+You don't have to write full documentation for helper functions
+that are only used inside your package,
+but these should still have at least a one-liner explaining their purpose.</p>
+<h3>Comments as Communication</h3>
+<p>People don't usually think of <span class="ix-entry" ix-key="comments!as communication;communication!comments" markdown="1">code comments</span>
+as a form of communication like email or chat,
+but the only significant difference is that
+the comments are right there in the code where the recipients can't miss them
+rather than in an archive somewhere that they'll have to go and search.
+If you choose names for functions and variables carefully,
+the code itself will explain <em>what</em> it's doing when someone reads it aloud.
+The comments should therefore explain <em>why</em>.
+For example, this is not a useful comment:</p>
+<div class="highlight"><pre><span></span><code><span class="n">x</span> <span class="o">=</span> <span class="n">x</span><span class="p">[</span><span class="mi">1</span><span class="p">:]</span> <span class="c1"># take all but first element of list</span>
+</code></pre></div>
+<p class="continue">This, on the other hand, tells the next person why we're doing it:</p>
+<div class="highlight"><pre><span></span><code><span class="n">threads</span> <span class="o">=</span> <span class="n">threads</span><span class="p">[</span><span class="mi">1</span><span class="p">:]</span> <span class="c1"># First thread is already running so save the others.</span>
+</code></pre></div>
+<h2 id="communication-reviews">Section 4.4: Code Reviews</h2>
+<p>People usually don't think of <a class="gl-ref" href="../glossary/#code_review" markdown="1">code reviews</a> as a kind of communication either,
+but they are one of the most effective ways to share knowledge within a team.
+There's no point creating PRs if they are all merged as-is.
+One study after another since the mid-1970s has proven that
+code review is the most cost-effective way to find bugs in software <span class="bib-ref">[<a class="bib-ref" href="../bibliography/#Cohen2010">Cohen2010</a>]</span>.</p>
+<div class="callout">
+<h3>Do more eyes make for fewer bugs?</h3>
+<p>Some people have claimed that many eyes make all bugs shallow
+(i.e., easy to find)
+but the evidence doesn't support that claim.
+For example,
+<span class="bib-ref">[<a class="bib-ref" href="../bibliography/#Meneely2014">Meneely2014</a>]</span> found that,
+"…source code files reviewed by more developers are,
+counter-intuitively,
+more likely to be vulnerable (even after accounting for file size).
+However,
+files are less likely to be vulnerable
+if they were reviewed by developers
+who had experience participating on prior vulnerability-fixing reviews."
+In short, <em>whose</em> eyes matters more than how many.</p>
+</div>
+<p>There are many guides online for doing code reviews,
+most of them based on individual experience.
+A notable exception is the <a href="https://smartbear.com/learn/code-review/best-practices-for-peer-code-review/">SmartBear guide</a>,
+which draws on a large study of code review in industry.
+The <span class="ix-entry" ix-key="code review!procedure" markdown="1">rules below</span> present some of their findings
+with modifications for students' situations.</p>
+<dl>
+<dt>Have the instructor do a demonstration review.</dt>
+<dd>Even if you have done code reviews before,
+you may not know what's expected for this course.
+The instructor can show you by putting up some sample code and going through it,
+thinking aloud as they notice things worth commenting on
+so that you have an idea of how much detail they expected.</dd>
+<dt>Authors should clean up code before review.</dt>
+<dd>If the person creating the PR goes through and adds some more comments,
+cleans up some variable names,
+and does a bit of <span class="ix-entry" ix-key="refactoring!for code review" markdown="1">refactoring</span>,
+they won't just make reviewing easier:
+the odds are very good that they will find and fix a few problems on their own.</dd>
+<dt>Review at most 200 lines of a code at a time.</dt>
+<dd>The SmartBear guide recommends reviewing at most 400 lines at a time,
+which should take 60–90 minutes.
+You will probably get there eventually,
+but in our experience it's better to start with something smaller
+and work up to that.
+A corollary of this rule is that no PR should be more than 200 lines long.
+If one is,
+the odds are that reviewers won't be able to hold it all in their head at once and so will miss things.</dd>
+<dt>Use checklists.</dt>
+<dd><span class="bib-ref">[<a class="bib-ref" href="../bibliography/#Gawande2011">Gawande2011</a>]</span> popularized the idea that
+using <span class="ix-entry" ix-key="checklists!use in code review" markdown="1">checklists</span>
+improves results even for experts.
+While <span class="bib-ref">[<a class="bib-ref" href="../bibliography/#Hatton2008">Hatton2008</a>]</span> found no evidence that they made a difference to code reviews by professionals,
+I have found them very useful as a starter for students.
+If you are new to code reviews,
+ask the instructor for a list of the dozen most common problems to check for;
+anything more than that is likely to be overwhelming.
+(The code quality rubric developed in <span class="bib-ref">[<a class="bib-ref" href="../bibliography/#Stegeman2014">Stegeman2014</a>, <a class="bib-ref" href="../bibliography/#Stegeman2016">Stegeman2016</a>]</span> is a good starting point.)
+If you and your teammates have been working together for a while,
+look at your own code reviews and make a list of the things that keep coming up.
+Having the list will make you more aware of the issues while you're coding,
+which in turn will make you less likely to keep making the same mistakes.</dd>
+<dt>Look for algorithmic problems first.</dt>
+<dd>Code review isn't primarily about style:
+your linter should catch those problems.
+Code review's real purpose is to find bugs before they can affect anyone.
+The first pass over any change should therefore look for algorithmic problems.
+Are the calculations right?
+Are any rare cases going to be missed?
+Are errors being caught and handled?</dd>
+<dt>Offer alternatives.</dt>
+<dd>Telling authors that something is wrong is helpful;
+telling them what they might do instead is more so.</dd>
+<dt>Don't <a class="gl-ref" href="../glossary/#feigning_surprise" markdown="1">feign surprise</a> or pass judgment.</dt>
+<dd>"Gosh, didn't you know [some obscure fact]?" isn't helpful;
+neither is,
+"Bloody hell, why don't you just [some clever trick] here?"</dd>
+<dt>Don't overwhelm people with details.</dt>
+<dd>If someone has used the letter <code>x</code> as a variable name in several places,
+and they shouldn't have,
+comment on the first two or three and
+put a check beside the others—the reader won't need the comment repeated.</dd>
+<dt>Don't try to sneak in feature requests.</dt>
+<dd>Nobody enjoys fixing bugs.
+Asking them to add entirely new functionality while they're at it is rude.</dd>
+<dt>Follow up.</dt>
+<dd>The author of the code doesn't have to accept every suggestion,
+but should have a better reason than "I don't want to" for rejecting any of them.
+GitHub and other platforms allow people to create discussion threads for each comment,
+and will mark threads as being out of date when the pull request is updated.
+Whoever did the review should then scan the changes to make sure their points have been addressed,
+and to give themselves a chance to learn a few more things from the author.</dd>
+<dt>Don't tolerate rudeness.</dt>
+<dd>Most code review guidelines say, "Be respectful."
+The problem is that if you are,
+you probably don't need to be told that,
+and if you aren't,
+those two works alone won't change your behavior.
+What <em>will</em> is teammates defending the victims of rudeness by telling the offender,
+"That's not how we speak to each other."</dd>
+</dl>
+<p>How we <span class="ix-entry" ix-key="code review!responding to" markdown="1">respond</span> to reviews
+is just as important:</p>
+<dl>
+<dt>Be specific in replies to reviewers.</dt>
+<dd>If someone has suggested a better variable name you can simply fix it.
+If someone has suggested a major overhaul to an algorithm
+you should reply to their comment to point at the commit that includes the fix.</dd>
+<dt>Thank your reviewers.</dt>
+<dd>If someone has taken the time to read your code carefully, thank them for doing it.</dd>
+</dl>
+<p>So what does a code review actually look like?
+Here's a Python program that searches for duplicated files
+with comments added to show review.</p>
+<div class="highlight"><pre><span></span><code><span class="ch">#!/usr/bin/env python</span>
+
+<span class="c1">## Add a docstring describing the program.</span>
+
+<span class="kn">import</span> <span class="nn">hashlib</span>
+<span class="kn">import</span> <span class="nn">os</span>
+<span class="kn">import</span> <span class="nn">sys</span>
+
+<span class="n">IGNORES</span> <span class="o">=</span> <span class="p">[</span> <span class="c1">## Use a set instead of a list for lookup tables.</span>
+    <span class="s2">&quot;.git&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;node_modules&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;.cache&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;.DS_Store&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;.dropbox&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;Thumbs.db&quot;</span><span class="p">,</span>
+<span class="p">]</span>
+
+<span class="n">SENSES</span> <span class="o">=</span> <span class="p">{</span> <span class="c1">## not used anywhere - delete</span>
+    <span class="s2">&quot;--unique&quot;</span><span class="p">:</span> <span class="kc">True</span><span class="p">,</span>
+    <span class="s2">&quot;--duplicate&quot;</span><span class="p">:</span> <span class="kc">False</span>
+<span class="p">}</span>
+
+
+<span class="k">def</span> <span class="nf">main</span><span class="p">():</span>
+    <span class="c1">## add a docstring describing this function</span>
+    <span class="c1">## use the argparse library to handle options</span>
+    <span class="c1">## put option handling in its own function</span>
+    <span class="k">if</span> <span class="n">sys</span><span class="o">.</span><span class="n">argv</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span> <span class="o">==</span> <span class="s2">&quot;--unique&quot;</span><span class="p">:</span>
+        <span class="n">unique</span> <span class="o">=</span> <span class="kc">True</span>
+    <span class="k">elif</span> <span class="n">sys</span><span class="o">.</span><span class="n">argv</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span> <span class="o">==</span> <span class="s2">&quot;--duplicate&quot;</span><span class="p">:</span>
+        <span class="n">unique</span> <span class="o">=</span> <span class="kc">False</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="c1">## print error messages to sys.stderr</span>
+        <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Unknown sense&quot;</span><span class="p">,</span> <span class="n">sys</span><span class="o">.</span><span class="n">argv</span><span class="p">[</span><span class="mi">1</span><span class="p">])</span>
+        <span class="n">sys</span><span class="o">.</span><span class="n">exit</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span>
+
+    <span class="n">roots</span> <span class="o">=</span> <span class="n">sys</span><span class="o">.</span><span class="n">argv</span><span class="p">[</span><span class="mi">2</span><span class="p">:]</span>
+    <span class="k">if</span> <span class="ow">not</span> <span class="n">roots</span><span class="p">:</span>
+        <span class="n">roots</span> <span class="o">=</span> <span class="p">[</span><span class="n">os</span><span class="o">.</span><span class="n">curdir</span><span class="p">]</span>
+
+    <span class="n">found</span> <span class="o">=</span> <span class="p">{}</span>
+    <span class="n">count</span> <span class="o">=</span> <span class="mi">0</span>
+    <span class="k">for</span> <span class="n">r</span> <span class="ow">in</span> <span class="n">roots</span><span class="p">:</span>
+        <span class="n">count</span> <span class="o">=</span> <span class="n">find</span><span class="p">(</span><span class="n">r</span><span class="p">,</span> <span class="n">found</span><span class="p">,</span> <span class="n">count</span><span class="p">)</span>
+
+    <span class="n">report</span><span class="p">(</span><span class="n">unique</span><span class="p">,</span> <span class="n">found</span><span class="p">)</span>
+
+
+<span class="k">def</span> <span class="nf">find</span><span class="p">(</span><span class="n">root</span><span class="p">,</span> <span class="n">found</span><span class="p">,</span> <span class="n">count</span><span class="p">):</span>
+    <span class="c1">## add a docstring describing this function</span>
+    <span class="k">for</span> <span class="p">(</span><span class="n">dirpath</span><span class="p">,</span> <span class="n">dirnames</span><span class="p">,</span> <span class="n">filenames</span><span class="p">)</span> <span class="ow">in</span> <span class="n">os</span><span class="o">.</span><span class="n">walk</span><span class="p">(</span><span class="n">root</span><span class="p">):</span>
+        <span class="n">ignore</span> <span class="o">=</span> <span class="kc">False</span>
+        <span class="c1">## use any() instead of a loop for this check</span>
+        <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="n">IGNORES</span><span class="p">:</span>
+            <span class="k">if</span> <span class="n">i</span> <span class="ow">in</span> <span class="n">dirpath</span><span class="p">:</span>
+                <span class="n">ignore</span> <span class="o">=</span> <span class="kc">True</span>
+        <span class="k">if</span> <span class="n">ignore</span><span class="p">:</span>
+            <span class="k">continue</span>
+        <span class="n">count</span> <span class="o">+=</span> <span class="mi">1</span>
+        <span class="c1">## 10 is a magic number: define a constant</span>
+        <span class="c1">## provide a command-line option to control reporting</span>
+        <span class="k">if</span> <span class="p">(</span><span class="n">count</span> <span class="o">%</span> <span class="mi">10</span><span class="p">)</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
+            <span class="nb">print</span><span class="p">(</span><span class="n">count</span><span class="p">,</span> <span class="n">file</span><span class="o">=</span><span class="n">sys</span><span class="o">.</span><span class="n">stderr</span><span class="p">)</span>
+        <span class="k">for</span> <span class="n">f</span> <span class="ow">in</span> <span class="n">filenames</span><span class="p">:</span>
+            <span class="n">path</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">dirpath</span><span class="p">,</span> <span class="n">f</span><span class="p">)</span>
+            <span class="k">if</span> <span class="ow">not</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">isfile</span><span class="p">(</span><span class="n">path</span><span class="p">):</span>
+                <span class="k">continue</span>
+            <span class="c1">## use &quot;rb&quot; to read files in binary  mode</span>
+            <span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="n">path</span><span class="p">,</span> <span class="s2">&quot;r&quot;</span><span class="p">)</span> <span class="k">as</span> <span class="n">reader</span><span class="p">:</span>
+                <span class="n">data</span> <span class="o">=</span> <span class="n">reader</span><span class="o">.</span><span class="n">read</span><span class="p">()</span>
+                <span class="n">digest</span> <span class="o">=</span> <span class="n">hashlib</span><span class="o">.</span><span class="n">md5</span><span class="p">(</span><span class="n">data</span><span class="p">)</span><span class="o">.</span><span class="n">digest</span><span class="p">()</span>
+                <span class="k">if</span> <span class="n">digest</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">found</span><span class="p">:</span>
+                    <span class="n">found</span><span class="p">[</span><span class="n">digest</span><span class="p">]</span> <span class="o">=</span> <span class="nb">set</span><span class="p">()</span>
+                <span class="n">found</span><span class="p">[</span><span class="n">digest</span><span class="p">]</span><span class="o">.</span><span class="n">add</span><span class="p">(</span><span class="n">path</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">count</span>
+
+
+<span class="k">def</span> <span class="nf">report</span><span class="p">(</span><span class="n">unique</span><span class="p">,</span> <span class="n">found</span><span class="p">):</span>
+    <span class="c1">## add a docstring describing this function</span>
+    <span class="k">for</span> <span class="n">digest</span> <span class="ow">in</span> <span class="n">found</span><span class="p">:</span>
+        <span class="n">paths</span> <span class="o">=</span> <span class="n">found</span><span class="p">[</span><span class="n">digest</span><span class="p">]</span>
+        <span class="k">if</span> <span class="n">unique</span> <span class="ow">and</span> <span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">paths</span><span class="p">)</span> <span class="o">==</span> <span class="mi">1</span><span class="p">):</span>
+            <span class="c1">## why paths.pop() ?</span>
+            <span class="nb">print</span><span class="p">(</span><span class="n">paths</span><span class="o">.</span><span class="n">pop</span><span class="p">())</span>
+        <span class="k">elif</span> <span class="p">(</span><span class="ow">not</span> <span class="n">unique</span><span class="p">)</span> <span class="ow">and</span> <span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">paths</span><span class="p">)</span> <span class="o">&gt;</span> <span class="mi">1</span><span class="p">):</span>
+            <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;, &quot;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="nb">sorted</span><span class="p">(</span><span class="n">paths</span><span class="p">)))</span>
+
+
+<span class="k">if</span> <span class="vm">__name__</span> <span class="o">==</span> <span class="s2">&quot;__main__&quot;</span><span class="p">:</span>
+    <span class="n">main</span><span class="p">()</span>
+</code></pre></div>
+<h2 id="communication-reporting">Section 4.5: Reporting</h2>
+<p>As well as reporting progress to your teammates,
+you may have to <span class="ix-entry" ix-key="reporting!to your manager" markdown="1">report</span> it regularly
+to your instructor or manager.
+<span class="ix-entry" ix-key="Evans, Julia" markdown="1"><a href="https://jvns.ca/">Julia Evans</a></span> described
+<a href="https://jvns.ca/blog/things-your-manager-might-not-know/">eight things your manager might not know</a>, all of which apply to student teams:</p>
+<ol>
+<li>
+<p>What's slowing the team down.</p>
+</li>
+<li>
+<p>Exactly what individual people on the team are working on.</p>
+</li>
+<li>
+<p>Where the <span class="ix-entry" ix-key="technical debt" markdown="1"><a class="gl-ref" href="../glossary/#technical_debt" markdown="1">technical debt</a></span> is.</p>
+</li>
+<li>
+<p>How to help you get better at your job.</p>
+</li>
+<li>
+<p>What your goals are.</p>
+</li>
+<li>
+<p>What issues they should be escalating.</p>
+</li>
+<li>
+<p>What extra work you're doing.</p>
+</li>
+<li>
+<p>How compensation/promotions work at the company. (For students, this one translates to, "How grading works.")</p>
+</li>
+</ol>
+<p><span class="ix-entry" ix-key="Kaplan-Moss, Jacob" markdown="1"><a href="https://jacobian.org/">Jacob Kaplan-Moss</a></span>
+has a similar guide to <a href="https://jacobian.org/2021/mar/5/exec-status-update/">giving a status update to executives</a>,
+and <a href="https://www.askamanager.org/">Ask a Manager</a> is full of good advice and discussion as well.
+These guidelines produce briefs like this:</p>
+<blockquote>
+<p>Project X is running smoothly.
+We're making steady progress: we've delivered a bit over half of the features on our roadmap,
+and we're on track to launch publicly in May.</p>
+<p>I want to particularly highlight J's design work.
+Every time we share a new demo with our users
+they rave over the design.</p>
+<p>We do have some cost risk:
+right now the code is pretty inefficient
+and would require us to increase our AWS spend by 25% in production.
+We either need to decide that cost is acceptable
+or add some extra time to the schedule for performance optimization.
+Please let us know which you prefer.</p>
+</blockquote>
+<p>If you learn how to summarize your status like this,
+you will be a very popular team member.</p>
+<h2 id="communication-exercises">Section 4.6: Exercises</h2>
+<p>FIXME</p>
+        </main>
+      </div>
+    </div>
+  </body>
+</html>

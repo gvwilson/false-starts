@@ -1,0 +1,34 @@
+From: Andreas Stefik <stefika@gmail.com>
+Date: Mon, 11 Jul 2022 22:40:15 -0700
+Subject: Re: software engineering vignettes
+
+Dude you are always welcome. For your consideration, I would consider this
+one:
+
+https://dl.acm.org/doi/10.1145/3368089.3409701?cid=81314486348
+
+(I think my webpage properly bypasses the firewall
+http://web.cs.unlv.edu/stefika/publications.html)
+
+Here's the thing:
+
+   1. Polyglot is a damned important issue I never see discussed. It's like
+   97% of open source projects and we just blindly accept that it's fine. It's
+   actually not fine though and it turns out to be a really complex issue
+
+   2. Turns out, minor tweaks to how we many polyglot matter a lot and are
+   *age* dependent (well, experience maybe, but they're related)
+
+   3. There's a replication packet. Sometimes, our IRB doesn't allow raw
+   anonymized data because they are picky, but I think they did for this one.
+   Off the top of my head, Merlin (my ex Ph.D. student who has now graduated)
+   has a docker instance to replicate the whole thing. So it's *very* easy
+   to try and replicate compared to most studies
+
+   4. It's in an evidence standard. Folks have to understand what that "is"
+   (most don't, but nevermind), but if they "do" understand what that is, it's
+   easy to know where everything is (the analogy I've thought about lately is
+   that it's like design patterns, but for evidence. If you understand the
+   standard, everything is easier to follow)
+
+Stefik

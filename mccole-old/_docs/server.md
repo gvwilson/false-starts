@@ -1,3 +1,0 @@
-# Preview Server
-
-::: mccole.server

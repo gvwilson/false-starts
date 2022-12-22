@@ -1,3 +1,0 @@
-# Collect
-
-::: mccole.collect

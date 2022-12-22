@@ -1,0 +1,904 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="icon" type="image/x-icon" href="../favicon.ico">
+    <title>The Compassionate Programmer</title>
+    <link rel="stylesheet" href="../mccole.css">
+    <link rel="stylesheet" href="../tango.css">
+    <script>
+      MathJax = {
+        tex: {
+          inlineMath: [['\\(', '\\)']]
+        }
+      };
+    </script>
+    <script
+      type="text/javascript"
+      id="MathJax-script"
+      async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js">
+    </script>
+  </head>
+  <body>
+    <div class="row">
+      <div class="column">
+        <h2><a href="../">TCP</a></h2>
+        <ol class="toc-chapter">
+  
+  <li>
+    <a href="../introduction/">
+      Introduction
+    </a>
+  </li>
+  
+  <li>
+    <a href="../teamwork/">
+      Teamwork
+    </a>
+  </li>
+  
+  <li>
+    <a href="../tooling/">
+      <strong>Tooling</strong>
+    </a>
+  </li>
+  
+  <li>
+    <a href="../communication/">
+      Communication
+    </a>
+  </li>
+  
+  <li>
+    <a href="../process/">
+      Process
+    </a>
+  </li>
+  
+  <li>
+    <a href="../pipeline/">
+      Building a Pipeline
+    </a>
+  </li>
+  
+  <li>
+    <a href="../devops/">
+      Developer Operations
+    </a>
+  </li>
+  
+  <li>
+    <a href="../roles/">
+      Roles and Responsibilities
+    </a>
+  </li>
+  
+  <li>
+    <a href="../testing/">
+      Testing
+    </a>
+  </li>
+  
+  <li>
+    <a href="../design/">
+      Design
+    </a>
+  </li>
+  
+  <li>
+    <a href="../performance/">
+      Performance
+    </a>
+  </li>
+  
+  <li>
+    <a href="../rights/">
+      Rights
+    </a>
+  </li>
+  
+  <li>
+    <a href="../responsibilities/">
+      Responsibilities
+    </a>
+  </li>
+  
+  <li>
+    <a href="../conclusion/">
+      Conclusion
+    </a>
+  </li>
+  
+</ol>
+<ol class="toc-appendix">
+  
+  <li>
+    <a href="../bibliography/">
+      Bibliography
+    </a>
+  </li>
+  
+  <li>
+    <a href="../syllabus/">
+      Syllabus
+    </a>
+  </li>
+  
+  <li>
+    <a href="../license/">
+      License
+    </a>
+  </li>
+  
+  <li>
+    <a href="../conduct/">
+      Code of Conduct
+    </a>
+  </li>
+  
+  <li>
+    <a href="../tips/">
+      Tips
+    </a>
+  </li>
+  
+  <li>
+    <a href="../checklists/">
+      Checklists
+    </a>
+  </li>
+  
+  <li>
+    <a href="../glossary/">
+      Glossary
+    </a>
+  </li>
+  
+  <li>
+    <a href="../links/">
+      Links
+    </a>
+  </li>
+  
+  <li>
+    <a href="../credits/">
+      Credits
+    </a>
+  </li>
+  
+  <li>
+    <a href="../contents/">
+      Index
+    </a>
+  </li>
+  
+</ol>
+
+      </div>
+      <div class="column bordered">
+        <main>
+	  
+          <h1>Tooling</h1>
+	  
+          
+  
+
+  
+  <ul class="syllabus">
+  
+  <li markdown="1">Choose a programming language based on its libraries and its community.</li>
+  
+  <li markdown="1">Use a package manager and an isolated environment for your project's dependencies.</li>
+  
+  <li markdown="1">Use a version control system to share files and record a project's history.</li>
+  
+  <li markdown="1">Use a build manager to repeat work in a reproducible way.</li>
+  
+  <li markdown="1">Use a test runner to find and execute tests and report their results.</li>
+  
+  <li markdown="1">Use a linter to ensure consistent code style and find common problems.</li>
+  
+  <li markdown="1">Use an IDE rather than a plain text editor when coding.</li>
+  
+  </ul>
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+
+          <p>If you know how to work well you can find a way to do it using whatever is available,
+but if you don't,
+the best tools in the world are useless.
+However,
+tools are more tangible than processes:
+it's easier to tell if someone is using version control or a style checker
+than it is to tell if they're designing or estimating sensibly.
+This chapter therefore describes tools that you should already be using
+by the time you reach a course like this.</p>
+<blockquote>
+<p>The hand shapes the tool and then the tool shapes the hand.</p>
+<p>— various attributed</p>
+</blockquote>
+<h2 id="tooling-language">Section 3.1: Programming Language</h2>
+<p>Programmers have argued about which language is best for as long as there have <em>been</em> programmers.
+Twenty years ago there was a pretty clear tradeoff
+between how quickly you could get something to run the first time
+and how fast it ran.
+High-level <span class="ix-entry" ix-key="programming language!interpreted" markdown="1"><a class="gl-ref" href="../glossary/#interpreted_language" markdown="1">Interpreted languages</a></span>
+like <span class="ix-entry" ix-key="Perl" markdown="1">Perl</span>
+optimized programmers' time;
+low-level
+<span class="ix-entry" ix-key="programming language!compiled" markdown="1"><a class="gl-ref" href="../glossary/#compiled_language" markdown="1">compiled languages</a></span>
+like <span class="ix-entry" ix-key="C" markdown="1">C</span>
+optimized the machine's.</p>
+<p>The difference between the two is much smaller now than it used to be:
+<span class="ix-entry" ix-key="Go" markdown="1"><a href="https://go.dev/">Go</a></span> is faster than <span class="ix-entry" ix-key="Python" markdown="1"><a href="https://www.python.org/">Python</a></span>,
+but Python runs fast enough for most all needs,
+while the Go compiler is so fast that the language feels interactive.
+The biggest change,
+though,
+is that the execution time of modern applications depends less on
+squeezing performance out of processors than it used to.
+The bottleneck in a web application is almost always network latency
+or the time required to perform database operations,
+so doubling or tentupling the speed of the software has little effect.</p>
+<p>That said, there are three things to keep in mind:</p>
+<dl>
+<dt>Some languages are <span class="ix-entry" ix-key="programming language!ease of learning" markdown="1">easier to learn</span> than others.</dt>
+<dd><span class="bib-ref">[<a class="bib-ref" href="../bibliography/#Stefik2013">Stefik2013</a>]</span> did a controlled experiment to see
+how quickly people could learn to recognize correct and incorrect syntax
+in several different languages.
+They found that <a class="gl-ref" href="../glossary/#curly_brace_language" markdown="1">curly-brace languages</a>
+like <span class="ix-entry" ix-key="Java" markdown="1">Java</span> and <span class="ix-entry" ix-key="Perl" markdown="1">Perl</span>
+were as hard for people to learn as a language with a randomly designed syntax.
+(They rolled <em>Dungeons &amp; Dragons</em> dice to pick random names and characters
+for a made-up language.)
+Other languages like <span class="ix-entry" ix-key="Ruby" markdown="1"><a href="https://www.ruby-lang.org/">Ruby</a></span> and <span class="ix-entry" ix-key="Python" markdown="1"><a href="https://www.python.org/">Python</a></span>
+were significantly easier to learn,
+and they are now building a language called <span class="ix-entry" ix-key="Quorum" markdown="1"><a href="https://quorumlanguage.com/">Quorum</a></span>
+by testing the usability of every language feature.</dd>
+<dt>Static typing helps, but only a little.</dt>
+<dd>A <span class="ix-entry" ix-key="static typing;typing!static;programming language!statically typed" markdown="1"><a class="gl-ref" href="../glossary/#static_typing" markdown="1">statically-typed</a></span>
+language like <span class="ix-entry" ix-key="Java" markdown="1">Java</span>
+requires programmers to specify the data type of each variable;
+a <span class="ix-entry" ix-key="dynamic typing;typing!dynamic;programming language!dynamically typed" markdown="1"><a class="gl-ref" href="../glossary/#dynamic_typing" markdown="1">dynamically-typed</a></span> one like <span class="ix-entry" ix-key="Python" markdown="1">Python</span> doesn't,
+though you can add them if you want.
+<span class="bib-ref">[<a class="bib-ref" href="../bibliography/#Hanenberg2013">Hanenberg2013</a>, <a class="bib-ref" href="../bibliography/#Endrikat2014">Endrikat2014</a>]</span> found that declaring types does add complexity to programs,
+but it pays off by acting as documentation
+and by making <span class="ix-entry" ix-key="auto-completion" markdown="1"><a class="gl-ref" href="../glossary/#auto_completion" markdown="1">auto-completion</a></span> more accurate.
+More recently,
+<span class="bib-ref">[<a class="bib-ref" href="../bibliography/#Gao2017">Gao2017</a>]</span> found that adding TypeScript typing to programs
+would catch 15% of bugs in existing programs,
+which is either not much (one in seven)
+or a lot (more than sales tax here in Ontario).</dd>
+<dt>The most important thing about a language is its community.</dt>
+<dd>Some programming communities work hard to welcome newcomers
+and treat everyone respectfully.
+Others are more likely to call naïve questions "stupid"
+or to make excuses when <span class="ix-entry" ix-key="Linux!toxic leadership" markdown="1">their leaders harass people</span>
+<span class="bib-ref">[<a class="bib-ref" href="../bibliography/#Cohen2018">Cohen2018</a>]</span>.
+As a junior programmer,
+you will learn more from the former than from the latter.</dd>
+</dl>
+<p><span class="bib-ref">[<a class="bib-ref" href="../bibliography/#Stefik2017">Stefik2017</a>]</span> is a good short summary of what we know about languages' usability
+and why we believe it's true.
+If someone disagrees with it,
+ask them to show you <em>their</em> evidence.</p>
+<h2 id="tooling-packman">Section 3.2: Package Manager</h2>
+<p>There is no point building software if you can't install it.
+Inspired by the <span class="ix-entry" ix-key="Comprehensive TeX Archive Network (CTAN)" markdown="1"><a href="https://www.ctan.org/">Comprehensive TeX Archive Network</a></span>,
+most languages now have an online archive from which developers can download packages.
+Each package typically has a name and one or more versions;
+each version has a list of dependencies,
+and the package may specify a version or range of versions for each dependency.</p>
+<p>A <span class="ix-entry" ix-key="package manager" markdown="1"><a class="gl-ref" href="../glossary/#package_manager" markdown="1">package manager</a></span>
+is a program that keeps track of which packages are installed on your computer
+and how they depend on each other.
+Package managers became widespread in the 1990s to cope with <span class="ix-entry" ix-key="Linux" markdown="1">Linux</span>:
+so many distributions were being updated so often
+that people needed tools to keep track of what they had.</p>
+<p>Package managers
+like <span class="ix-entry" ix-key="APT;package manager!APT" markdown="1"><a href="https://en.wikipedia.org/wiki/APT_(software)">APT</a></span> for <span class="ix-entry" ix-key="Linux" markdown="1">Linux</span>
+and <span class="ix-entry" ix-key="Homebrew;package manager!Homebrew" markdown="1"><a href="https://en.wikipedia.org/wiki/Homebrew_(package_manager)">Homebrew</a></span> for <span class="ix-entry" ix-key="MacOS" markdown="1">MacOS</span>
+can handle many languages.
+Others,
+like <span class="ix-entry" ix-key="pip;package manager!pip" markdown="1"><a href="https://pypi.org/project/pip/">pip</a></span> for <span class="ix-entry" ix-key="Python" markdown="1">Python</span>
+and <span class="ix-entry" ix-key="NPM;package manager!NPM" markdown="1"><a href="https://en.wikipedia.org/wiki/Npm_(software)">NPM</a></span> for <span class="ix-entry" ix-key="JavaScript" markdown="1">JavaScript</span>,
+are language-specific.
+No matter which one you use,
+the biggest challenge you'll face is finding the packages you need:
+at the time of writing,
+<a href="https://www.npmjs.com/search?q=xml%20parser">this search</a> turns up over 700 XML parsers for JavaScript.
+To help narrow the results,
+NPM allows the results to be sorted by popularity, quality, and maintenance.
+Doing this obviously creates a feedback loop:
+if NPM labels a package "more popular" then more people will find it,
+which raises its popularity score even further.
+Unlike most social media,
+<span class="ix-entry" ix-key="NPMS;package manager!package ratings" markdown="1"><a href="https://npms.io/about">NPMS</a></span> is open
+about how these scores are calculated,
+so package authors can find out what they need to do in order to improve their scores.</p>
+<p>Whatever package manager you use,
+your project should follow these rules:</p>
+<dl>
+<dt>Keep a record.</dt>
+<dd>NPM automatically updates a project's
+<span class="ix-entry" ix-key="Node!package.json file" markdown="1"><code>package.json</code></span> file
+to show which packages have been installed explicitly,
+and its <code>package-lock.json</code> file keeps track of
+exactly which versions of their dependencies have been installed as well.
+In theory,
+someone else can duplicate your environment exactly.
+If you are using <code>pip</code> for Python,
+on the other hand,
+it's up to you to create a file (typically called <code>requirements.txt</code>)
+that lists the packages someone needs to make your project work.</dd>
+<dt>To install is beautiful, to uninstall divine.</dt>
+<dd>You should install packages to try them out before committing to using them,
+but if you decide that something doesn't do what you want,
+please uninstall it.
+(I have worked with projects that used less than half of their "requirements".)</dd>
+<dt>Keep an eye on security updates.</dt>
+<dd>NPM will warn you if there are security problems with things you depend on.
+The world would be a slightly safer place if more people paid attention to these warnings.</dd>
+</dl>
+<h2 id="tooling-environments">Section 3.3: Environments</h2>
+<p>If you are working on several projects at the same time,
+you will need to manage their packages separately
+so that a change to one project doesn't break another.
+Different languages manage <span class="ix-entry" ix-key="environment" markdown="1"><a class="gl-ref" href="../glossary/#environment" markdown="1">environments</a></span>
+in different ways:</p>
+<dl>
+<dt>Install everything a project needs in that project.</dt>
+<dd>If every project contains everything it depends on,
+updates to one project can't affect others.
+This is NPM's approach;
+it uses much more storage than necessary
+(because a single package can be installed many times on the same machine)
+but ensures isolation.</dd>
+<dt>Change the path.</dt>
+<dd>Most languages' runtimes check an environment variable
+called a <span class="ix-entry" ix-key="search path" markdown="1"><a class="gl-ref" href="../glossary/#search_path" markdown="1">search path</a></span>
+that lists the directories from which libraries can be loaded.
+Tools like Python's <code>virtualenv</code> put an extra directory on the front of this path
+for each <a class="gl-ref" href="../glossary/#virtual_environment" markdown="1">virtual environment</a>
+so that environment-specific libraries are found before system-wide libraries.</dd>
+<dt>Use a virtual machine.</dt>
+<dd><span class="ix-entry" ix-key="Docker" markdown="1"><a href="https://www.docker.com/">Docker</a></span> uses some clever tricks
+to run one operating system on top of another to create a
+<span class="ix-entry" ix-key="virtual machine" markdown="1"><a class="gl-ref" href="../glossary/#virtual_machine" markdown="1">virtual machine</a></span>
+(VM) that is isolated from everything beneath it.
+VMs ensure complete isolation,
+and as a bonus VMs can be deployed to the cloud (<a class="x-ref" href="../devops/">Chapter 7</a>),
+but they are essentially an admission that
+we haven't figured out how to manage packaging reliably.</dd>
+</dl>
+<h2 id="tooling-versioning">Section 3.4: Version Control</h2>
+<p><span class="ix-entry" ix-key="version control!reasons to use" markdown="1">Version control</span>
+is the collective memory of the project.
+It's what lets you move files from one machine to another
+without clobbering stuff you just spent three hours writing
+and without worrying about whether you forgot something important.
+It also lets you undo your mistakes:
+if you spend an hour or two going down the wrong path
+and want to get back to where you were,
+version control lets you do it reliably with a single command.
+If all that wasn't enough,
+version control lets you share files reliably with your teammates
+and keeps track of who did what
+so that you know who to turn to with questions.</p>
+<p>Dozens of <span class="ix-entry" ix-key="version control!systems" markdown="1">version control</span> systems exist.
+<span class="ix-entry" ix-key="version control!CVS;CVS (version control)" markdown="1"><a href="https://www.nongnu.org/cvs/">CVS</a></span>
+was the workhorse of open source for many years;
+it was replaced by
+<span class="ix-entry" ix-key="version control!Subversion;Subversion (version control)" markdown="1"><a href="https://subversion.apache.org/">Subversion</a></span>,
+which fixed many of its predecessor's flaws while introducing a few minor ones of its own.
+Both of these were <span class="ix-entry" ix-key="version control!centralized" markdown="1"><a class="gl-ref" href="../glossary/#centralized_system" markdown="1">centralized systems</a></span>:</p>
+<ol>
+<li>
+<p>One <span class="ix-entry" ix-key="version control!repository;repository (version control)" markdown="1"><a class="gl-ref" href="../glossary/#repository" markdown="1">repository</a></span>
+    stored the definitive copy of the project's files.</p>
+</li>
+<li>
+<p>Nobody ever edited the contents of the main repository directly.
+    Instead, everyone worked in a local copy.</p>
+</li>
+<li>
+<p>In order to share files,
+    people would <a class="gl-ref" href="../glossary/#push_git" markdown="1">push</a> the contents of their copy to the main repository.
+    To get other people's work,
+    they would <a class="gl-ref" href="../glossary/#pull_git" markdown="1">pull</a> changes from the main repository
+    and <a class="gl-ref" href="../glossary/#merge_git" markdown="1">merge</a> them with their own work.</p>
+</li>
+</ol>
+<p>Centralized version control systems have largely been replaced by
+<span class="ix-entry" ix-key="version control!decentralized" markdown="1"><a class="gl-ref" href="../glossary/#decentralized_system" markdown="1">decentralized</a></span> ones,
+and in particular by <span class="ix-entry" ix-key="version control!Git;Git" markdown="1"><a href="https://git-scm.com/">Git</a></span>.
+In theory,
+a Git project doesn't need a main repository:
+developers can merge the contents of any repository into any other.
+In practice,
+every project designates one repository as the master copy
+so that people know where to look to find the current state of the project.</p>
+<p>Unfortunately,
+Git has a needlessly complicated interface.
+<span class="bib-ref">[<a class="bib-ref" href="../bibliography/#PerezDeRosso2013">PerezDeRosso2013</a>]</span> found that even experienced users'
+<span class="ix-entry" ix-key="mental model!Git" markdown="1"><a class="gl-ref" href="../glossary/#mental_model" markdown="1">mental model</a></span> of how it works
+is inconsistent with its actual operation in important ways.
+Each of these inconsistencies produces a steady stream of "what the hell?"  moments.
+Other distributed version control systems
+like <span class="ix-entry" ix-key="version control!Mercurial;Mercurial (version control)" markdown="1"><a href="https://www.mercurial-scm.org/">Mercurial</a></span>
+are proof that this complexity and pain are unnecessary.
+(The fact that most people don't immediately realize that
+[the random Git manual page generator][git-man-page-generator]
+is a <span class="ix-entry" ix-key="Git!interface (indistinguishable from hoax)" markdown="1">hoax</span>
+says a lot…)</p>
+<p>So why do people keep using <span class="ix-entry" ix-key="Git!reasons for popularity" markdown="1">Git</span>?
+Because everyone else is using it,
+and because it's the tax they have to pay in order to use <a href="https://github.com/">GitHub</a>.
+At the time of writing
+GitHub has over 40 million users and hosts over 28 million public repositories,
+including those for many well-known open source projects.
+It is easily the most popular <span class="ix-entry" ix-key="software portal!GitHub" markdown="1"><a class="gl-ref" href="../glossary/#software_portal" markdown="1">software portal</a></span> in existence,
+and offers all of the tools a small software team needs.
+Other portals like <span class="ix-entry" ix-key="Bitbucket;software portal!Bitbucket" markdown="1"><a href="https://bitbucket.org/">Bitbucket</a></span>
+and <span class="ix-entry" ix-key="GitLab;software portal!GitLab" markdown="1"><a href="https://gitlab.com/">GitLab</a></span>
+are just as usable,
+but GitHub's share of the educational market is even larger than its share among professional developers.
+If you're using anything in class,
+you're almost certainly using it,
+and it's probably helping you become a better programmer
+<span class="bib-ref">[<a class="bib-ref" href="../bibliography/#Hsing2019">Hsing2019</a>]</span>.</p>
+<div class="callout">
+<h3>Why can't we fix it?</h3>
+<p>If Git's interface is a problem, why can't we build a new one?
+<span class="bib-ref">[<a class="bib-ref" href="../bibliography/#PerezDeRosso2016">PerezDeRosso2016</a>]</span> tried,
+but the gravity of the existing interface is simply too powerful:
+as soon as people run into a problem and start searching online for solutions
+they are thrown back into the world of original Git.</p>
+</div>
+<p>This section won't try to teach you Git from scratch:
+[GitHub's guides][github-guides] and [the Atlassian Git tutorial][atlassian-git]
+do an excellent job of that,
+as does [the Carpentries lesson on Git][carpentries-git].
+Instead,
+we will review the basics that we hope you have learned previously.
+We show the commands you would run in the Unix shell,
+but we recommend that you use a <span class="ix-entry" ix-key="Git!graphical interface" markdown="1">graphical interface</span>
+like <a href="https://www.gitkraken.com/">GitKraken</a>,
+<a href="https://www.sourcetreeapp.com/">SourceTree</a>,
+or the one that comes with your IDE (discussed below).
+If any of the commands below are unfamiliar,
+please take the time to work through one of the Git tutorials linked above.</p>
+<p>The first step is to make sure that <span class="ix-entry" ix-key="Git!configuring" markdown="1">Git knows who we</span>
+are by configuring our name and email address.</p>
+<div class="highlight"><pre><span></span><code>$ git config --global user.name <span class="s2">&quot;Pera DiAngelo&quot;</span>
+$ git config --global user.email <span class="s2">&quot;pera@secept.org&quot;</span>
+</code></pre></div>
+<p class="continue">The <code>--global</code> flag tells Git to apply this change across the whole machine,
+i.e.,
+to set it for every project.</p>
+<p>Next,
+let's <span class="ix-entry" ix-key="Git!creating project" markdown="1">set up a project</span>.
+If we are starting from scratch,
+we create a directory,
+go into it,
+and run <code>git init</code>.
+This command creates a sub-directory called <code>.git</code> inside your project directory.
+That sub-directory is what makes something a project:
+it stores the data Git uses to keep track of what files you have
+and how they've changed.</p>
+<div class="callout">
+<h3>Don't mess</h3>
+<p>Don't edit the files in your <code>.git</code> directory yourself—it will have
+the same unfortunate effect as editing a spreadsheet or an image
+as if it was a text file.
+If you'd like to know more about what they're for and how Git uses them,
+please see <span class="bib-ref">[<a class="bib-ref" href="../bibliography/#Chacon2014">Chacon2014</a>]</span> or <span class="bib-ref">[<a class="bib-ref" href="../bibliography/#Cook2019">Cook2019</a>]</span>.</p>
+</div>
+<p>You won't use <code>git init</code>
+if your instructor or one of your teammates has already created a project.
+Instead,
+you will use <code>git clone</code> followed by the project's URL
+to get a local copy called a <span class="ix-entry" ix-key="Git!cloning project" markdown="1"><a class="gl-ref" href="../glossary/#clone_git" markdown="1">clone</a></span>.
+For example,
+this command clones the repository for this book:</p>
+<div class="highlight"><pre><span></span><code>$ git clone https://github.com/gvwilson/secept
+</code></pre></div>
+<p class="continue">Cloning creates a directory with the same name as the project
+and a <code>.git</code> sub-directory inside it.
+It also downloads the project's history so that you can start work.</p>
+<p>Regardless of how you create your repository,
+you can use <code>git log</code> to look at its <span class="ix-entry" ix-key="Git!history" markdown="1">history</span>:</p>
+<div class="highlight"><pre><span></span><code>commit 1a8fed9b06b93c719baecebf6bf0a66b3eab2be8
+Author: Greg Wilson &lt;gvwilson@third-bit.com&gt;
+Date:   Fri Jul 29 22:12:03 2022 -0400
+
+    fix: add build check for undefined Markdown links
+
+commit b728816d64c1937e9434d29d117649101aa52ec1
+Author: Greg Wilson &lt;gvwilson@third-bit.com&gt;
+Date:   Fri Jul 29 16:38:13 2022 -0400
+
+    add: clean up wording in description of IDEs
+
+commit c2f103ee4ee5a222b7e561955705fa20cd888b99
+Author: Greg Wilson &lt;gvwilson@third-bit.com&gt;
+Date:   Fri Jul 29 13:39:29 2022 -0400
+
+    add: outline chapter on tooling
+</code></pre></div>
+<p>Each entry has:</p>
+<ul>
+<li>
+<p>A line labeled <code>commit</code> followed by a hexadecimal number.
+    This number is a unique <span class="ix-entry" ix-key="Git!commit ID" markdown="1">label</span>
+    for the state of the project's files at that point in time.
+    We can use this to refer to a particular state of the project;
+    it is enough in most cases to use the first half-dozen digits
+    such as <code>1a8fed</code> so long as they are unique.</p>
+</li>
+<li>
+<p>Two lines showing who saved the state of the project and when.</p>
+</li>
+<li>
+<p>A short <span class="ix-entry" ix-key="commit message (version control);Git!commit message" markdown="1"><a class="gl-ref" href="../glossary/#commit_message" markdown="1">commit message</a></span>
+    describing the change.
+    <a class="x-ref" href="../communication/">Chapter 4</a> explains how to write a good commit message;
+    for now,
+    just remember that if your team makes a hundred changes to the project
+    over the course of several months,
+    you're going to want something more informative than "Fixed stuff."</p>
+</li>
+</ul>
+<p>A <span class="ix-entry" ix-key="commit (version control);Git!commit" markdown="1"><a class="gl-ref" href="../glossary/#commit" markdown="1">commits</a></span>
+is a snapshot of the project at a particular moment in time.
+We create commits using a command like:</p>
+<div class="highlight"><pre><span></span><code>$ git commit -m <span class="s2">&quot;Made the status bar display the user name&quot;</span>
+</code></pre></div>
+<p>Before we run <code>git commit</code>,
+though,
+we need to tell Git which files we want to save.
+We do this using <code>git add</code>:</p>
+<div class="highlight"><pre><span></span><code>$ git add src/tooling.md info/glossary.yml
+</code></pre></div>
+<p><span class="ix-entry" ix-key="Git!difference between add and commit" markdown="1">One way to think about this</span>
+is that <code>git add</code> puts things in a box to be shipped
+while <code>git commit</code> actually sends the package.
+Git does this in two steps
+because we might change our mind about what we want to save:
+for example,
+we might <code>git add</code> a file,
+realize we need to make a few more edits,
+<code>git add</code> it again,
+and only then commit.
+Alternatively,
+we might add a bunch of files
+and then realize that some of them
+(like editor backup files or temporary data files)
+shouldn't be saved.</p>
+<div class="callout">
+<h3>Teach us to care and not to care</h3>
+<p>You can tell Git to <span class="ix-entry" ix-key="Git!ignoring files" markdown="1">ignore certain kinds of files</span>
+by putting their names,
+or patterns that match multiple names,
+in a file called <code>.gitignore</code>.
+For example, the <code>.gitignore</code> file for this project includes:</p>
+<div class="highlight"><pre><span></span><code>*.pyc
+*~
+.DS_Store
+__pycache__
+</code></pre></div>
+<p>Be careful not to put files containing passwords or <a class="gl-ref" href="../glossary/#api_key" markdown="1">API keys</a> for web services
+into version control.
+Even if the repository is private now,
+it might be public in future,
+or the team might grow to include someone who shouldn't have access.</p>
+</div>
+<p>We can keep track of which changes haven't yet been added
+and which have using <span class="ix-entry" ix-key="Git!showing status" markdown="1"><code>git status</code></span>.
+If I run this command right now in this book's project I get:</p>
+<div class="highlight"><pre><span></span><code>On branch main
+Your branch is up to date with &#39;origin/main&#39;.
+
+Changes to be committed:
+  (use &quot;git restore --staged &lt;file&gt;...&quot; to unstage)
+    modified:   src/tooling/index.md
+
+Changes not staged for commit:
+  (use &quot;git add &lt;file&gt;...&quot; to update what will be committed)
+  (use &quot;git restore &lt;file&gt;...&quot; to discard changes in working directory)
+    modified:   src/tooling/index.md
+
+Untracked files:
+  (use &quot;git add &lt;file&gt;...&quot; to include in what will be committed)
+    src/tooling/git-log.txt
+</code></pre></div>
+<p class="continue">The first paragraph tells me which files I have added but not yet committed.
+The second tells me which files I have changed,
+and the third tells me which files have never been saved in version control.</p>
+<p>I can use <span class="ix-entry" ix-key="Git!recovering old files" markdown="1"><code>git restore</code></span>
+to recover an old version of a file from any previous commit.
+For example,
+if I want to get the version of this file from two days ago,
+I can use <code>git log</code> to find the commit ID <code>2be70844</code> and run:</p>
+<div class="highlight"><pre><span></span><code>$ git restore --source 2be70844 src/tooling.md
+</code></pre></div>
+<p>I can also count backward from where I am now.
+The most recent commit has the special <span class="ix-entry" ix-key="Git!HEAD" markdown="1">symbolic name <code>HEAD</code></span>;
+the expression <code>HEAD~1</code> means "the one before it",
+while <code>HEAD~2</code> goes back two commits and so on.
+Regardless of how I specify what I want,
+restoring an old version doesn't erase any of the ones I have saved since then:
+the project's history stays intact.</p>
+<p>Finally,
+I should make sure there's a copy of my work
+so that I don't lose everything I've done
+if my drive fails or my laptop is stolen.
+If I create the repository by cloning a repository,
+Git automatically adds a bookmark called a <span class="ix-entry" ix-key="Git!remote;remote (in Git)" markdown="1"><a class="gl-ref" href="../glossary/#remote_git" markdown="1">remote</a></span>
+that points at the original repository.
+I can get a list of remotes like this:</p>
+<p><div class="highlight"><pre><span></span><code>$ git remote -v
+</code></pre></div>
+<div class="highlight"><pre><span></span><code>origin  https://github.com/gvwilson/secept.git (fetch)
+origin  https://github.com/gvwilson/secept.git (push)
+</code></pre></div></p>
+<p class="continue">The remote's name is <code>origin</code>.
+Git lists two URLs for it because in theory you can download (or "fetch") from one
+and upload (or "push") to another.
+(I have never once needed this feature in the sixteen years I have been using Git
+<span class="bib-ref">[<a class="bib-ref" href="../bibliography/#Xu2015">Xu2015</a>]</span>.)</p>
+<p>One difference between Git and a file backup tool like <a href="https://dropbox.com">Dropbox</a>
+is that Git doesn't automatically synchronize local changes to the remote repository.
+If I want to <span class="ix-entry" ix-key="Git!saving changes remotely" markdown="1">save</span> everything I've done to GitHub,
+I have to push changes explicitly:</p>
+<div class="highlight"><pre><span></span><code>$ git push origin main
+</code></pre></div>
+<p>The word <code>main</code> identifies the branch I'm on.
+We'll discuss branches in <a class="x-ref" href="../process/">Chapter 5</a>;
+for now,
+you can run <code>git branch</code> to see which one you're working in.</p>
+<p>The counterpart of <code>git push</code> is <code>git pull</code>,
+which downloads changes from the remote repository:</p>
+<div class="highlight"><pre><span></span><code>$ git pull origin main
+</code></pre></div>
+<p>Pushing and pulling allows you and your teammates to synchronize your work.
+They are also often used to deploy software to remote machines
+(<a class="x-ref" href="../devops/">Chapter 7</a>).</p>
+<h2 id="tooling-build">Section 3.5: Build Manager</h2>
+<p>A <span class="ix-entry" ix-key="build manager" markdown="1"><a class="gl-ref" href="../glossary/#build_manager" markdown="1">build manager</a></span>
+is a tool that re-runs commands to recompile programs,
+rebuild packages,
+or anything else a project needs to do repeatedly.
+The origin build manager,
+<span class="ix-entry" ix-key="Make;build manager!Make" markdown="1"><a href="https://www.gnu.org/software/make/">Make</a></span>,
+was invented in 1975 by a summer intern at Bell Labs to compile C programs
+in which some modules depended on others.
+Its configuration files look like this:</p>
+<div class="highlight"><pre><span></span><code>game.exe : game.bc graphics.bc utils.bc
+        tx -E -o game.exe game.bc graphics.bc utils.bc
+
+%.bc : %.grace
+        tx -C $&lt;
+</code></pre></div>
+<p>This file tells Make that <code>game.exe</code> can't be compiled
+until <code>game.bc</code>, <code>graphics.bc</code>, and <code>utils.bc</code> exist,
+and that once they do,
+the way to create <code>game.exe</code> is to run the <code>tx</code> compiler with several options.
+Below that is a <span class="ix-entry" ix-key="Make!pattern rule" markdown="1"><a class="gl-ref" href="../glossary/#pattern_rule" markdown="1">pattern rule</a></span>
+telling Make how to create any <code>.bc</code> file from a <code>.grace</code> file with the same root name;
+the cryptic expression <code>$&lt;</code> is Make's way of saying "the first thing the target depends on".</p>
+<p>Make has been used by hundreds of thousands of programmers for more than forty years,
+but has some <span class="ix-entry" ix-key="Make!shortcomings" markdown="1">fundamental flaws</span>.
+The first is its syntax;
+the second is that it runs commands by invoking shell commands,
+which make portability a constant headache.
+(Quick, should you use <code>rm</code> or <code>del</code> to delete a file?)
+Third, Make doesn't have a debugger:
+the only way to track down problems in your configuration
+is to tweak things and hope the problems go away.</p>
+<p>Programmers have built <a href="https://en.wikipedia.org/wiki/List_of_build_automation_software">hundreds of alternatives to Make</a>,
+but each one has only been adopted within a single language community.
+Whatever you choose or are told to use,
+please <span class="ix-entry" ix-key="build manager!rules for using" markdown="1">follow these rules</span>:</p>
+<dl>
+<dt>Choose something that works with your other tools.</dt>
+<dd>For example,
+most Java editors and IDEs integrate with a build tool called
+<span class="ix-entry" ix-key="build manager!Ant;Ant;Java!build manager" markdown="1"><a href="https://ant.apache.org/">Ant</a></span>,
+which means they can jump directly to compilation errors when they occur.</dd>
+<dt>Be cautious about adding dependencies.</dt>
+<dd>"Reduce, re-use, recycle" is as important for software as it is for daily life
+but every library you depend on is one more way for your project
+to accumulate <span class="ix-entry" ix-key="technical debt" markdown="1">technical debt</span>.
+We are all biased toward solving problems by adding things
+instead of taking them away <span class="bib-ref">[<a class="bib-ref" href="../bibliography/#Meyvis2021">Meyvis2021</a>]</span>;
+checking the packages your project depends on before every release
+and cutting any you can will prevent a lot of future headaches.</dd>
+<dt>Always use the build manager—never build by hand.</dt>
+<dd>This isn't just for efficiency's sake:
+if any of the things you need to do
+to get your application up on your web site
+have to be done by hand,
+the odds are that you'll forget a crucial step right before a crucial demo.
+and if you do something by hand,
+one of your teammates might do it differently.
+"But it works on my machine!"
+isn't something you want to hear an hour before a deadline…</dd>
+</dl>
+<p>Once you have a build system in place,
+never commit anything to version control that
+<span class="ix-entry" ix-key="version control!and build manager;build manager!and version control" markdown="1">breaks the build</span>.
+This is one of the golden rules of working in a team:
+if your code won't compile or doesn't pass tests,
+putting it into the repository can interrupt everyone else on the team.
+It's OK to use version control as a simple file backup tool when you're working on your own,
+but do <em>not</em> carry this habit over to teamwork.</p>
+<h2 id="tooling-test">Section 3.6: Test Runner</h2>
+<p>A <span class="ix-entry" ix-key="unit test" markdown="1"><a class="gl-ref" href="../glossary/#unit_test" markdown="1">unit test</a></span> is one that checks the correctness
+of a single piece of software.
+Exactly what constitutes a "single piece" is subjective,
+but it typically means the behavior of a single function or method in one situation.
+Every unit test has:</p>
+<ul>
+<li>
+<p>A <span class="ix-entry" ix-key="fixture (in unit test);unit test!fixture" markdown="1"><a class="gl-ref" href="../glossary/#fixture" markdown="1">fixture</a></span>,
+    which is the thing being tested.
+    The fixture is typically a subset or smaller version of
+    the data the function will typically process.</p>
+</li>
+<li>
+<p>The <span class="ix-entry" ix-key="expected result (in unit test);unit test!expected result" markdown="1"><a class="gl-ref" href="../glossary/#expected_result" markdown="1">expected result</a></span>
+    that the code is supposed to produce when given the fixture.</p>
+</li>
+<li>
+<p>The <span class="ix-entry" ix-key="actual result (in unit test);unit test!actual result" markdown="1"><a class="gl-ref" href="../glossary/#actual_result" markdown="1">actual result</a></span>
+    that the code actually produces.</p>
+</li>
+</ul>
+<p>Good programmers frequently run tests interactively when debugging,
+but tests are much more valuable when they can be re-run at a moment's notice
+to make sure that recent changes haven't <a class="gl-ref" href="../glossary/#regression" markdown="1">regressed</a>,
+i.e.,
+haven't broken anything that used to work.
+Every modern programming language has <span class="ix-entry" ix-key="test runner;unit test!test runner" markdown="1"><a class="gl-ref" href="../glossary/#test_runner" markdown="1">test runners</a></span>
+to find and run tests and report their results.
+The most widely-used test runner for Python is [<code>pytest</code>][pytest]:</p>
+<ol>
+<li>
+<p>Tests are put in files whose names begin with <code>test_</code>.</p>
+</li>
+<li>
+<p>Each test is a function whose name also begins with <code>test_</code>.</p>
+</li>
+<li>
+<p>These functions use <code>assert</code> to check results.</p>
+</li>
+</ol>
+<p>If running all the tests takes so long that it's disrupting developers' <span class="ix-entry" ix-key="flow" markdown="1">flow</span>,
+you can tell <code>pytest</code> and other test runners to run only one test or a subset of tests.
+This speeds up debugging,
+but you should always re-run the entire <span class="ix-entry" ix-key="test suite;unit test!test suite" markdown="1"><a class="gl-ref" href="../glossary/#test_suite" markdown="1">test suite</a></span>
+before committing your changes to version control.</p>
+<h2 id="tooling-lint">Section 3.7: Linter</h2>
+<p>A <span class="ix-entry" ix-key="linter" markdown="1"><a class="gl-ref" href="../glossary/#linter" markdown="1">linters</a></span> is a program
+that checks your source code for things that are legal but questionable.
+(The name comes from an early tool called <code>lint</code> that looked for problems in C code.)
+Linters are also called <span class="ix-entry" ix-key="style checker" markdown="1"><a class="gl-ref" href="../glossary/#style_checker" markdown="1">style checkers</a></span>
+because they check rules like
+"no method can be longer than 100 lines"
+or "class names must be written in CamelCase".
+Code is much easier to read and review when it is formatted consistently,
+so everything should be linted and reformatted before being committed to version control.</p>
+<p>Modern linters like <span class="ix-entry" ix-key="linter!ESLint;ESLint" markdown="1"><a href="https://eslint.org/">ESLint</a></span>
+for <span class="ix-entry" ix-key="JavaScript!linter" markdown="1">JavaScript</span>,
+<span class="ix-entry" ix-key="Checkstyle;linter!Checkstyle" markdown="1"><a href="https://checkstyle.org/">Checkstyle</a></span>
+for <span class="ix-entry" ix-key="Java!linter" markdown="1">Java</span>,
+or <span class="ix-entry" ix-key="linter!Black;Black" markdown="1"><a href="https://pypi.org/project/black/">Black</a></span> for <span class="ix-entry" ix-key="Python!linter" markdown="1">Python</span>
+can do more than just check style.
+For example,
+they can find code that is never called,
+parameters that are never used,
+and duplicated code that could be refactored.
+This kind of checking is called <span class="ix-entry" ix-key="static analysis" markdown="1"><a class="gl-ref" href="../glossary/#static_analysis" markdown="1">static analysis</a></span>
+because these tools work by analyzing source code
+rather than by watching the program run.
+Compilers also do a lot of static analysis;
+the warnings they produce are a lot more useful than many students realize,
+and a "zero warnings" policy can prevent a lot of subtle bugs.</p>
+<h2 id="tooling-ide">Section 3.8: Integrated Development Environment</h2>
+<p>Programmers spend a lot of time editing code and documentation,
+so choosing a good editor is as important as choosing a comfortable chair.
+You probably already have one,
+and if you're like most programmers,
+you will change jobs, operating systems, and nationality
+before you'll switch
+because it takes weeks or months for your hands to master a new one.
+However,
+if it is not an <span class="ix-entry" ix-key="IDE" markdown="1"><a class="gl-ref" href="../glossary/#ide" markdown="1">integrated development environment</a></span> (IDE)
+that combines an editor with other tools,
+then everything you do will take longer and hurt more than it needs to.</p>
+<p>IDEs were invented in the 1970s,
+but didn't really catch on until <span class="ix-entry" ix-key="Borland" markdown="1">Borland</span> released <span class="ix-entry" ix-key="Turbo Pascal" markdown="1">Turbo Pascal</span>
+in the 1980s.
+IDEs usually included tools:</p>
+<ul>
+<li>
+<p>A <span class="ix-entry" ix-key="console;IDE!console" markdown="1"><a class="gl-ref" href="../glossary/#console" markdown="1">console</a></span>
+    so that you can type in expressions or call functions and see the results
+    without having to start (or restart) your program.</p>
+</li>
+<li>
+<p>A <span class="ix-entry" ix-key="code browser" markdown="1"><a class="gl-ref" href="../glossary/#code_browser" markdown="1">code browser</a></span>
+    to navigate the packages, classes, methods, and data in your program.</p>
+</li>
+<li>
+<p><span class="ix-entry" ix-key="refactoring" markdown="1">Refactoring tools</span>
+    to reformat and reorganize code.</p>
+</li>
+<li>
+<p>A <span class="ix-entry" ix-key="test runner" markdown="1">test runner</span> to re-run tests,
+    display their results,
+    and jump directly to ones that have failed.</p>
+</li>
+</ul>
+<p>The most popular IDE today is
+<span class="ix-entry" ix-key="VS Code;Microsoft Visual Studio Code;IDE!VS Code" markdown="1"><a href="https://code.visualstudio.com/">Microsoft Visual Studio Code</a></span>,
+often referred to simply as "VS Code".
+Along with all the tools above,
+it has hundreds of <span class="ix-entry" ix-key="plugin!for IDE" markdown="1"><a class="gl-ref" href="../glossary/#plugin" markdown="1">plugins</a></span>
+to support database design,
+manage version control,
+preview web pages,
+and much more.</p>
+<p>But calling VS Code is the world's most popular IDE is misleading.
+If you open <span class="ix-entry" ix-key="IDE!in browser" markdown="1">developer tools</span>. in Firefox, Chrome, or Edge,
+you will see an HTML browser that's smart enough to tell you
+which bits of CSS are in effect where,
+a console that displays messages from the JavaScript running in the page,
+a breakpointing debugger,
+a network monitor,
+and much more.
+It won't help you with your C# or Python—at least, not yet—but
+it will make all of your front-end work a lot easier.</p>
+<div class="callout">
+<h3>Stuck in the punchcard era</h3>
+<p>In many ways,
+programming is still stuck in the punchcard era:
+we still insist that source code be represented using characters
+that are typed one at a time.
+<a class="gl-ref" href="../glossary/#wysiwyg" markdown="1">WYSIWYG</a> editors like Microsoft Word did away with this model decades ago:
+they store the file in a machine-friendly format and then render it in a human-friendly way.
+Drawing tools, spreadsheets, and almost every other kind of "editor" does the same,
+and there's no reason we couldn't do the same with programs.
+if you are looking for a project to tackle, this would be a good one.</p>
+</div>
+<h2 id="tooling-exercises">Section 3.9: Exercises</h2>
+<ul>
+<li>FIXME</li>
+</ul>
+        </main>
+      </div>
+    </div>
+  </body>
+</html>

@@ -1,0 +1,29 @@
+From: Maurício Aniche <mauricioaniche@gmail.com>
+Date: Thu, 14 Jul 2022 09:55:51 +0200
+Subject: Re: software engineering research vignettes
+To: Greg Wilson <gvwilson@third-bit.com>
+
+Hey Greg,
+
+Thanks for your e-mail, and sorry for the late reply.
+
+I never really did lots of MSR. I always preferred more qualitative
+research. A few papers I have some data:
+
+- [1] We studied atoms of confusion by means of a controlled
+experiment with participants.
+- [2] self vs peer grading, experimented in my own software testing course
+- [3] code reviews in test files, are they different from reviews in
+production code?
+- [4] what linting rules do JS developers enable and disable in their
+JSLint configurations?
+
+The appendixes with data should all be available in the papers
+themselves. I can't promise I remember everything, we did [4] in 2016,
+and most of them were led by our PhD and MSc students, but I can try
+and help.
+
+[1] https://www.mauricioaniche.com/publications/atoms-of-confusion-in-java/
+[2] https://www.mauricioaniche.com/publications/self-vs-peer-grading/
+[3] https://www.mauricioaniche.com/publications/testing-meets-code-review/
+[4] https://www.mauricioaniche.com/publications/adoption-of-js-linters/

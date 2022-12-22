@@ -1,3 +1,0 @@
-# Glossary
-
-::: mccole.gloss

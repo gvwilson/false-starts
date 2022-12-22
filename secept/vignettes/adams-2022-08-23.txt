@@ -1,0 +1,16 @@
+One paper that comes to mind would be this TSE 2020 collaboration with 
+Shane McIntosh, comparing statement test coverage with flaky test coverage:
+- Based on a CI data set we basically check to what extent one can trust 
+statement test coverage, given that some of the tests covering the code 
+might be flaky, and hence not trustworthy.
+- This analysis uses simple stats and quantitative observations, and is 
+followed by a relatively simple descriptive statistics analysis of 3 
+"devil's advocate" hypotheses.
+- There's also a replication package.
+
+So, if you're still looking for a possible paper, this could be a 
+possibility.
+
+The PDF is available here: 
+https://rebels.cs.uwaterloo.ca/papers/tse2020_vysali.pdf.
+

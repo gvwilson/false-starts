@@ -1,0 +1,25 @@
+Date: Tue, 12 Jul 2022 12:09:46 +0200
+Subject: Re: short research vignettes
+From: Stefan Hanenberg <stefan.hanenberg@uni-due.de>
+
+Just a quick question: what will be the goal of the analysis?
+
+In case, the teaching goal is to run a 2-faktor analysis, the ICSE study 
+from 2014 could be feasible (the data is in the paper, 
+https://dl.acm.org/doi/10.1145/2568225.2568299). In case the goal is to 
+study some more slightly complex design, the N-of-1 study could help 
+(https://link.springer.com/article/10.1007/s10664-021-10077-3, 
+https://drive.google.com/file/d/1Q8hEtgudO8UnsXPw2y5NBsp8UYAy-VaJ/view?usp=sharing).
+
+Does it make sense from your perspective?
+
+Best
+Stefan
+
+----------------------------------------
+
+Maybe just the idea of an alternative. I teach empirical methods here to CS students. But I mainly focus on experiment design and execution (and only do a quick intro into analysis).
+
+I let students to simple experiments (such as "mouse vs. touchpad", "indentation", "syntax highlighting", i.e. one single student does one single experiment) that they repeat over and over again (first as N-of-1 experiments) before using their collegues as participants. The analysis is typically not that hard, but the "idea how to collect data" seems to be a harder task.
+
+The analysis-part is typically just "click the right buttons in SPSS and tell me what these numbers mean".

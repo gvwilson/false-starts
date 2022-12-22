@@ -1,3 +1,0 @@
-# Writing Files
-
-::: mccole.write

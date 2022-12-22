@@ -1,0 +1,15 @@
+From: Sebastian Baltes <sebastian.baltes@adelaide.edu.au>
+To: Greg Wilson <gvwilson@third-bit.com>
+Subject: Re: software engineering vignettes
+
+Thanks for reaching out - and no worries that it was out of the blue :-)
+
+Table 2 on page 9 of this paper (also attached below) could be a candidate for such a vignette, maybe focusing on the relationship between formality and lifespan, effort, and the fact whether the sketch/diagram had been archived.
+https://empirical-software.engineering/assets/pdf/fse14-sketches.pdf
+
+The correlations are between different properties of sketches and diagrams created for software development.
+The correlations itself are not super surprising, but in the paper I complemented them with additional (qualitative) insights, e.g., in Sections 3.4 and 4.
+The data (as CSV) as well as the R script that I’ve used are available here: https://empirical-software.engineering/supp/sketches/
+
+Best regards,
+Sebastian

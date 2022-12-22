@@ -1,0 +1,18 @@
+Date: Thu, 21 Jul 2022 15:25:16 -0400
+From: Elizabeth Patitsas <elizabeth.patitsas@mcgill.ca>
+
+Hi Greg,
+
+Sorry, it's been too long since I did the analysis for that paper - I 
+got the grades from UBC back in 2013.
+
+There have been some replications of the paper though the only published 
+one I know of is this one: 
+https://www.ejmste.com/download/exploring-bimodality-in-introductory-computer-science-performance-distributions-5549.pdf 
+(more may have been published since then)
+
+If you're just looking for quant data sets with associated papers, I can 
+offer the cleaned data & R code for this paper on what computer 
+scientists report knowing about conflict minerals: 
+https://computingwithinlimits.org/2021/papers/limits21-moreno.pdf - let 
+me know if you'd want it.
