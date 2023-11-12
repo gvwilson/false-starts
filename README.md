@@ -1,1 +1,41 @@
 # Half-Baked Book Ideas
+
+- btt
+  - Sparse raw material already recycled into the new book
+- buildtogether.tech
+  - consolidated material close to latest attempt
+  - copied over some already
+- caycuse
+  - invasion percolation
+  - script to download Python packages to analyze properties
+  - show how to test that download script
+- ds4se
+  - data science for software engineers
+  - `basic-tools` is an intro to Pandas
+  - `hypothesis-testing` compares function lengths of Python and JavaScript programs
+  - `correlation` extracts features from software
+  - `theory` is an introduction to statistics (too much detail)
+  - `curve-fitting` looks at email arrival times
+  - `measuring-contributions` scrapes GitHub data
+  - `gini` uses Gini coefficient to measure fairness
+  - `capacity-planning` is an intro to queueing theory
+  - `parameter-estimation` is an incomplete introduction to Zipf's Law
+  - `programmer-survey` is empirical analysis of survey data
+  - `robust-analysis` is Taschuk's Rules
+  - `papers` summarizes some interesting papers from NWIT
+  - `large-numbers` is a bit more statistical theory
+- mesachie
+  - material on general software engineering practices for data scientists
+  - `project` includes Python project, `invoke`, linting, and GitHub actions (but not pre-commit hooks)
+  - `dstools` is an intro to Pandas (copied over)
+  - `scraping` shows how to scrape data from PyPI
+- nitinat
+  - simple data science project step by step
+- nitinat2
+  - abortive rewrite of nitinat
+- seceba
+  - abortive rewrite of btt
+- seceba-old
+  - has some material on Snakemake
+- secept
+  - another abortive rewrite of btt, material copied over
