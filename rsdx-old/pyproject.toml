@@ -1,0 +1,19 @@
+[build-system]
+requires = ["setuptools"]
+build-backend = "setuptools.build_meta"
+
+[tool.setuptools]
+packages = ["rsdx"]
+
+[project]
+name = "rsdx"
+authors = [
+    {name = "Greg Wilson", email = "gvwilson@third-bit.com"},
+]
+readme = "README.md"
+requires-python = ">=3.11"
+classifiers = ["License :: OSI Approved :: MIT License"]
+version = "0.2"
+
+[tool.ruff]
+target-version = "py311"
