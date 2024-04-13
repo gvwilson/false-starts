@@ -1,0 +1,1 @@
+[% summary kind="syllabus" %]
